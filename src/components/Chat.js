@@ -1,7 +1,10 @@
-import React from 'react';
+import React from "react";
 
-const Chat = () => {
-    return ( <div>Chat</div> );
-}
- 
-export default Chat;
+export const Chat = () => {
+  return (
+    <React.Fragment>
+      <h1 className="title">Chat</h1>
+      <p>You are logged in, so you have access to this page</p>
+    </React.Fragment>
+  );
+};
