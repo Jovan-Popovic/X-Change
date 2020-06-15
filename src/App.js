@@ -17,12 +17,21 @@ class App extends React.Component {
     super(props);
     this.state = {
       isAuth: auth.getAuthStatus(),
+      navbarActive: false,
+      signUpActive: false,
+      logInActive: false,
     };
   }
+  //Later inside a state place values for modals and navbar toggler,for easier work with login form
   toggleAuthStatus = (status) => {
     if (!status) auth.logout();
     this.setState({ isAuth: status });
   };
+
+  toggleActiveStatus = (value, status) => {
+    this.setState({ [value]: !status });
+  };
+
   render() {
     return (
       <div className="App">
@@ -33,22 +42,32 @@ class App extends React.Component {
               <Navbar
                 auth={this.state.isAuth}
                 toggleAuthStatus={this.toggleAuthStatus}
+                navActive={this.state.navbarActive}
+                signUpActive={this.state.signUpActive}
+                logInActive={this.state.logInActive}
+                toggStatus={(value, status) =>
+                  this.toggleActiveStatus(value, status)
+                }
               />
             )}
+          />
+          <SignUp
+            signUpActive={this.state.signUpActive}
+            toggStatus={() =>
+              this.toggleActiveStatus("signUpActive", this.state.signUpActive)
+            }
+          />
+          <Login
+            auth={this.state.isAuth}
+            toggleAuthStatus={this.toggleAuthStatus}
+            logInActive={this.state.logInActive}
+            toggStatus={() =>
+              this.toggleActiveStatus("logInActive", this.state.logInActive)
+            }
           />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/contact" component={Contact} />
-            <Route path="/sign-up" component={SignUp} />
-            <Route
-              path="/login"
-              render={() => (
-                <Login
-                  auth={this.state.isAuth}
-                  toggleAuthStatus={this.toggleAuthStatus}
-                />
-              )}
-            />
             <PrivateRoute path="/chat" component={Chat} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <Route path="*">
