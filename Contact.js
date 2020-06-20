@@ -31,7 +31,7 @@ const DrawerSettings = () => {
       >
         <div className="drawer-div">
         <a>Help</a>
-        <a>About</a>
+        <a>About Developers</a>
         <a>Edit Profile</a>
         <a>Delete Account</a>
         </div>
