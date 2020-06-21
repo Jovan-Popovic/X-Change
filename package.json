@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^5.6.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "antd": "^4.3.4",
+    "antd": "^4.3.5",
     "bulma": "^0.8.2",
     "chart.js": "^2.9.3",
     "react": "^16.13.1",
@@ -20,9 +21,9 @@
     "slick-carousel": "^1.8.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

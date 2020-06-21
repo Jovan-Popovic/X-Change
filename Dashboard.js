@@ -2,6 +2,8 @@ import React, { useState, Component } from "react";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
+import { TableAdmin } from './table-admin.js'
+
 import {Bar, Line, Pie} from 'react-chartjs-2';
 
 class Chart extends Component{
@@ -75,6 +77,7 @@ export const Dashboard = () => {
         <p>Number of Admins:</p>
         <p>Number of Products</p>
       </div>
+      <TableAdmin />
     </div>
   );
 };
