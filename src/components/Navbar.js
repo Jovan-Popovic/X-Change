@@ -5,18 +5,8 @@ import { auth } from "../auth/AuthService";
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      /* 
-      navbarToggle: false,
-      signUpToggle: false,
-      logInToggle: false,
-    */
-    };
+    this.state = {};
   }
-  /* 
-  toggleStatus = (value, status) => {
-    this.setState({ [value]: !status });
-  }; */
 
   render() {
     return (
@@ -49,23 +39,48 @@ class Navbar extends React.Component {
         >
           <div className="navbar-start">
             <NavLink className="navbar-item" exact to="/">
-              <span className="fa fa-home"></span> &nbsp; Home
-            </NavLink>
-            <NavLink className="navbar-item" to="/chat">
-              <span className="fa fa-comment"></span> &nbsp; Chat
-            </NavLink>
-            <NavLink className="navbar-item" to="/contact">
-              <span className="fa fa-address-book"></span> &nbsp; Contact
+              <i className="fas fa-home" />
+              &nbsp; Home
             </NavLink>
             <NavLink className="navbar-item" to="/dashboard">
-              Dashboard
+              <i className="fas fa-chart-line" />
+              &nbsp; Dashboard
+            </NavLink>
+            <NavLink className="navbar-item" to="/chat">
+              <i className="fas fa-comments" />
+              &nbsp; Chat
+            </NavLink>
+            <NavLink className="navbar-item" to="/profile">
+              <i className="fas fa-user-alt" />
+              &nbsp; {this.props.auth ? "Profile" : "Guest"}
             </NavLink>
           </div>
           <div className="navbar-end">
+            <div className="navbar-item field has-addons">
+              <div className="control">
+                <input
+                  className="input"
+                  type="text"
+                  placeholder="Search product"
+                />
+              </div>
+              <div
+                className="control"
+                onClick={() =>
+                  alert(
+                    "This action will later show all products matched by name"
+                  )
+                }
+              >
+                <button className="button is-info">
+                  <i className="fas fa-search" />
+                </button>
+              </div>
+            </div>
             <div className="navbar-item">
               <div className="buttons">
                 {this.props.auth ? (
-                  <NavLink
+                  <button
                     to={window.location}
                     className="button is-light"
                     onClick={() => {
@@ -73,8 +88,9 @@ class Navbar extends React.Component {
                       this.props.toggleAuthStatus(false);
                     }}
                   >
-                    Log out
-                  </NavLink>
+                    <i className="fas fa-sign-out-alt" />
+                    &nbsp; Log Out
+                  </button>
                 ) : (
                   <React.Fragment>
                     <button
@@ -86,7 +102,8 @@ class Navbar extends React.Component {
                         )
                       }
                     >
-                      Sign up
+                      <i className="fas fa-sign-in-alt" />
+                      &nbsp; Sign Up
                     </button>
                     <button
                       className="button is-light"
@@ -97,18 +114,9 @@ class Navbar extends React.Component {
                         )
                       }
                     >
-                      Log in
+                      <i className="fas fa-user-circle" />
+                      &nbsp; Log In
                     </button>
-                    {/* move bottom part of code to app component, for easier work with modal value*/}
-                    {/*  <SignUp
-                      modalToggle={this.state.signUpToggle}
-                      changeModalStatus={() =>
-                        this.toggleStatus(
-                          "signUpToggle",
-                          this.state.signUpToggle
-                        )
-                      }
-                    /> */}
                   </React.Fragment>
                 )}
               </div>

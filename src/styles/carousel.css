@@ -1,0 +1,22 @@
+/* .carousel{
+  margin: auto;
+} */
+.slick-prev {
+  left: 5% !important;
+  z-index: 1;
+}
+
+.slick-next {
+  right: 5% !important;
+  z-index: 1;
+}
+
+.slide-img{
+  margin-bottom: 2vh;
+}
+/* 
+@media only screen and (min-width: 768px){
+  .carousel{
+    width: 65%;
+  }
+} */

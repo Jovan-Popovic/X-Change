@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { auth } from "../auth/AuthService";
+import { auth } from "../../auth/AuthService";
 
 const Login = (props) => {
   function handleSubmit(event) {
@@ -16,7 +16,7 @@ const Login = (props) => {
         <div className="modal-background" onClick={props.toggStatus}></div>
         <div className="modal-card">
           <header className="modal-card-head">
-            <p className="modal-card-title">Sign Up and join us today!</p>
+            <p className="modal-card-title">Login to your profile</p>
             <button
               type="button"
               onClick={props.toggStatus}
@@ -46,14 +46,16 @@ const Login = (props) => {
           <footer className="modal-card-foot">
             <div className="control">
               <button type="submit" className="button is-primary">
-                Login
+                <i className="fas fa-user-circle" />
+                &nbsp; Log In
               </button>
               <button
                 type="button"
                 className="button is-danger"
                 onClick={props.toggStatus}
               >
-                Cancel
+                <i className="fas fa-times" />
+                &nbsp; Cancel
               </button>
             </div>
           </footer>

@@ -182,14 +182,16 @@ export default class SignUp extends React.Component {
             <footer className="modal-card-foot">
               <div className="control">
                 <button type="submit" className="button is-primary">
-                  Create Account
+                  <i className="fas fa-plus" />
+                  &nbsp; Create Account
                 </button>
                 <button
                   type="button"
                   className="button is-danger"
                   onClick={this.props.toggStatus}
                 >
-                  Cancel
+                  <i className="fas fa-times" />
+                  &nbsp; Cancel
                 </button>
               </div>
             </footer>
