@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import profile from "../img/profile.png"
-import location from "../img/location.png"
+import phone from "../img/phone.png"
 import review from "../img/review.png"
 import settings from '../img/settings.png'
+import addnew from '../img/add-new.png'
 
-
+/*ant*/
 
 import { Drawer } from 'antd';
 import 'antd/dist/antd.css'; 
@@ -46,22 +47,28 @@ const DrawerSettings = () => {
 
 export const Contact = () => {
   return (
-    <div className="profile-stats">
-      <div>
-        <img src={profile} className="profile-pic" />
-      </div>
+    <div>
+      <div className="profile-stats">
+        <div>
+          <img src={profile} className="profile-pic" />
+        </div>
 
-      <div className="stats-text">
-        <strong>Username</strong>
-        <p>Email</p>
-        <p> <img src={location} /> Location</p>
-        <a> <img src={review} /> Profile Review</a> {/* for start <a> in future <Link> */}
-      </div>
+        <div className="stats-text">
+          <strong>Username</strong>
+          <p>Email</p>
+          <p> <img src={phone} /> Phone</p>
+          <a> <img src={review} />Profile rating</a> {/* for start <a> in future <Link> */}
+        </div>
 
-      <div className="profile-end">
-        <DrawerSettings />
-      </div>
+        <div className="profile-end">
+          <DrawerSettings />
+        </div>
 
+      </div>
+      <div className="for-add-new">
+        <a className="add-new"><img src={addnew} /></a>
+      </div>
+      <hr />
     </div>
   )
 };
