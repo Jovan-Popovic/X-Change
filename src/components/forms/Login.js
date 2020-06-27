@@ -1,17 +1,24 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { auth } from "../../auth/AuthService";
+import { books } from "../../api/apiCalls";
 
 const Login = (props) => {
-  function handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    auth.login();
-    props.toggleAuthStatus(true);
-    props.toggStatus();
-  }
+    const userData = JSON.stringify(props.logInData);
+    books
+      .post("/login", userData)
+      .then((res) => res.data)
+      .then((data) => {
+        auth.login(data.token);
+        props.toggleAuthStatus(true);
+        props.toggStatus();
+      });
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form id="logIn" onSubmit={handleSubmit}>
       <div className={`modal ${props.logInActive ? "is-active" : ""}`}>
         <div className="modal-background" onClick={props.toggStatus}></div>
         <div className="modal-card">
@@ -24,13 +31,14 @@ const Login = (props) => {
             ></button>
           </header>
           <section className="modal-card-body">
-            <label className="label">Email Adress</label>
+            <label className="label">Username</label>
             <div className="control">
               <input
-                name="email"
+                name="username"
                 className="input"
                 type="text"
-                placeholder="Enter your email adress"
+                placeholder="Enter your username"
+                onChange={props.handleInfo}
               />
             </div>
             <label className="label">Pasword</label>
@@ -40,6 +48,7 @@ const Login = (props) => {
                 className="input"
                 type="password"
                 placeholder="Enter your password"
+                onChange={props.handleInfo}
               />
             </div>
           </section>

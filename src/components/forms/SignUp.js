@@ -1,46 +1,33 @@
 import React from "react";
+import { books } from "../../api/apiCalls";
 
-export default class SignUp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstName: "",
-      lastName: "",
-      userName: "",
-      password: "",
-      email: "",
-      bio: "",
-      gender: "male",
-    };
-  }
-
-  handleInfo = (event) => {
+export const SignUp =(props)=> {
+/* 
+  props.handleInfo = (event) => {
     let userInfo = event.target.name;
     let value = event.target.value;
-    this.setState({ [userInfo]: value });
-  };
+    setState({ [userInfo]: value });
+  }; */
 
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    alert(
-      "You didn't actually signed up, to get access to private routes just press login button in login form."
-    );
+    const userData = JSON.stringify(props.signUpData);
+    books.post("/register", userData).then((res) => console.log(res));
   };
 
-  render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className={`modal ${this.props.signUpActive ? "is-active" : ""}`}>
+      <form id="signUp" onSubmit={handleSubmit}>
+        <div className={`modal ${props.signUpActive ? "is-active" : ""}`}>
           <div
             className="modal-background"
-            onClick={this.props.toggStatus}
+            onClick={props.toggStatus}
           ></div>
           <div className="modal-card">
             <header className="modal-card-head">
               <p className="modal-card-title">Sign Up and join us today!</p>
               <button
                 type="button"
-                onClick={this.props.toggStatus}
+                onClick={props.toggStatus}
                 className="delete"
                 aria-label="close"
               ></button>
@@ -54,8 +41,8 @@ export default class SignUp extends React.Component {
                       name="firstName"
                       className="input"
                       type="text"
-                      value={this.state.firstName}
-                      onChange={this.handleInfo}
+                      value={props.firstName}
+                      onChange={props.handleInfo}
                       placeholder="Enter your First Name"
                       required
                     />
@@ -66,8 +53,8 @@ export default class SignUp extends React.Component {
                       name="lastName"
                       className="input"
                       type="text"
-                      value={this.state.lastName}
-                      onChange={this.handleInfo}
+                      value={props.lastName}
+                      onChange={props.handleInfo}
                       placeholder="Enter your First Name"
                       required
                     />
@@ -77,11 +64,11 @@ export default class SignUp extends React.Component {
                   <label className="label">Username</label>
                   <div className="control has-icons-left has-icons-right">
                     <input
-                      name="userName"
+                      name="username"
                       className="input is-success"
                       type="text"
                       placeholder="Text input"
-                      onChange={this.handleInfo}
+                      onChange={props.handleInfo}
                       required
                     />
                     <span className="icon is-small is-left">
@@ -101,7 +88,7 @@ export default class SignUp extends React.Component {
                       className="input is-warning"
                       type="password"
                       placeholder="Text input"
-                      onChange={this.handleInfo}
+                      onChange={props.handleInfo}
                       minLength={8}
                       required
                     />
@@ -122,7 +109,7 @@ export default class SignUp extends React.Component {
                       className="input is-danger"
                       type="email"
                       placeholder="Enter your email adress"
-                      onChange={this.handleInfo}
+                      onChange={props.handleInfo}
                       required
                     />
                     <span className="icon is-small is-left">
@@ -141,8 +128,7 @@ export default class SignUp extends React.Component {
                       name="bio"
                       className="textarea"
                       placeholder="Tell us something about yourself"
-                      value={this.state.bio}
-                      onChange={this.handleInfo}
+                      value={props.bio}
                     />
                   </div>
                 </div>
@@ -160,7 +146,6 @@ export default class SignUp extends React.Component {
                       <input
                         type="radio"
                         name="gender"
-                        onChange={this.handleInfo}
                         value="male"
                         defaultChecked
                       />
@@ -170,8 +155,8 @@ export default class SignUp extends React.Component {
                       <input
                         type="radio"
                         name="gender"
-                        onChange={this.handleInfo}
-                        value="female"
+                        /*                         onChange={props.handleInfo}
+                         */ value="female"
                       />
                       Female
                     </label>
@@ -188,7 +173,7 @@ export default class SignUp extends React.Component {
                 <button
                   type="button"
                   className="button is-danger"
-                  onClick={this.props.toggStatus}
+                  onClick={props.toggStatus}
                 >
                   <i className="fas fa-times" />
                   &nbsp; Cancel
@@ -200,4 +185,3 @@ export default class SignUp extends React.Component {
       </form>
     );
   }
-}

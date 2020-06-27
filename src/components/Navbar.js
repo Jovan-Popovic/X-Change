@@ -17,7 +17,7 @@ class Navbar extends React.Component {
           </Link>
           <Link
             onClick={() =>
-              this.props.toggStatus("navbarActive", this.props.navActive)
+              this.props.toggStatus("navbar", this.props.navActive)
             }
             to={window.location}
             role="button"
@@ -28,9 +28,9 @@ class Navbar extends React.Component {
             aria-expanded="false"
             data-target="navbar"
           >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
           </Link>
         </div>
         <div
@@ -52,7 +52,7 @@ class Navbar extends React.Component {
             </NavLink>
             <NavLink className="navbar-item" to="/profile">
               <i className="fas fa-user-alt" />
-              &nbsp; {this.props.auth ? "Profile" : "Guest"}
+              &nbsp; {this.props.auth ? `${this.props.username}` : "Guest"}
             </NavLink>
           </div>
           <div className="navbar-end">
@@ -96,10 +96,7 @@ class Navbar extends React.Component {
                     <button
                       className="button is-primary"
                       onClick={() =>
-                        this.props.toggStatus(
-                          "signUpActive",
-                          this.props.signUpActive
-                        )
+                        this.props.toggStatus("signUp", this.props.signUpActive)
                       }
                     >
                       <i className="fas fa-sign-in-alt" />
@@ -108,10 +105,7 @@ class Navbar extends React.Component {
                     <button
                       className="button is-light"
                       onClick={() =>
-                        this.props.toggStatus(
-                          "logInActive",
-                          this.props.logInActive
-                        )
+                        this.props.toggStatus("logIn", this.props.logInActive)
                       }
                     >
                       <i className="fas fa-user-circle" />
