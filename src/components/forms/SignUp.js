@@ -20,14 +20,14 @@ export const SignUp =(props)=> {
         <div className={`modal ${props.signUpActive ? "is-active" : ""}`}>
           <div
             className="modal-background"
-            onClick={props.toggStatus}
+            onClick={props.toggleActiveStatus}
           ></div>
           <div className="modal-card">
             <header className="modal-card-head">
               <p className="modal-card-title">Sign Up and join us today!</p>
               <button
                 type="button"
-                onClick={props.toggStatus}
+                onClick={props.toggleActiveStatus}
                 className="delete"
                 aria-label="close"
               ></button>
@@ -134,8 +134,8 @@ export const SignUp =(props)=> {
                 </div>
                 <div className="field">
                   <div className="control">
-                    <label className="checkbox" required>
-                      <input type="checkbox" />I agree to the terms and
+                    <label className="checkbox">
+                      <input type="checkbox" required/>I agree to the terms and
                       conditions
                     </label>
                   </div>
@@ -173,7 +173,7 @@ export const SignUp =(props)=> {
                 <button
                   type="button"
                   className="button is-danger"
-                  onClick={props.toggStatus}
+                  onClick={props.toggleActiveStatus}
                 >
                   <i className="fas fa-times" />
                   &nbsp; Cancel

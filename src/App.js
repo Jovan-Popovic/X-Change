@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Home } from "./components/home/Home";
 import { Chat } from "./components/chat/Chat";
-import { Profile } from "./components/Profile";
+import { Profile } from "./components/profile/Profile";
 import { NotFound } from "./components/NotFound";
 import { Dashboard } from "./components/dashboard/Dashboard";
 import Navbar from "./components/Navbar";
@@ -10,6 +10,7 @@ import { auth } from "./auth/AuthService";
 import { PrivateRoute } from "./auth/PrivateRoute";
 import Login from "./components/forms/Login";
 import { SignUp } from "./components/forms/SignUp";
+import { AddProduct } from "./components/forms/AddProduct";
 import { Footer } from "./components/Footer";
 import "bulma/css/bulma.css";
 
@@ -22,7 +23,7 @@ class App extends React.Component {
         navbar: false,
         signUp: false,
         logIn: false,
-        product: false,
+        addProduct: false,
       },
       signUp: {
         firstName: "",
@@ -34,6 +35,16 @@ class App extends React.Component {
       logIn: {
         username: "",
         password: "",
+      },
+      addProduct: {
+        name: "",
+        description: "",
+        price: 3,
+        image: "",
+        condition: "",
+        age: 0,
+        category: "",
+        quantity: 1,
       },
     };
   }
@@ -54,7 +65,8 @@ class App extends React.Component {
 
   //Update state of forms
   handleInfo = (event) => {
-    let form = event.target.closest(["#signUp","#logIn"]).id;
+    let form = event.target.closest(["#signUp", "#logIn", "#addProduct"]).id;
+    console.log(this.state.addProduct);
     let userInfo = event.target.name;
     let value = event.target.value;
     this.setState({ [userInfo]: value });
@@ -91,7 +103,7 @@ class App extends React.Component {
                 navActive={this.state.activeStatus.navbar}
                 signUpActive={this.state.activeStatus.signUp}
                 logInActive={this.state.activeStatus.logIn}
-                toggStatus={(value, status) =>
+                toggleActiveStatus={(value, status) =>
                   this.toggleActiveStatus(value, status)
                 }
               />
@@ -102,7 +114,7 @@ class App extends React.Component {
               signUpActive={this.state.activeStatus.signUp}
               signUpData={this.state.signUp}
               handleInfo={this.handleInfo}
-              toggStatus={() =>
+              toggleActiveStatus={() =>
                 this.toggleActiveStatus(
                   "signUp",
                   this.state.activeStatus.signUp
@@ -119,8 +131,20 @@ class App extends React.Component {
               logInActive={this.state.activeStatus.logIn}
               logInData={this.state.logIn}
               handleInfo={this.handleInfo}
-              toggStatus={() =>
+              toggleActiveStatus={() =>
                 this.toggleActiveStatus("logIn", this.state.activeStatus.logIn)
+              }
+            />
+          ) : (
+            ""
+          )}
+          {this.state.activeStatus.addProduct ? (
+            <AddProduct
+              addProductActive={this.state.activeStatus.addProduct}
+              handleInfo={this.handleInfo}
+              addProductData={this.state.addProduct}
+              toggleActiveStatus={() =>
+                this.toggleActiveStatus("addProduct", this.state.activeStatus.addProduct)
               }
             />
           ) : (
@@ -130,7 +154,14 @@ class App extends React.Component {
             <Route exact path="/" component={Home} />
             <PrivateRoute path="/chat" component={Chat} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
-            <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute
+              path="/profile"
+              addProduct={this.state.addProduct}
+              toggleActiveStatus={() =>
+                this.toggleActiveStatus("addProduct", this.state.activeStatus.addProduct)
+              }
+              component={Profile}
+            />
             <Route path="*">
               <Redirect to="/404" />
               <NotFound />

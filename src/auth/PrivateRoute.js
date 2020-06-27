@@ -1,15 +1,15 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, withRouter } from "react-router-dom";
 import { auth } from "./AuthService";
 
 export const PrivateRoute = (props) => {
-  let Component = props.component;
+  let Component = withRouter(props.component);
   let isAuthenticated = auth.getAuthStatus();
   return (
     <Route
-      render={(props) => {
-        return isAuthenticated ? <Component /> : <Redirect to="/" />;
-      }}
+      render={() =>
+        isAuthenticated ? <Component props={props} /> : <Redirect to="/" />
+      }
     />
   );
 };

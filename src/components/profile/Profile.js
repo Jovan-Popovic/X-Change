@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import profile from "../img/profile.png";
-import phone from "../img/phone.png";
-import review from "../img/review.png";
-import settings from "../img/settings.png";
-import addnew from "../img/add-new.png";
+import profile from "../../img/profile.png";
+import phone from "../../img/phone.png";
+import review from "../../img/review.png";
+import settings from "../../img/settings.png";
+import addnew from "../../img/add-new.png";
 import { Drawer } from "antd";
 
-const DrawerSettings = () => {
+const DrawerSettings = (props) => {
   const [visible, setVisible] = useState(false);
 
   const toggleDrawer = () => setVisible(!visible);
@@ -34,7 +34,7 @@ const DrawerSettings = () => {
   );
 };
 
-export const Profile = () => {
+export const Profile = (props) => {
   return (
     <div>
       <div className="profile-stats">
@@ -57,7 +57,7 @@ export const Profile = () => {
         </div>
       </div>
       <div className="for-add-new">
-        <a href className="add-new">
+        <a href className="add-new" onClick={props.props.toggleActiveStatus}>
           <img src={addnew} alt="" />
         </a>
       </div>

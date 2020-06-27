@@ -21,7 +21,7 @@ export const Filters = (props) => {
         <div className="control">
           <label className="checkbox">
             <input type="checkbox" />
-            &nbsp; <i className="fas fa-tennis-ball" /> Sport
+            &nbsp; Sport
           </label>
         </div>
         <div className="control">
@@ -67,15 +67,15 @@ export const Filters = (props) => {
             className="input column is-5"
             type="number"
             min={1}
-            max={20}
+            max={5}
             placeholder="Min is 1"
           />
           <input
             className="input column is-5"
             type="number"
             min={1}
-            max={20}
-            placeholder="Max is 20"
+            max={5}
+            placeholder="Max is 5"
           />
         </p>
       </div>

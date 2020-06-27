@@ -11,22 +11,22 @@ const Login = (props) => {
       .post("/login", userData)
       .then((res) => res.data)
       .then((data) => {
-        auth.login(data.token);
+        auth.login(data.token, props.logInData.username);
         props.toggleAuthStatus(true);
-        props.toggStatus();
+        props.toggleActiveStatus();
       });
   };
 
   return (
     <form id="logIn" onSubmit={handleSubmit}>
       <div className={`modal ${props.logInActive ? "is-active" : ""}`}>
-        <div className="modal-background" onClick={props.toggStatus}></div>
+        <div className="modal-background" onClick={props.toggleActiveStatus}></div>
         <div className="modal-card">
           <header className="modal-card-head">
             <p className="modal-card-title">Login to your profile</p>
             <button
               type="button"
-              onClick={props.toggStatus}
+              onClick={props.toggleActiveStatus}
               className="delete"
             ></button>
           </header>
@@ -39,6 +39,7 @@ const Login = (props) => {
                 type="text"
                 placeholder="Enter your username"
                 onChange={props.handleInfo}
+                required
               />
             </div>
             <label className="label">Pasword</label>
@@ -49,6 +50,7 @@ const Login = (props) => {
                 type="password"
                 placeholder="Enter your password"
                 onChange={props.handleInfo}
+                required
               />
             </div>
           </section>
@@ -61,7 +63,7 @@ const Login = (props) => {
               <button
                 type="button"
                 className="button is-danger"
-                onClick={props.toggStatus}
+                onClick={props.toggleActiveStatus}
               >
                 <i className="fas fa-times" />
                 &nbsp; Cancel
