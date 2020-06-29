@@ -13,8 +13,12 @@ const Login = (props) => {
       .then((data) => {
         auth.login(data.token, props.logInData.username);
         props.toggleAuthStatus(true);
+        props.showNotification(data.Message)
         props.toggleActiveStatus();
-      });
+      }).catch((error=>{
+        console.log(error);
+        props.showNotification("Mrs")
+      }))
   };
 
   return (

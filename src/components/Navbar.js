@@ -17,7 +17,11 @@ class Navbar extends React.Component {
           </Link>
           <Link
             onClick={() =>
-              this.props.toggleActiveStatus("navbar", this.props.navActive)
+              this.props.toggleActiveStatus(
+                "activeStatus",
+                "navbar",
+                this.props.navActive
+              )
             }
             to={window.location}
             role="button"
@@ -52,7 +56,10 @@ class Navbar extends React.Component {
             </NavLink>
             <NavLink className="navbar-item" to="/profile">
               <i className="fas fa-user-alt" />
-              &nbsp; {this.props.auth ? `${localStorage.getItem("username")}` : "Guest"}
+              &nbsp;{" "}
+              {this.props.auth
+                ? `${localStorage.getItem("username")}`
+                : "Guest"}
             </NavLink>
           </div>
           <div className="navbar-end">
@@ -95,7 +102,11 @@ class Navbar extends React.Component {
                     <button
                       className="button is-primary"
                       onClick={() =>
-                        this.props.toggleActiveStatus("signUp", this.props.signUpActive)
+                        this.props.toggleActiveStatus(
+                          "activeStatus",
+                          "signUp",
+                          this.props.signUpActive
+                        )
                       }
                     >
                       <i className="fas fa-sign-in-alt" />
@@ -104,7 +115,11 @@ class Navbar extends React.Component {
                     <button
                       className="button is-light"
                       onClick={() =>
-                        this.props.toggleActiveStatus("logIn", this.props.logInActive)
+                        this.props.toggleActiveStatus(
+                          "activeStatus",
+                          "logIn",
+                          this.props.logInActive
+                        )
                       }
                     >
                       <i className="fas fa-user-circle" />
