@@ -41,7 +41,7 @@ export class Products extends React.Component {
               <div className="content">
                 {prod.description}
                 <br />
-                <time datetime="2016-1-1">Created at: {prod.createdAt}</time>
+                <time dateTime="2016-1-1">Created at: {prod.createdAt}</time>
               </div>
             </div>
           </div>

@@ -48,8 +48,7 @@ class App extends React.Component {
         quantity: 1,
       },
       notification: {
-        value:
-          "Cupidatat eiusmod consectetur proident nulla excepteur. Elit incididunt cillum reprehenderit culpa laborum sunt. Nulla labore pariatur consequat dolor reprehenderit irure ut sunt.Id eu veniam deserunt nostrud dolor tempor minim eiusmod velit. Nisi id elit Lorem est occaecat est eu.",
+        value: "Starter notification",
         status: "is-primary",
       },
     };

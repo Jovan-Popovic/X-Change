@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import profile from "../../img/profile.png";
 import phone from "../../img/phone.png";
@@ -47,7 +48,7 @@ export const Profile = (props) => {
           <p>
             <img src={phone} alt="" /> Phone
           </p>
-          <a href>
+          <a>
             <img src={review} alt="" />
             Profile rating
           </a>
@@ -57,7 +58,7 @@ export const Profile = (props) => {
         </div>
       </div>
       <div className="for-add-new">
-        <a href className="add-new" onClick={props.props.toggleActiveStatus}>
+        <a className="add-new" onClick={props.props.toggleActiveStatus}>
           <img src={addnew} alt="" />
         </a>
       </div>
