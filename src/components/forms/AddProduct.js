@@ -4,9 +4,42 @@ import { books } from "../../api/apiCalls";
 export const AddProduct = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
-    let productData = JSON.stringify(props.addProductData);
-    books.post("/createPost", productData).then((res) => console.log(res));
-    console.log("Product created", productData);
+    const {
+      name,
+      description,
+      price,
+      condition,
+      age,
+      category,
+      quantity,
+    } = props.addProductData;
+    const { upfile } = props.addProductData;
+    const productData = JSON.stringify({
+      name,
+      description,
+      price,
+      condition,
+      age,
+      category,
+      quantity,
+    });
+    const productImage = upfile;
+    /*     console.log(productData, productImage);
+     */ const imageData = new FormData();
+    imageData.append("upfile", productImage, productImage.name);
+    console.log(imageData);
+    books
+      .post("/createPost", productData)
+      .then((res) => {
+        console.log(res, imageData);
+        const productId = res.data.product._id;
+        return books.post(
+          `/uploadImage/product?productId=${productId}`,
+          imageData
+        );
+      })
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -31,6 +64,7 @@ export const AddProduct = (props) => {
                 type="text"
                 placeholder="Enter products name"
                 onChange={props.handleInfo}
+                required
               />
             </div>
             <label className="label">Description</label>
@@ -53,6 +87,7 @@ export const AddProduct = (props) => {
                 onChange={props.handleInfo}
                 min={0}
                 max={5}
+                required
               />
             </div>
             <label className="label">Image</label>
@@ -61,9 +96,10 @@ export const AddProduct = (props) => {
                 <input
                   className="file-input"
                   type="file"
-                  name="image"
+                  name="upfile"
                   accept="image/*"
-                  onChange={props.handleInfo}
+                  onChange={props.updateFile}
+                  required
                 />
                 <span className="file-cta">
                   <span className="file-icon">
@@ -75,7 +111,7 @@ export const AddProduct = (props) => {
             </div>
             <label className="label">Condition</label>
             <div className="select">
-              <select name="condition" onChange={props.handleInfo}>
+              <select name="condition" onChange={props.handleInfo} required>
                 <option value="new">New</option>
                 <option value="used">Used</option>
                 <option value="bad">Bad</option>
@@ -90,11 +126,12 @@ export const AddProduct = (props) => {
                 value={props.addProductData.age}
                 onChange={props.handleInfo}
                 min={0}
+                required
               />
             </div>
             <label className="label">Category</label>
             <div className="select">
-              <select name="category" onChange={props.handleInfo}>
+              <select name="category" onChange={props.handleInfo} required>
                 <option value="books">Books</option>
                 <option value="electronics">Electronics</option>
                 <option value="clothes">Clothes</option>
@@ -110,6 +147,7 @@ export const AddProduct = (props) => {
                 value={props.addProductData.quantity}
                 onChange={props.handleInfo}
                 min={0}
+                required
               />
             </div>
           </section>

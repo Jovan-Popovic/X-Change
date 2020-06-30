@@ -40,16 +40,17 @@ class App extends React.Component {
       addProduct: {
         name: "",
         description: "",
+        upfile: null,
         price: 3,
-        image: "",
         condition: "",
         age: 0,
         category: "",
         quantity: 1,
       },
       notification: {
-        signUp:
-          "Cupidatat eiusmod consectetur proident nulla excepteur. Elit incididunt cillum reprehenderit culpa laborum sunt. Nulla labore pariatur consequat dolor reprehenderit irure ut sunt.Id eu veniam deserunt nostrud dolor tempor minim eiusmod velit. Nisi id elit Lorem est occaecat est eu. Nostrud sint adipisicing adipisicing consequat adipisicing adipisicing velit pariatur. In esse amet nulla ullamco exercitation qui voluptate elit nisi velit sunt sit amet irure.Ex id amet do duis velit dolor ea. Anim ex quis sit id duis. Labore excepteur laboris cupidatat tempor. Nisi ut ad do enim elit nisi enim minim.Anim non reprehenderit sint eiusmod commodo dolore dolor. Magna deserunt aliquip duis do dolor nulla officia aute amet. Duis sint quis ex ipsum amet esse duis consectetur esse ad. Consectetur sint laboris culpa proident consequat aliquip officia commodo culpa consectetur.",
+        value:
+          "Cupidatat eiusmod consectetur proident nulla excepteur. Elit incididunt cillum reprehenderit culpa laborum sunt. Nulla labore pariatur consequat dolor reprehenderit irure ut sunt.Id eu veniam deserunt nostrud dolor tempor minim eiusmod velit. Nisi id elit Lorem est occaecat est eu.",
+        status: "is-primary",
       },
     };
   }
@@ -67,6 +68,15 @@ class App extends React.Component {
       10000
     );
   }; */
+
+  updateFile = (event) => {
+    const upfile = event.target.files[0];
+    this.setState({
+      ...this.state,
+      addProduct: { ...this.state.addProduct, upfile },
+    });
+    console.log(this.state.addProduct.upfile);
+  };
 
   //Update state of forms
   handleInfo = (event) => {
@@ -92,10 +102,13 @@ class App extends React.Component {
     this.setState({ [stateObj]: stateObject });
   };
 
-  showNotification = (value) =>
+  showNotification = (value, status) =>
     this.setState({
       ...this.state,
-      notification: { ...this.state.notification, signUp: value },
+      notification: {
+        value,
+        status,
+      },
     });
 
   render() {
@@ -156,10 +169,12 @@ class App extends React.Component {
           {this.state.activeStatus.addProduct ? (
             <AddProduct
               addProductActive={this.state.activeStatus.addProduct}
+              updateFile={this.updateFile}
               handleInfo={this.handleInfo}
               addProductData={this.state.addProduct}
               toggleActiveStatus={() =>
                 this.toggleActiveStatus(
+                  "activeStatus",
                   "addProduct",
                   this.state.activeStatus.addProduct
                 )
@@ -168,14 +183,15 @@ class App extends React.Component {
           ) : (
             ""
           )}
-          {this.state.notification.signUp ? (
+          {this.state.notification.value ? (
             <Notification
-              value={this.state.notification.signUp}
+              value={this.state.notification.value}
+              status={this.state.notification.status}
               toggleActiveStatus={() =>
                 this.toggleActiveStatus(
                   "notification",
-                  "signUp",
-                  this.state.notification.signUp
+                  "value",
+                  this.state.notification.value
                 )
               }
             />
@@ -191,6 +207,7 @@ class App extends React.Component {
               addProduct={this.state.addProduct}
               toggleActiveStatus={() =>
                 this.toggleActiveStatus(
+                  "activeStatus",
                   "addProduct",
                   this.state.activeStatus.addProduct
                 )

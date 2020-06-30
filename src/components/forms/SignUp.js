@@ -9,12 +9,12 @@ export const SignUp = (props) => {
       .post("/register", userData)
       .then((res) => {
         console.log(res.data.Message);
-        props.showNotification(res.data.Message)
+        props.showNotification(res.data.Message, "is-success");
         props.toggleActiveStatus();
       })
       .catch((error) => {
         console.error(error);
-        props.showNotification("SOAB")
+        props.showNotification("SOAB", "is-danger");
       });
   };
 
@@ -124,17 +124,25 @@ export const SignUp = (props) => {
               </div>
               <div className="field">
                 <div className="control">
-                  <label className="radio">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="male"
-                      defaultChecked
-                    />
+                  <input
+                    id="male"
+                    className="is-checkradio"
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    defaultChecked
+                  />
+                  <label className="radio" for="male">
                     Male
                   </label>
-                  <label className="radio">
-                    <input type="radio" name="gender" value="female" />
+                  <input
+                    id="female"
+                    className="is-checkradio"
+                    type="radio"
+                    name="gender"
+                    value="female"
+                  />
+                  <label className="radio" for="female">
                     Female
                   </label>
                 </div>

@@ -13,11 +13,11 @@ const Login = (props) => {
       .then((data) => {
         auth.login(data.token, props.logInData.username);
         props.toggleAuthStatus(true);
-        props.showNotification(data.Message)
+        props.showNotification(data.Message, "is-success")
         props.toggleActiveStatus();
       }).catch((error=>{
         console.log(error);
-        props.showNotification("Mrs")
+        props.showNotification("Mrs", "is-danger")
       }))
   };
 
