@@ -23,14 +23,21 @@ export class Products extends React.Component {
           <div key={index} className="card column is-3">
             <div className="card-image">
               <figure className="image is-4by3">
-                <img src={`${prod.imageUrl}`} alt="" />
+                <img
+                  src={prod.imageUrl}
+                  alt=""
+                  onError={() => {
+                    this.onerror = null;
+                    this.src = prod.safariUrl;
+                  }}
+                />
               </figure>
             </div>
             <div className="card-content">
               <div className="media">
                 <div className="media-left">
                   <figure className="image is-48x48">
-                    <img src={`${prod.imageUrl}`} alt="" />
+                    <img src={prod.user.profilePictureUrl} alt="" />
                   </figure>
                 </div>
                 <div className="media-content">
