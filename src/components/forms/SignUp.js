@@ -1,14 +1,44 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
+import { auth } from "../../auth/AuthService";
 import { books } from "../../api/apiCalls";
 
 export const SignUp = (props) => {
+
+  //Function for handling form submit
   const handleSubmit = (event) => {
     event.preventDefault();
-    const userData = JSON.stringify(props.signUpData);
+    const {
+      firstName,
+      lastName,
+      email,
+      username,
+      password,
+      location,
+      phoneNumber,
+    } = props.data;
+    const userData = JSON.stringify({
+      firstName,
+      lastName,
+      email,
+      username,
+      password,
+      location,
+      phoneNumber,
+    });
+    const { upfile } = props.data;
+    const userImage = new FormData();
+    userImage.append("upfile", upfile, upfile.name);
     books
       .post("/register", userData)
       .then((res) => {
-        console.log(res.data.Message);
+        console.log(res);
+        auth.login(res.data.token, res.data["Created user"].username);
+        props.toggleAuthStatus(true);
+        return books.post("/uploadImage/user", userImage);
+      })
+      .then((res) => {
+        console.log(res);
         props.showNotification(res.data.Message, "is-success");
         props.toggleActiveStatus();
       })
@@ -20,7 +50,7 @@ export const SignUp = (props) => {
 
   return (
     <form id="signUp" onSubmit={handleSubmit}>
-      <div className={`modal ${props.signUpActive ? "is-active" : ""}`}>
+      <div className={`modal ${props.active ? "is-active" : ""}`}>
         <div
           className="modal-background"
           onClick={props.toggleActiveStatus}
@@ -44,12 +74,14 @@ export const SignUp = (props) => {
                     name="firstName"
                     className="input"
                     type="text"
-                    value={props.firstName}
+                    value={props.data.firstName}
                     onChange={props.handleInfo}
                     placeholder="Enter your First Name"
                     required
                   />
                 </div>
+              </div>
+              <div className="field">
                 <label className="label">Last Name</label>
                 <div className="control">
                   <input
@@ -64,6 +96,20 @@ export const SignUp = (props) => {
                 </div>
               </div>
               <div className="field">
+                <label className="label">Email</label>
+                <div className="control">
+                  <input
+                    name="email"
+                    className="input"
+                    type="email"
+                    value={props.data.email}
+                    placeholder="Enter your email adress"
+                    onChange={props.handleInfo}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="field">
                 <label className="label">Username</label>
                 <div className="control">
                   <input
@@ -71,6 +117,7 @@ export const SignUp = (props) => {
                     className="input"
                     type="text"
                     placeholder="Text input"
+                    value={props.data.username}
                     onChange={props.handleInfo}
                     required
                   />
@@ -84,6 +131,7 @@ export const SignUp = (props) => {
                     className="input"
                     type="password"
                     placeholder="Text input"
+                    value={props.data.password}
                     onChange={props.handleInfo}
                     minLength={8}
                     required
@@ -91,16 +139,50 @@ export const SignUp = (props) => {
                 </div>
               </div>
               <div className="field">
-                <label className="label">Email</label>
+                <label className="label">Phone Number</label>
                 <div className="control">
                   <input
-                    name="email"
                     className="input"
-                    type="email"
-                    placeholder="Enter your email adress"
+                    name="phoneNumber"
+                    value={props.data.phoneNumber}
                     onChange={props.handleInfo}
-                    required
+                    type="tel"
+                    placeholder="Your phone number"
                   />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Profile Picture (Optional)</label>
+                <div className="control">
+                  <label className="file-label">
+                    <input
+                      className="file-input"
+                      type="file"
+                      name="upfile"
+                      accept="image/*"
+                      onChange={props.updateFile}
+                      required
+                    />
+                    <span className="file-cta">
+                      <span className="file-icon">
+                        <i className="fas fa-upload" />
+                      </span>
+                      <span className="file-label">Choose an image</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Location</label>
+                <div className="control">
+                  <div className="select">
+                    <select name="location" onChange={props.handleInfo}>
+                      <option value="podgorica">Podgorica</option>
+                      <option value="danilovgrad">Danilovgrad</option>
+                      <option value="cetinje">Cetinje</option>
+                      <option value="niksic">Niksic</option>
+                    </select>
+                  </div>
                 </div>
               </div>
               <div className="field">
@@ -110,15 +192,13 @@ export const SignUp = (props) => {
                     name="bio"
                     className="textarea"
                     placeholder="Tell us something about yourself"
-                    value={props.bio}
                   />
                 </div>
               </div>
               <div className="field">
                 <div className="control">
                   <label className="checkbox">
-                    <input type="checkbox" required />I agree to the terms and
-                    conditions
+                    <input type="checkbox" />I agree to the terms and conditions
                   </label>
                 </div>
               </div>
@@ -132,7 +212,7 @@ export const SignUp = (props) => {
                     value="male"
                     defaultChecked
                   />
-                  <label className="radio" for="male">
+                  <label className="radio" htmlFor="male">
                     Male
                   </label>
                   <input
@@ -142,7 +222,7 @@ export const SignUp = (props) => {
                     name="gender"
                     value="female"
                   />
-                  <label className="radio" for="female">
+                  <label className="radio" htmlFor="female">
                     Female
                   </label>
                 </div>

@@ -12,8 +12,8 @@ export const AddProduct = (props) => {
       age,
       category,
       quantity,
-    } = props.addProductData;
-    const { upfile } = props.addProductData;
+    } = props.data;
+    const { upfile } = props.data;
     const productData = JSON.stringify({
       name,
       description,
@@ -24,8 +24,7 @@ export const AddProduct = (props) => {
       quantity,
     });
     const productImage = upfile;
-    /*     console.log(productData, productImage);
-     */ const imageData = new FormData();
+    const imageData = new FormData();
     imageData.append("upfile", productImage, productImage.name);
     console.log(imageData);
     books
@@ -44,7 +43,7 @@ export const AddProduct = (props) => {
 
   return (
     <form id="addProduct" onSubmit={handleSubmit}>
-      <div className={`modal ${props.addProductActive ? "is-active" : ""}`}>
+      <div className={`modal ${props.active ? "is-active" : ""}`}>
         <div className="modal-background" onClick={props.toggleActiveStatus} />
         <div className="modal-card">
           <header className="modal-card-head">
@@ -62,6 +61,7 @@ export const AddProduct = (props) => {
                 name="name"
                 className="input"
                 type="text"
+                value={props.data.name}
                 placeholder="Enter products name"
                 onChange={props.handleInfo}
                 required
@@ -72,9 +72,9 @@ export const AddProduct = (props) => {
               <textarea
                 name="description"
                 className="textarea"
+                value={props.data.description}
                 placeholder="Add description to your product"
                 onChange={props.handleInfo}
-                defaultValue="Random description"
               />
             </div>
             <label className="label">Price (in bookcoins)</label>
@@ -83,14 +83,14 @@ export const AddProduct = (props) => {
                 name="price"
                 className="input"
                 type="number"
-                value={props.addProductData.price}
+                value={props.data.price}
                 onChange={props.handleInfo}
                 min={0}
                 max={5}
                 required
               />
             </div>
-            <label className="label">Image</label>
+            <label className="label">Product Image</label>
             <div className="file">
               <label className="file-label">
                 <input
@@ -123,15 +123,15 @@ export const AddProduct = (props) => {
                 name="age"
                 className="input"
                 type="number"
-                value={props.addProductData.age}
+                value={props.data.age}
                 onChange={props.handleInfo}
                 min={0}
                 required
               />
             </div>
             <label className="label">Category</label>
-            <div className="select">
-              <select name="category" onChange={props.handleInfo} required>
+            <div className="control">
+              <select className="select" name="category" onChange={props.handleInfo} required>
                 <option value="books">Books</option>
                 <option value="electronics">Electronics</option>
                 <option value="clothes">Clothes</option>
@@ -144,7 +144,7 @@ export const AddProduct = (props) => {
                 name="quantity"
                 className="input"
                 type="number"
-                value={props.addProductData.quantity}
+                value={props.data.quantity}
                 onChange={props.handleInfo}
                 min={0}
                 required

@@ -1,17 +1,18 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import { auth } from "../../auth/AuthService";
 import { books } from "../../api/apiCalls";
 
-const Login = (props) => {
+export const Login = (props) => {
+
+  //Function for handling form submit
   const handleSubmit = (event) => {
     event.preventDefault();
-    const userData = JSON.stringify(props.logInData);
+    const userData = JSON.stringify(props.data);
     books
       .post("/login", userData)
       .then((res) => res.data)
       .then((data) => {
-        auth.login(data.token, props.logInData.username);
+        auth.login(data.token, props.data.username);
         props.toggleAuthStatus(true);
         props.showNotification(data.Message, "is-success")
         props.toggleActiveStatus();
@@ -23,7 +24,7 @@ const Login = (props) => {
 
   return (
     <form id="logIn" onSubmit={handleSubmit}>
-      <div className={`modal ${props.logInActive ? "is-active" : ""}`}>
+      <div className={`modal ${props.active ? "is-active" : ""}`}>
         <div className="modal-background" onClick={props.toggleActiveStatus}></div>
         <div className="modal-card">
           <header className="modal-card-head">
@@ -41,6 +42,7 @@ const Login = (props) => {
                 name="username"
                 className="input"
                 type="text"
+                value={props.data.username}
                 placeholder="Enter your username"
                 onChange={props.handleInfo}
                 required
@@ -52,6 +54,7 @@ const Login = (props) => {
                 name="password"
                 className="input"
                 type="password"
+                value={props.data.password}
                 placeholder="Enter your password"
                 onChange={props.handleInfo}
                 required
@@ -79,5 +82,3 @@ const Login = (props) => {
     </form>
   );
 };
-
-export default withRouter(Login);

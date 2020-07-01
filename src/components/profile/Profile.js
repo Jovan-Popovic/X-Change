@@ -1,68 +1,106 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React from "react";
 import profile from "../../img/profile.png";
-import phone from "../../img/phone.png";
-import review from "../../img/review.png";
-import settings from "../../img/settings.png";
-import addnew from "../../img/add-new.png";
-import { Drawer } from "antd";
-
-const DrawerSettings = (props) => {
-  const [visible, setVisible] = useState(false);
-
-  const toggleDrawer = () => setVisible(!visible);
-
-  return (
-    <React.Fragment>
-      <button className="settings-btn" type="primary" onClick={toggleDrawer}>
-        <img src={settings} alt="" className="profile-sett" />
-      </button>
-      <Drawer
-        title="Settings:"
-        placement="right"
-        closable={false}
-        onClose={toggleDrawer}
-        visible={visible}
-      >
-        <div className="drawer-div">
-          <a href>Help</a>
-          <a href>About Developers</a>
-          <a href>Edit Profile</a>
-          <a href>Delete Account</a>
-        </div>
-      </Drawer>
-    </React.Fragment>
-  );
-};
+import { AddProduct } from "../forms/AddProduct.js";
+import { UpdateProfile } from "../forms/UpdateProfile";
 
 export const Profile = (props) => {
   return (
-    <div>
-      <div className="profile-stats">
-        <div>
-          <img src={profile} alt="" className="profile-pic" />
+    <div className="overflow" onLoad={props.getUserInfo}>
+      <div className="columns is-variable is-1-mobile is-1-tablet is-1-desktop is-1-widescreen is-1-fullhd">
+        <div className="column is-one-third" id="picture">
+          <figure className="image is-1by1">
+            <img
+              src={
+                !!props.userInfo.profilePictureUrl
+                  ? props.userInfo.profilePictureUrl
+                  : profile
+              }
+              className="is-rounded"
+              alt=""
+            />
+          </figure>
         </div>
-        <div className="stats-text">
-          <strong>Username</strong>
-          <p>Email</p>
-          <p>
-            <img src={phone} alt="" /> Phone
+        <div className="column">
+          <strong className="is-size-3-mobile is-size-2-tablet is-size-1-desktop">
+            {props.userInfo.username}
+          </strong>
+          <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
+            {props.userInfo.firstName} {props.userInfo.lastName}
           </p>
-          <a>
-            <img src={review} alt="" />
-            Profile rating
-          </a>
+          <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
+            <i className="fas fa-envelope" />
+            Email: {props.userInfo.email}
+          </p>
+          <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
+            <i className="fas fa-star" />
+            Rating: {props.userInfo.ratings}
+          </p>
         </div>
-        <div className="profile-end">
-          <DrawerSettings />
+        <div className="column is-1">
+          <button
+            className="none-btn"
+            onClick={() =>
+              props.toggleActiveStatus(
+                "activeStatus",
+                "updateProfile",
+                props.active.updateProfile
+              )
+            }
+          >
+            <p className="is-size-4">
+              <i className="fas fa-user-cog" />
+            </p>
+          </button>
         </div>
       </div>
-      <div className="for-add-new">
-        <a className="add-new" onClick={props.props.toggleActiveStatus}>
-          <img src={addnew} alt="" />
-        </a>
+      <div className="box has-text-centered">
+        <button
+          className="none-btn is-size-4"
+          onClick={() =>
+            props.toggleActiveStatus(
+              "activeStatus",
+              "addProduct",
+              props.active.addProduct
+            )
+          }
+        >
+          <i className="fas fa-plus" />
+        </button>
       </div>
-      <hr />
+      {props.active.addProduct ? (
+        <AddProduct
+          active={props.active.addProduct}
+          data={props.addProduct}
+          handleInfo={props.handleInfo}
+          updateFile={props.updateFile}
+          toggleActiveStatus={() =>
+            props.toggleActiveStatus(
+              "activeStatus",
+              "addProduct",
+              props.active.addProduct
+            )
+          }
+        />
+      ) : (
+        ""
+      )}
+      {props.active.updateProfile ? (
+        <UpdateProfile
+          active={props.active.updateProfile}
+          data={props.updateProfile}
+          handleInfo={props.handleInfo}
+          toggleActiveStatus={() =>
+            props.toggleActiveStatus(
+              "activeStatus",
+              "updateProfile",
+              props.active.updateProfile
+            )
+          }
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
