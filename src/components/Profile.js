@@ -27,12 +27,12 @@ export class Profile extends React.Component {
               Email
             </p>
             <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
-              <i class="far fa-star"></i>
+              <i className="far fa-star"></i>
               Profile Rate
             </p>
           </div>
           <div className="column is-1">
-            <button data-show={QuickView} data-target="quickviewDefault" className="none-btn">
+            <button>
               <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
                 <i className="fas fa-cog"></i>
               </p>
@@ -42,7 +42,7 @@ export class Profile extends React.Component {
         <div className="box has-text-centered">
           <button className="none-btn">
             <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
-              <i class="fas fa-plus"></i>
+              <i className="fas fa-plus"></i>
             </p>
           </button>
         </div>
