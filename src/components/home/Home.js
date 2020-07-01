@@ -11,7 +11,7 @@ export class Home extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="overflow">
         <div className="columns">
           <Filters />
           <Carousel />
