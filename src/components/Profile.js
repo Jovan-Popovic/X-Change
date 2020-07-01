@@ -32,7 +32,7 @@ export class Profile extends React.Component {
             </p>
           </div>
           <div className="column is-1">
-            <button>
+            <button className="none-btn">
               <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
                 <i className="fas fa-cog"></i>
               </p>
