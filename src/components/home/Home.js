@@ -5,22 +5,6 @@ import { Carousel } from "./Carousel";
 import { Filters } from "./Filters";
 import { Products } from "./Products";
 
-<<<<<<< HEAD
-export class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <div className="overflow">
-        <div className="columns">
-          <Filters />
-          <Carousel />
-        </div>
-        <Products />
-=======
 export const Home = (props) => {
   return (
     <div>
@@ -66,7 +50,6 @@ export const Home = (props) => {
       <div className="columns">
         <Filters />
         <Carousel />
->>>>>>> master
       </div>
       <Products />
     </div>
