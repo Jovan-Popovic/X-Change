@@ -1,8 +1,11 @@
 import React from "react";
+import { SignUp } from "../forms/SignUp";
+import { Login } from "../forms/Login";
 import { Carousel } from "./Carousel";
 import { Filters } from "./Filters";
 import { Products } from "./Products";
 
+<<<<<<< HEAD
 export class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +20,55 @@ export class Home extends React.Component {
           <Carousel />
         </div>
         <Products />
+=======
+export const Home = (props) => {
+  return (
+    <div>
+      {props.activeStatus.signUp ? (
+        <SignUp
+          active={props.activeStatus.signUp}
+          data={props.signUp}
+          notification={props.notification}
+          showNotification={props.showNotification}
+          handleInfo={props.handleInfo}
+          updateFile={props.updateFile}
+          toggleAuthStatus={props.toggleAuthStatus}
+          toggleActiveStatus={() =>
+            props.toggleActiveStatus(
+              "activeStatus",
+              "signUp",
+              props.activeStatus.signUp
+            )
+          }
+        />
+      ) : (
+        ""
+      )}
+      {props.activeStatus.logIn ? (
+        <Login
+          active={props.activeStatus.logIn}
+          data={props.logIn}
+          notification={props.notification}
+          showNotification={props.showNotification}
+          handleInfo={props.handleInfo}
+          toggleAuthStatus={props.toggleAuthStatus}
+          toggleActiveStatus={() =>
+            props.toggleActiveStatus(
+              "activeStatus",
+              "logIn",
+              props.activeStatus.logIn
+            )
+          }
+        />
+      ) : (
+        ""
+      )}
+      <div className="columns">
+        <Filters />
+        <Carousel />
+>>>>>>> master
       </div>
-    );
-  }
-}
+      <Products />
+    </div>
+  );
+};

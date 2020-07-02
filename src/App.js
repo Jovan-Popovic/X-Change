@@ -2,15 +2,15 @@ import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Home } from "./components/home/Home";
 import { Chat } from "./components/chat/Chat";
-import { Profile } from "./components/Profile";
+import { Profile } from "./components/profile/Profile";
 import { NotFound } from "./components/NotFound";
 import { Dashboard } from "./components/dashboard/Dashboard";
 import Navbar from "./components/Navbar";
 import { auth } from "./auth/AuthService";
 import { PrivateRoute } from "./auth/PrivateRoute";
-import Login from "./components/forms/Login";
-import { SignUp } from "./components/forms/SignUp";
+import { Notification } from "./components/Notification";
 import { Footer } from "./components/Footer";
+import { books } from "./api/apiCalls";
 import "bulma/css/bulma.css";
 
 class App extends React.Component {
@@ -22,46 +22,72 @@ class App extends React.Component {
         navbar: false,
         signUp: false,
         logIn: false,
-        product: false,
+        addProduct: false,
+        updateProfile: false,
+      },
+      notification: {
+        value: "Starter notification",
+        status: "is-primary",
       },
       signUp: {
         firstName: "",
         lastName: "",
         username: "",
-        password: "",
         email: "",
+        password: "",
+        upfile: null,
+        location: "",
+        phoneNumber: 0,
       },
       logIn: {
         username: "",
         password: "",
       },
+      userInfo: {},
+      addProduct: {
+        name: "",
+        description: "Random description",
+        upfile: null,
+        price: 3,
+        condition: "",
+        age: 0,
+        category: "",
+        quantity: 1,
+      },
+      updateProfile: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: 0,
+        location: "",
+      },
     };
   }
 
-  //Open modal login form in first 10 sec if user isn't logged in
-  checkLogin = () => {
-    setTimeout(
-      () =>
-        this.state.isAuth
-          ? ""
-          : this.setState({
-              ...this.state,
-              activeStatus: { ...this.state.activeStatus, logIn: true },
-            }),
-      10000
-    );
-  };
-
   //Update state of forms
   handleInfo = (event) => {
-    let form = event.target.closest(["#signUp","#logIn"]).id;
+    let form = event.target.closest([
+      "#signUp",
+      "#logIn",
+      "#addProduct",
+      "#updateProfile",
+    ]).id;
     let userInfo = event.target.name;
     let value = event.target.value;
-    this.setState({ [userInfo]: value });
     this.setState({
       ...this.state,
       [form]: { ...this.state[form], [userInfo]: value },
     });
+  };
+
+  updateFile = (event) => {
+    let form = event.target.closest(["#signUp", "#addProduct"]).id;
+    const upfile = event.target.files[0];
+    this.setState({
+      ...this.state,
+      [form]: { ...this.state[form], upfile },
+    });
+    console.log(this.state[form].upfile);
   };
 
   //Toggle authenticated status
@@ -71,15 +97,33 @@ class App extends React.Component {
   };
 
   //Toggle bulma's is-active class
-  toggleActiveStatus = (value, status) => {
-    let activeStatus = { ...this.state.activeStatus };
-    activeStatus[value] = !status;
-    this.setState({ activeStatus });
+  toggleActiveStatus = (stateObj, value, status) => {
+    let stateObject = { ...this.state[stateObj] };
+    stateObject[value] = !status;
+    this.setState({ [stateObj]: stateObject });
   };
+
+  showNotification = (value, status) =>
+    this.setState({
+      ...this.state,
+      notification: {
+        value,
+        status,
+      },
+    });
+
+  getUserInfo = () =>
+    books(`/findUser/${localStorage.getItem("username")}`)
+      .then((res) => {
+        console.log(res);
+        this.setState({ userInfo: res.data.user });
+      })
+      .then(() => console.log(this.state.userInfo))
+      .catch((error) => console.log(error));
 
   render() {
     return (
-      <div className="container" onLoad={this.checkLogin}>
+      <div className="container">
         <BrowserRouter>
           <Route
             path="*"
@@ -91,46 +135,58 @@ class App extends React.Component {
                 navActive={this.state.activeStatus.navbar}
                 signUpActive={this.state.activeStatus.signUp}
                 logInActive={this.state.activeStatus.logIn}
-                toggStatus={(value, status) =>
-                  this.toggleActiveStatus(value, status)
-                }
+                toggleActiveStatus={this.toggleActiveStatus}
               />
             )}
           />
-          {this.state.activeStatus.signUp ? (
-            <SignUp
-              signUpActive={this.state.activeStatus.signUp}
-              signUpData={this.state.signUp}
-              handleInfo={this.handleInfo}
-              toggStatus={() =>
+          {this.state.notification.value ? (
+            <Notification
+              value={this.state.notification.value}
+              status={this.state.notification.status}
+              toggleActiveStatus={() =>
                 this.toggleActiveStatus(
-                  "signUp",
-                  this.state.activeStatus.signUp
+                  "notification",
+                  "value",
+                  this.state.notification.value
                 )
               }
             />
           ) : (
             ""
           )}
-          {this.state.activeStatus.logIn ? (
-            <Login
-              auth={this.state.isAuth}
-              toggleAuthStatus={this.toggleAuthStatus}
-              logInActive={this.state.activeStatus.logIn}
-              logInData={this.state.logIn}
-              handleInfo={this.handleInfo}
-              toggStatus={() =>
-                this.toggleActiveStatus("logIn", this.state.activeStatus.logIn)
-              }
-            />
-          ) : (
-            ""
-          )}
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route
+              exact
+              path="/"
+              render={(props) => (
+                <Home
+                  {...props}
+                  activeStatus={this.state.activeStatus}
+                  toggleAuthStatus={this.toggleAuthStatus}
+                  signUp={this.state.signUp}
+                  logIn={this.state.logIn}
+                  notification={this.state.notification}
+                  showNotification={this.showNotification}
+                  handleInfo={this.handleInfo}
+                  updateFile={this.updateFile}
+                  toggleActiveStatus={this.toggleActiveStatus}
+                />
+              )}
+            />
+            <PrivateRoute
+              path="/profile"
+              component={Profile}
+              active={this.state.activeStatus}
+              userInfo={this.state.userInfo}
+              addProduct={this.state.addProduct}
+              updateProfile={this.state.updateProfile}
+              handleInfo={this.handleInfo}
+              updateFile={this.updateFile}
+              getUserInfo={this.getUserInfo}
+              toggleActiveStatus={this.toggleActiveStatus}
+            />
             <PrivateRoute path="/chat" component={Chat} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
-            <PrivateRoute path="/profile" component={Profile} />
             <Route path="*">
               <Redirect to="/404" />
               <NotFound />

@@ -1,7 +1,7 @@
-@import "styles/carousel.css";
-@import "styles/chat.css";
+@import "~bulma/css/bulma.css";
+@import "styles/carousel.scss";
 @import "styles/navbar.scss";
-@import '~antd/dist/antd.less';
+@import "~antd/dist/antd.less";
 
 .overflow{
   overflow: hidden;
@@ -22,16 +22,29 @@ code {
 }
 
 a.navbar-item.active {
+<<<<<<< HEAD
   font-weight: bold; 
 }
 
 .container>form {
+=======
+  font-weight: bold;
+}
+
+.notification {
+  position: fixed !important;
+  bottom: 1vh !important;
+  right: 1vh !important;
+  z-index: 1;
+}
+.container > form {
+>>>>>>> master
   padding-left: 300px;
   padding-right: 300px;
   padding-top: 40px;
 }
 
-.container>form>label>div {
+.container > form > label > div {
   margin-top: 25px;
   margin-bottom: 18px;
 }
@@ -39,5 +52,9 @@ a.navbar-item.active {
 .none-btn {
   border: 0px solid blue;
   background: none;
+<<<<<<< HEAD
   outline:none;
+=======
+  outline: none;
+>>>>>>> master
 }
