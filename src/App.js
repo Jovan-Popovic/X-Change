@@ -5,6 +5,7 @@ import { Chat } from "./components/chat/Chat";
 import { Profile } from "./components/profile/Profile";
 import { NotFound } from "./components/NotFound";
 import { Dashboard } from "./components/dashboard/Dashboard";
+import { Product } from "./components/home/Product";
 import Navbar from "./components/Navbar";
 import { auth } from "./auth/AuthService";
 import { PrivateRoute } from "./auth/PrivateRoute";
@@ -29,6 +30,7 @@ class App extends React.Component {
         value: "Starter notification",
         status: "is-primary",
       },
+      product: {},
       signUp: {
         firstName: "",
         lastName: "",
@@ -112,6 +114,8 @@ class App extends React.Component {
       },
     });
 
+  updateStateObject = (object, value) => this.setState({ [object]: value });
+  
   getUserInfo = () =>
     books(`/findUser/${localStorage.getItem("username")}`)
       .then((res) => {
@@ -172,6 +176,12 @@ class App extends React.Component {
                   toggleActiveStatus={this.toggleActiveStatus}
                 />
               )}
+            />
+            <PrivateRoute
+              path="/product/:id"
+              component={Product}
+              data={this.state.product}
+              updateState={this.updateStateObject}
             />
             <PrivateRoute
               path="/profile"

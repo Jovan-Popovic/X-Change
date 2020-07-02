@@ -1,20 +1,33 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import profile from "../../img/profile.png";
+import profilePicture from "../../img/profile.png";
 import { AddProduct } from "../forms/AddProduct.js";
 import { UpdateProfile } from "../forms/UpdateProfile";
-
+import { books } from "../../api/apiCalls";
 export const Profile = (props) => {
+  
+  const [profile, updateProfile] = React.useState({});
+
+  React.useEffect(() => {
+    books(`/findUser/${localStorage.getItem("username")}`)
+      .then((res) => {
+        console.log(res);
+        updateProfile(res.data.user);
+      })
+      .then(() => console.log(this.state.userInfo))
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
-    <div className="overflow" onLoad={props.getUserInfo}>
+    <div className="overflow">
       <div className="columns is-variable is-1-mobile is-1-tablet is-1-desktop is-1-widescreen is-1-fullhd">
         <div className="column is-one-third" id="picture">
           <figure className="image is-1by1">
             <img
               src={
-                !!props.userInfo.profilePictureUrl
-                  ? props.userInfo.profilePictureUrl
-                  : profile
+                !!profile.profilePictureUrl
+                  ? profile.profilePictureUrl
+                  : profilePicture
               }
               className="is-rounded"
               alt=""
@@ -23,18 +36,18 @@ export const Profile = (props) => {
         </div>
         <div className="column">
           <strong className="is-size-3-mobile is-size-2-tablet is-size-1-desktop">
-            {props.userInfo.username}
+            {profile.username}
           </strong>
           <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
-            {props.userInfo.firstName} {props.userInfo.lastName}
+            {profile.firstName} {profile.lastName}
           </p>
           <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
             <i className="fas fa-envelope" />
-            Email: {props.userInfo.email}
+            Email: {profile.email}
           </p>
           <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
             <i className="fas fa-star" />
-            Rating: {props.userInfo.ratings}
+            Rating: {profile.ratings}
           </p>
         </div>
         <div className="column is-1">

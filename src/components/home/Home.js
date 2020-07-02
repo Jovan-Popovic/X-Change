@@ -3,7 +3,7 @@ import { SignUp } from "../forms/SignUp";
 import { Login } from "../forms/Login";
 import { Carousel } from "./Carousel";
 import { Filters } from "./Filters";
-import { Products } from "./Products";
+import { LastProducts } from "./LastProducts";
 
 export const Home = (props) => {
   return (
@@ -51,7 +51,7 @@ export const Home = (props) => {
         <Filters />
         <Carousel />
       </div>
-      <Products />
+      <LastProducts />
     </div>
   );
 };
