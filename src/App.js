@@ -108,10 +108,15 @@ const App = () => {
           />
           <PrivateRoute path="/chat" component={Chat} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
-          <Route path="*">
-            <Redirect to="/404" />
-            <NotFound />
-          </Route>
+          <Route
+            path="*"
+            render={(props) => (
+              <React.Fragment>
+                <Redirect to="/404" />
+                <NotFound {...props}/>
+              </React.Fragment>
+            )}
+          ></Route>
         </Switch>
         <Footer />
       </BrowserRouter>

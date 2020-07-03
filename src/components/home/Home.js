@@ -35,7 +35,6 @@ export const Home = (props) => {
     updateData({ ...data, upfile });
   };
 
-  console.log(props)
   return (
     <div>
       {props.activeStatus.signUp ? (
