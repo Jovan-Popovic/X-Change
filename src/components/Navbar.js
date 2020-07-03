@@ -1,13 +1,14 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { auth } from "../auth/AuthService";
+import logo from "../img/logo1.png"
 
 export const Navbar =(props)=> {
     return (
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <Link className="navbar-item" to="/">
-            <img alt="" src="https://bulma.io/images/bulma-logo.png" />
+          <Link className="" to="/">
+            <img alt="" src={logo} className="nav-logo" />
           </Link>
           <Link
             onClick={() =>
