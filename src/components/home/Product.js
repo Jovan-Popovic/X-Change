@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps*/
 import React from "react";
 import { Link } from "react-router-dom";
 import { books } from "../../api/apiCalls";
@@ -6,7 +7,6 @@ export const Product = (props) => {
   const [product, updateProduct] = React.useState({});
 
   React.useEffect(() => {
-    console.log("jojo");
     books(`/products/${props.computedMatch.params.id}`)
       .then((res) => {
         console.log(res);

@@ -5,12 +5,15 @@ import { books } from "../../api/apiCalls";
 export const LastProducts = () => {
   const [products, updateProducts] = React.useState([]);
 
-  React.useEffect(() => {
-    books("/getProducts/12").then((res) => {
-      updateProducts(res.data.products);
-      console.log(res, products);
-    });
-  }, []);
+  React.useEffect(
+    () => {
+      books("/getProducts/12").then((res) => {
+        updateProducts(res.data.products);
+      });
+    },
+    [],
+    []
+  );
 
   return (
     <div className="columns is-multiline">

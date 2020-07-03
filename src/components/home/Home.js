@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { SignUp } from "../forms/SignUp";
 import { Login } from "../forms/Login";
 import { Carousel } from "./Carousel";
@@ -6,16 +6,46 @@ import { Filters } from "./Filters";
 import { LastProducts } from "./LastProducts";
 
 export const Home = (props) => {
+  const [data, updateData] = useState({
+    signUp: {
+      firstName: "",
+      lastName: "",
+      username: "",
+      email: "",
+      password: "",
+      location: "podgorica",
+      phoneNumber: 0,
+    },
+    logIn: {
+      username: "",
+      password: "",
+    },
+    upfile: null,
+  });
+
+  const handleInfo = (event) => {
+    const form = event.target.closest(["#signUp", "#logIn"]).id;
+    const key = event.target.name;
+    const value = event.target.value;
+    updateData({ ...data, [form]: { ...data[form], [key]: value } });
+  };
+
+  const handleFile = (event) => {
+    const upfile = event.target.files[0];
+    updateData({ ...data, upfile });
+  };
+
+  console.log(props)
   return (
     <div>
       {props.activeStatus.signUp ? (
         <SignUp
           active={props.activeStatus.signUp}
-          data={props.signUp}
-          notification={props.notification}
+          data={data.signUp}
+          upfile={data.upfile}
           showNotification={props.showNotification}
-          handleInfo={props.handleInfo}
-          updateFile={props.updateFile}
+          handleInfo={handleInfo}
+          handleFile={handleFile}
           toggleAuthStatus={props.toggleAuthStatus}
           toggleActiveStatus={() =>
             props.toggleActiveStatus(
@@ -31,10 +61,9 @@ export const Home = (props) => {
       {props.activeStatus.logIn ? (
         <Login
           active={props.activeStatus.logIn}
-          data={props.logIn}
-          notification={props.notification}
+          data={data.logIn}
           showNotification={props.showNotification}
-          handleInfo={props.handleInfo}
+          handleInfo={handleInfo}
           toggleAuthStatus={props.toggleAuthStatus}
           toggleActiveStatus={() =>
             props.toggleActiveStatus(

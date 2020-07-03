@@ -4,28 +4,10 @@ import { books } from "../../api/apiCalls";
 export const AddProduct = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
-    const {
-      name,
-      description,
-      price,
-      condition,
-      age,
-      category,
-      quantity,
-    } = props.data;
-    const { upfile } = props.data;
-    const productData = JSON.stringify({
-      name,
-      description,
-      price,
-      condition,
-      age,
-      category,
-      quantity,
-    });
-    const productImage = upfile;
+    const productData = JSON.stringify({ ...props.data });
+    const image = props.image;
     const imageData = new FormData();
-    imageData.append("upfile", productImage, productImage.name);
+    imageData.append("upfile", image, image.name);
     console.log(imageData);
     books
       .post("/createPost", productData)
@@ -98,7 +80,7 @@ export const AddProduct = (props) => {
                   type="file"
                   name="upfile"
                   accept="image/*"
-                  onChange={props.updateFile}
+                  onChange={props.handleFile}
                   required
                 />
                 <span className="file-cta">
@@ -131,7 +113,12 @@ export const AddProduct = (props) => {
             </div>
             <label className="label">Category</label>
             <div className="control">
-              <select className="select" name="category" onChange={props.handleInfo} required>
+              <select
+                className="select"
+                name="category"
+                onChange={props.handleInfo}
+                required
+              >
                 <option value="books">Books</option>
                 <option value="electronics">Electronics</option>
                 <option value="clothes">Clothes</option>

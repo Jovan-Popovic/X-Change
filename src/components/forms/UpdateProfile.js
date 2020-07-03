@@ -5,9 +5,17 @@ export const UpdateProfile = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const updateData = JSON.stringify({ ...props.data });
+    const image = props.image;
+    const imageData = new FormData();
+    imageData.append("upfile", image, image.name);
+    console.log(imageData);
     books
       .post("/updateProfile", updateData)
-      .then((res) => console.log(res))
+      .then(
+        (res) => console.log(res)
+        /*         return books.post("/uploadImage/user", image);
+         */
+      )
       .catch((error) => console.error(error));
   };
   return (
@@ -19,7 +27,7 @@ export const UpdateProfile = (props) => {
         ></div>
         <div className="modal-card">
           <header className="modal-card-head">
-            <p className="modal-card-title">Edit profile</p>
+            <p className="modal-card-title">Update Profile</p>
             <button
               type="button"
               onClick={props.toggleActiveStatus}
@@ -84,6 +92,25 @@ export const UpdateProfile = (props) => {
                   <option value="niksic">Niksic</option>
                 </select>
               </div>
+            </div>
+            <label className="label">New Image</label>
+            <div className="file">
+              <label className="file-label">
+                <input
+                  className="file-input"
+                  type="file"
+                  name="upfile"
+                  accept="image/*"
+                  onChange={props.handleFile}
+                  required
+                />
+                <span className="file-cta">
+                  <span className="file-icon">
+                    <i className="fas fa-upload" />
+                  </span>
+                  <span className="file-label">Choose New Image</span>
+                </span>
+              </label>
             </div>
           </section>
           <footer className="modal-card-foot">
