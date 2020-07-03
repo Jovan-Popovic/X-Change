@@ -112,9 +112,8 @@ export const AddProduct = (props) => {
               />
             </div>
             <label className="label">Category</label>
-            <div className="control">
+            <div className="select">
               <select
-                className="select"
                 name="category"
                 onChange={props.handleInfo}
                 required
