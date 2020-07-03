@@ -27,11 +27,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-emotion": "^10.0.0",
-<<<<<<< HEAD
     "react-fontawesome": "^1.7.1",
-=======
     "react-moment": "^0.9.7",
->>>>>>> master
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-slick": "^0.26.1",
