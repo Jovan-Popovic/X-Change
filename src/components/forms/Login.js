@@ -3,29 +3,32 @@ import { auth } from "../../auth/AuthService";
 import { books } from "../../api/apiCalls";
 
 export const Login = (props) => {
-
   //Function for handling form submit
   const handleSubmit = (event) => {
     event.preventDefault();
-    const userData = JSON.stringify(props.data);
+    const userData = JSON.stringify({ ...props.data });
     books
       .post("/login", userData)
-      .then((res) => res.data)
-      .then((data) => {
-        auth.login(data.token, props.data.username);
-        props.toggleAuthStatus(true);
-        props.showNotification(data.Message, "is-success")
+      .then((res) => {
+        const responseData = res.data;
+        auth.login(responseData.token, props.data.username);
+        props.showNotification(responseData.Message, "is-success");
         props.toggleActiveStatus();
-      }).catch((error=>{
+        props.toggleAuthStatus(true);
+      })
+      .catch((error) => {
         console.log(error);
-        props.showNotification("Mrs", "is-danger")
-      }))
+        props.showNotification("Mrs", "is-danger");
+      });
   };
 
   return (
     <form id="logIn" onSubmit={handleSubmit}>
       <div className={`modal ${props.active ? "is-active" : ""}`}>
-        <div className="modal-background" onClick={props.toggleActiveStatus}></div>
+        <div
+          className="modal-background"
+          onClick={props.toggleActiveStatus}
+        ></div>
         <div className="modal-card">
           <header className="modal-card-head">
             <p className="modal-card-title">Login to your profile</p>

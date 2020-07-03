@@ -1,14 +1,8 @@
 import React from "react";
-import { Link, NavLink, withRouter } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { auth } from "../auth/AuthService";
 
-class Navbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
+export const Navbar =(props)=> {
     return (
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
@@ -17,16 +11,16 @@ class Navbar extends React.Component {
           </Link>
           <Link
             onClick={() =>
-              this.props.toggleActiveStatus(
+              props.toggleActiveStatus(
                 "activeStatus",
                 "navbar",
-                this.props.navActive
+                props.navActive
               )
             }
             to={window.location}
             role="button"
             className={`navbar-burger burger ${
-              this.props.navActive ? "is-active" : ""
+              props.navActive ? "is-active" : ""
             }`}
             aria-label="menu"
             aria-expanded="false"
@@ -39,7 +33,7 @@ class Navbar extends React.Component {
         </div>
         <div
           id="navbar"
-          className={`navbar-menu ${this.props.navActive ? "is-active" : ""}`}
+          className={`navbar-menu ${props.navActive ? "is-active" : ""}`}
         >
           <div className="navbar-start">
             <NavLink className="navbar-item" exact to="/">
@@ -57,7 +51,7 @@ class Navbar extends React.Component {
             <NavLink className="navbar-item" to="/profile">
               <i className="fas fa-user-alt" />
               &nbsp;{" "}
-              {this.props.auth
+              {props.auth
                 ? `${localStorage.getItem("username")}`
                 : "Guest"}
             </NavLink>
@@ -86,12 +80,12 @@ class Navbar extends React.Component {
             </div>
             <div className="navbar-item">
               <div className="buttons">
-                {this.props.auth ? (
+                {props.auth ? (
                   <button
                     className="button is-light"
                     onClick={() => {
                       auth.logout();
-                      this.props.toggleAuthStatus(false);
+                      props.toggleAuthStatus(false);
                     }}
                   >
                     <i className="fas fa-sign-out-alt" />
@@ -102,10 +96,10 @@ class Navbar extends React.Component {
                     <button
                       className="button is-primary"
                       onClick={() =>
-                        this.props.toggleActiveStatus(
+                        props.toggleActiveStatus(
                           "activeStatus",
                           "signUp",
-                          this.props.signUpActive
+                          props.signUpActive
                         )
                       }
                     >
@@ -115,10 +109,10 @@ class Navbar extends React.Component {
                     <button
                       className="button is-light"
                       onClick={() =>
-                        this.props.toggleActiveStatus(
+                        props.toggleActiveStatus(
                           "activeStatus",
                           "logIn",
-                          this.props.logInActive
+                          props.logInActive
                         )
                       }
                     >
@@ -133,6 +127,4 @@ class Navbar extends React.Component {
         </div>
       </nav>
     );
-  }
 }
-export default withRouter(Navbar);

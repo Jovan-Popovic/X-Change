@@ -4,29 +4,11 @@ import { auth } from "../../auth/AuthService";
 import { books } from "../../api/apiCalls";
 
 export const SignUp = (props) => {
-
   //Function for handling form submit
   const handleSubmit = (event) => {
     event.preventDefault();
-    const {
-      firstName,
-      lastName,
-      email,
-      username,
-      password,
-      location,
-      phoneNumber,
-    } = props.data;
-    const userData = JSON.stringify({
-      firstName,
-      lastName,
-      email,
-      username,
-      password,
-      location,
-      phoneNumber,
-    });
-    const { upfile } = props.data;
+    const userData = JSON.stringify({ ...props.data });
+    const upfile = props.upfile;
     const userImage = new FormData();
     userImage.append("upfile", upfile, upfile.name);
     books
@@ -34,13 +16,13 @@ export const SignUp = (props) => {
       .then((res) => {
         console.log(res);
         auth.login(res.data.token, res.data["Created user"].username);
-        props.toggleAuthStatus(true);
         return books.post("/uploadImage/user", userImage);
       })
       .then((res) => {
         console.log(res);
         props.showNotification(res.data.Message, "is-success");
         props.toggleActiveStatus();
+        props.toggleAuthStatus(true);
       })
       .catch((error) => {
         console.error(error);
@@ -88,7 +70,7 @@ export const SignUp = (props) => {
                     name="lastName"
                     className="input"
                     type="text"
-                    value={props.lastName}
+                    value={props.data.lastName}
                     onChange={props.handleInfo}
                     placeholder="Enter your First Name"
                     required
@@ -160,7 +142,7 @@ export const SignUp = (props) => {
                       type="file"
                       name="upfile"
                       accept="image/*"
-                      onChange={props.updateFile}
+                      onChange={props.handleFile}
                       required
                     />
                     <span className="file-cta">
