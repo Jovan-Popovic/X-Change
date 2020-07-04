@@ -10,7 +10,7 @@ export const Notification = (props) => {
       <div
         className={`notification ${props.status} column is-mobile is-4 is-clearfix`}
       >
-        <button className="delete" onClick={props.toggleActiveStatus} />
+        <button className="delete" onClick={props.showNotification} />
         {props.value}
       </div>
     </div>

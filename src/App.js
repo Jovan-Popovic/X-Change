@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Home } from "./components/home/Home";
 import { Chat } from "./components/chat/Chat";
@@ -14,43 +14,32 @@ import { Footer } from "./components/Footer";
 import "bulma/css/bulma.css";
 
 const App = () => {
-  const [app, updateAppState] = React.useState({
-    isAuth: auth.getAuthStatus(),
-    activeStatus: {
-      navbar: false,
-      signUp: false,
-      logIn: false,
-      addProduct: false,
-      updateProfile: false,
-    },
-    notification: {
-      value: "Starter notification",
-      status: "is-primary",
-    },
+  const [isAuth, updateAuth] = useState(auth.getAuthStatus());
+  const [active, updateActive] = useState({
+    navbar: false,
+    signUp: false,
+    logIn: false,
+    addProduct: false,
+    updateProfile: false,
+  });
+  const [notification, updateNotification] = useState({
+    value: "Starter notification",
+    status: "is-primary",
   });
 
-  //Toggle authenticated status
   const toggleAuthStatus = (status) => {
     if (!status) auth.logout();
-    updateAppState({ ...app, isAuth: status });
+    updateAuth(status);
   };
 
-  //Toggle bulma's is-active class
-  const toggleActiveStatus = (stateObj, value, status) => {
-    let stateObject = { ...app[stateObj] };
-    stateObject[value] = !status;
-    updateAppState({ ...app, [stateObj]: stateObject });
-  };
+  const toggleActiveStatus = (value, status) =>
+    updateActive({ ...active, [value]: !status });
 
-  const showNotification = (value, status) => {
-    updateAppState({
-      ...app,
-      notification: {
-        value,
-        status,
-      },
+  const showNotification = (value, status) =>
+    updateNotification({
+      value,
+      status,
     });
-  };
 
   return (
     <div className="container">
@@ -60,25 +49,21 @@ const App = () => {
           render={(props) => (
             <Navbar
               {...props}
-              auth={app.isAuth}
-              navActive={app.activeStatus.navbar}
-              signUpActive={app.activeStatus.signUp}
-              logInActive={app.activeStatus.logIn}
+              isAuth={isAuth}
+              navActive={active.navbar}
+              signUpActive={active.signUp}
+              logInActive={active.logIn}
               toggleAuthStatus={toggleAuthStatus}
               toggleActiveStatus={toggleActiveStatus}
             />
           )}
         />
-        {app.notification.value ? (
+        {notification.value ? (
           <Notification
-            value={app.notification.value}
-            status={app.notification.status}
-            toggleActiveStatus={() =>
-              toggleActiveStatus(
-                "notification",
-                "value",
-                app.notification.value
-              )
+            value={notification.value}
+            status={notification.status}
+            showNotification={() =>
+              showNotification("value", notification.value)
             }
           />
         ) : (
@@ -91,8 +76,8 @@ const App = () => {
             render={(props) => (
               <Home
                 {...props}
-                activeStatus={app.activeStatus}
-                notification={app.notification}
+                active={active}
+                notification={notification}
                 toggleAuthStatus={toggleAuthStatus}
                 showNotification={showNotification}
                 toggleActiveStatus={toggleActiveStatus}
@@ -103,7 +88,7 @@ const App = () => {
           <PrivateRoute
             path="/profile"
             component={Profile}
-            active={app.activeStatus}
+            active={active}
             toggleActiveStatus={toggleActiveStatus}
           />
           <PrivateRoute path="/chat" component={Chat} />
@@ -113,7 +98,7 @@ const App = () => {
             render={(props) => (
               <React.Fragment>
                 <Redirect to="/404" />
-                <NotFound {...props}/>
+                <NotFound {...props} />
               </React.Fragment>
             )}
           ></Route>

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps*/
 import React from "react";
-import { books } from "../../api/apiCalls";
+import { xChange } from "../../api/apiCalls";
 import Moment from "react-moment";
 import "moment-timezone";
 
@@ -8,7 +8,7 @@ export const Product = (props) => {
   const [product, updateProduct] = React.useState({});
 
   React.useEffect(() => {
-    books(`/products/${props.computedMatch.params.id}`)
+    xChange(`/products/${props.computedMatch.params.id}`)
       .then((res) => {
         console.log(res);
         updateProduct({ ...res.data.product });
@@ -16,6 +16,11 @@ export const Product = (props) => {
       })
       .catch((error) => console.log(error));
   }, []);
+
+  const buyProduct = () =>
+    xChange(`/products/${props.computedMatch.params.id}/buy`).then((res) =>
+      console.log(res)
+    );
 
   return (
     <div className="container">
@@ -37,11 +42,6 @@ export const Product = (props) => {
                       &nbsp;Seller
                     </td>
                     <td className="has-text-right">
-                      <img
-                        src={product.user ? product.user.profilePictureUrl : ""}
-                        className="is-circle"
-                        alt=""
-                      />
                       {product.user ? product.user.username : ""}
                     </td>
                   </tr>
@@ -70,10 +70,18 @@ export const Product = (props) => {
                   </tr>
                 </tbody>
               </table>
-              <button className="button is-primary">
-                <i className="fas fa-shopping-cart" />
-                &nbsp; Buy Now!
-              </button>
+              {localStorage.getItem("username") !==
+              (product.user ? product.user.username : "") ? (
+                <button className="button is-primary" onClick={buyProduct}>
+                  <i className="fas fa-shopping-cart" />
+                  &nbsp; Buy Now!
+                </button>
+              ) : (
+                <p>
+                  <i className="fas fa-times" />
+                  &nbsp; You can't buy your own product moron
+                </p>
+              )}
             </div>
             <div className="column is-6-desktop is-horizontal-center">
               <img src={product.imageUrl} alt="" className="product-image" />

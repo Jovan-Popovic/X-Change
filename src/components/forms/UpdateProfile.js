@@ -1,5 +1,5 @@
 import React from "react";
-import { books } from "../../api/apiCalls";
+import { xChange } from "../../api/apiCalls";
 
 export const UpdateProfile = (props) => {
   const handleSubmit = (event) => {
@@ -9,11 +9,11 @@ export const UpdateProfile = (props) => {
     const imageData = new FormData();
     imageData.append("upfile", image, image.name);
     console.log(imageData);
-    books
+    xChange
       .post("/updateProfile", updateData)
       .then(
         (res) => console.log(res)
-        /*         return books.post("/uploadImage/user", image);
+        /*         return xChange.post("/uploadImage/user", image);
          */
       )
       .catch((error) => console.error(error));

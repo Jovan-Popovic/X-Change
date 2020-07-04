@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { auth } from "../../auth/AuthService";
-import { books } from "../../api/apiCalls";
+import { xChange } from "../../api/apiCalls";
 
 export const SignUp = (props) => {
   //Function for handling form submit
@@ -11,12 +11,12 @@ export const SignUp = (props) => {
     const upfile = props.upfile;
     const userImage = new FormData();
     userImage.append("upfile", upfile, upfile.name);
-    books
+    xChange
       .post("/register", userData)
       .then((res) => {
         console.log(res);
         auth.login(res.data.token, res.data["Created user"].username);
-        return books.post("/uploadImage/user", userImage);
+        return xChange.post("/uploadImage/user", userImage);
       })
       .then((res) => {
         console.log(res);
