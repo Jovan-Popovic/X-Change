@@ -15,8 +15,8 @@ export const Sell = (props) => {
       .catch((error) => console.error(error));
   }, []);
 
-  const acceptRequest = (id) => {
-    xChange(`transactions/${id}/accept`)
+  const rejecttRequest = (id) => {
+    xChange(`transactions/${id}/reject`)
       .then((res) => console.log(res))
       .catch((error) => console.error(error));
   };
@@ -57,7 +57,7 @@ export const Sell = (props) => {
                   confirm transaction.
                 </p>
                 <p>
-                  Location: {" "}
+                  Location:{" "}
                   {product.buyer.location
                     ? product.buyer.location[0].toUpperCase() +
                       product.buyer.location.slice(1)
@@ -68,16 +68,23 @@ export const Sell = (props) => {
                   Request sent:{" "}
                   <Moment date={product.createdAt} format="LLLL" />
                 </p>
-                <button
-                  className="button is-success"
-                  onClick={() => acceptRequest(product._id)}
-                >
-                  <i className="fas fa-check-circle" />
-                  &nbsp; Accept
-                </button>
+                  <button
+                    className="button is-success"
+                    onClick={() => props.acceptRequest(product._id)}
+                  >
+                    <i className="fas fa-check-circle" />
+                    &nbsp; Accept
+                  </button>
+                  <button
+                    className="button is-danger ml-3"
+                    onClick={() => props.acceptRequest(product._id)}
+                  >
+                    <i className="fas fa-trash-alt" />
+                    &nbsp; Reject
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
         ))}
       </div>
     </React.Fragment>

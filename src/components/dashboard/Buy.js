@@ -53,6 +53,13 @@ export const Buy = (props) => {
                 >
                   <i className="fas fa-store-alt" /> &nbsp;Check store
                 </Link>
+                <button
+                  className="button is-danger"
+                  onClick={() => props.acceptRequest(product._id)}
+                >
+                  <i className="fas fa-trash-alt" />
+                  &nbsp; Give up
+                </button>
               </div>
             </div>
           </div>
