@@ -57,11 +57,11 @@ export const Sell = (props) => {
                   confirm transaction.
                 </p>
                 <p>
-                  Location:{" "}
-                  {product.buyer.location !== ""
+                  Location: {" "}
+                  {product.buyer.location
                     ? product.buyer.location[0].toUpperCase() +
                       product.buyer.location.slice(1)
-                    : "Locatio unknown"}
+                    : "Location unknown"}
                 </p>
                 <p>Phone Number: {product.buyer.phoneNumber}</p>
                 <p>
