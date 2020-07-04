@@ -1,7 +1,6 @@
 @import "~bulma/css/bulma.css";
 @import "styles/carousel.scss";
 @import "styles/navbar.scss";
-@import "~antd/dist/antd.less";
 
 body {
   margin: 0;
@@ -39,15 +38,12 @@ a.navbar-item.active {
 }
 
 .is-circle {
-  width: 3.5vh !important;
-  height: 3.5vh !important;
+  width: 8vh !important;
+  height: 8vh !important;
   margin-right: 1vh !important;
   border-radius: 50% !important;
 }
 
-figure {
-  margin: auto !important;
-}
 /* 
 .container > form {
   padding-left: 300px;

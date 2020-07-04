@@ -4,7 +4,7 @@ import React from "react";
 import profilePicture from "../../img/profile.png";
 import { AddProduct } from "../forms/AddProduct.js";
 import { UpdateProfile } from "../forms/UpdateProfile";
-import { books } from "../../api/apiCalls";
+import { xChange } from "../../api/apiCalls";
 
 export const Profile = (props) => {
   const [info, getInfo] = React.useState({});
@@ -32,7 +32,7 @@ export const Profile = (props) => {
   });
 
   React.useEffect(() => {
-    books(`/findUser/${localStorage.getItem("username")}`)
+    xChange(`/findUser/${localStorage.getItem("username")}`)
       .then((res) => {
         const profileInfo = res.data.user;
         getInfo({ ...profileInfo });

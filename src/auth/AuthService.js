@@ -1,4 +1,4 @@
-import { books } from "../api/apiCalls";
+import { xChange } from "../api/apiCalls";
 
 class AuthService {
   getAuthStatus = () => {
@@ -8,7 +8,7 @@ class AuthService {
   };
 
   setJWT = (token) =>
-    (books.defaults.headers.common["Authorization"] = `Bearer ${token}`);
+    (xChange.defaults.headers.common["Authorization"] = `Bearer ${token}`);
 
   login = (token, username) => {
     localStorage.setItem("token", token);

@@ -1,5 +1,5 @@
 import React from "react";
-import { books } from "../../api/apiCalls";
+import { xChange } from "../../api/apiCalls";
 
 export const AddProduct = (props) => {
   const handleSubmit = (event) => {
@@ -9,12 +9,12 @@ export const AddProduct = (props) => {
     const imageData = new FormData();
     imageData.append("upfile", image, image.name);
     console.log(imageData);
-    books
+    xChange
       .post("/createPost", productData)
       .then((res) => {
         console.log(res, imageData);
         const productId = res.data.product._id;
-        return books.post(
+        return xChange.post(
           `/uploadImage/product?productId=${productId}`,
           imageData
         );

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const booksURL = "https://book-sale-backend.herokuapp.com";
+const xChangeURL = "https://book-sale-backend.herokuapp.com";
 
-export const books = axios.create({
-  baseURL: booksURL,
+export const xChange = axios.create({
+  baseURL: xChangeURL,
   headers: { "Content-Type": "application/json" },
 });

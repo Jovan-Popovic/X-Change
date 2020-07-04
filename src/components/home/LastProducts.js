@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { books } from "../../api/apiCalls";
+import { xChange } from "../../api/apiCalls";
 import Moment from "react-moment";
 import "moment-timezone";
 
@@ -8,7 +8,7 @@ export const LastProducts = () => {
   const [products, updateProducts] = React.useState([]);
 
   React.useEffect(() => {
-    books("/getProducts/12").then((res) => {
+    xChange("/getProducts/12").then((res) => {
       updateProducts(res.data.products);
     });
   }, []);
@@ -25,8 +25,12 @@ export const LastProducts = () => {
           <div className="card-content">
             <div className="media">
               <div className="media-left">
-                <figure className="image is-48x48">
-                  <img src={product.user.profilePictureUrl} alt="" />
+                <figure className="image">
+                  <img
+                    className="is-circle"
+                    src={product.user.profilePictureUrl}
+                    alt=""
+                  />
                 </figure>
               </div>
               <div className="media-content">
@@ -40,7 +44,8 @@ export const LastProducts = () => {
                 Created: <Moment date={product.createdAt} format="LLL" />
               </p>
               <Link className="button is-info" to={`product/${product._id}`}>
-                View More
+                <i className="fas fa-store-alt" />
+                &nbsp;View Store
               </Link>
             </div>
           </div>
