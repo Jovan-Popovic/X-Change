@@ -8,7 +8,10 @@ export const Sell = (props) => {
 
   React.useEffect(() => {
     xChange("/transactions")
-      .then((res) => getSell(res.data.sell))
+      .then((res) => {
+        getSell(res.data.sell);
+        console.log(res.data.sell[0]);
+      })
       .catch((error) => console.error(error));
   }, []);
 
@@ -34,13 +37,17 @@ export const Sell = (props) => {
             <div className="card-content">
               <div className="media">
                 <div className="media-left">
-                  <figure className="image is-48x48">
-                    <img src={product.seller.profilePictureUrl} alt="" />
+                  <figure className="image">
+                    <img
+                      src={product.buyer.profilePictureUrl}
+                      className="is-circle"
+                      alt=""
+                    />
                   </figure>
                 </div>
                 <div className="media-content">
                   <p className="title is-4">{product.productId.name}</p>
-                  <p className="subtitle is-6">@{product.seller.username}</p>
+                  <p className="subtitle is-6">@{product.buyer.username}</p>
                 </div>
               </div>
               <div className="content">
@@ -51,8 +58,10 @@ export const Sell = (props) => {
                 </p>
                 <p>
                   Location:{" "}
-                  {product.buyer.location[0].toUpperCase() +
-                    product.buyer.location.slice(1)}
+                  {product.buyer.location !== ""
+                    ? product.buyer.location[0].toUpperCase() +
+                      product.buyer.location.slice(1)
+                    : "Locatio unknown"}
                 </p>
                 <p>Phone Number: {product.buyer.phoneNumber}</p>
                 <p>
