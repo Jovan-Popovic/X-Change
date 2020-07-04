@@ -37,9 +37,9 @@ export const Home = (props) => {
 
   return (
     <div>
-      {props.activeStatus.signUp ? (
+      {props.active.signUp ? (
         <SignUp
-          active={props.activeStatus.signUp}
+          active={props.active.signUp}
           data={data.signUp}
           upfile={data.upfile}
           showNotification={props.showNotification}
@@ -48,27 +48,25 @@ export const Home = (props) => {
           toggleAuthStatus={props.toggleAuthStatus}
           toggleActiveStatus={() =>
             props.toggleActiveStatus(
-              "activeStatus",
               "signUp",
-              props.activeStatus.signUp
+              props.active.signUp
             )
           }
         />
       ) : (
         ""
       )}
-      {props.activeStatus.logIn ? (
+      {props.active.logIn ? (
         <Login
-          active={props.activeStatus.logIn}
+          active={props.active.logIn}
           data={data.logIn}
           showNotification={props.showNotification}
           handleInfo={handleInfo}
           toggleAuthStatus={props.toggleAuthStatus}
           toggleActiveStatus={() =>
             props.toggleActiveStatus(
-              "activeStatus",
               "logIn",
-              props.activeStatus.logIn
+              props.active.logIn
             )
           }
         />

@@ -15,7 +15,6 @@ export const LastProducts = () => {
 
   return (
     <div className="columns is-multiline is-centered">
-      {console.log(products)}
       {products.map((product) => (
         <div key={product._id} className="card column is-3 mx-5 my-5">
           <div className="card-image">

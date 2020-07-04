@@ -7,15 +7,15 @@ import { UpdateProfile } from "../forms/UpdateProfile";
 import { books } from "../../api/apiCalls";
 
 export const Profile = (props) => {
-  const [profile, updateProfile] = React.useState({
-    profileInfo: {},
+  const [info, getInfo] = React.useState({});
+  const [formData, updateProfile] = React.useState({
     addProduct: {
       name: "",
       description: "Random description",
       price: 3,
       condition: "new",
       age: 0,
-      category: "",
+      category: "books",
       quantity: 1,
     },
     updateProfile: {
@@ -35,7 +35,7 @@ export const Profile = (props) => {
     books(`/findUser/${localStorage.getItem("username")}`)
       .then((res) => {
         const profileInfo = res.data.user;
-        updateProfile({ ...profile, profileInfo });
+        getInfo({ ...profileInfo });
       })
       .catch((error) => console.log(error));
   }, []);
@@ -44,16 +44,16 @@ export const Profile = (props) => {
     const form = event.target.closest(["#addProduct", "#updateProfile"]).id;
     const key = event.target.name;
     const value = event.target.value;
-    updateProfile({ ...profile, [form]: { ...profile[form], [key]: value } });
+    updateProfile({ ...formData, [form]: { ...formData[form], [key]: value } });
   };
 
   const handleFile = (event) => {
     const form = event.target.closest(["#addProduct", "#updateProfile"]).id;
-    const image = form === "addProduct" ? "product" : "profile";
+    const image = form === "addProduct" ? "product" : "formData";
     const upfile = event.target.files[0];
     updateProfile({
-      ...profile,
-      images: { ...profile.images, [image]: upfile },
+      ...formData,
+      images: { ...formData.images, [image]: upfile },
     });
   };
 
@@ -64,9 +64,7 @@ export const Profile = (props) => {
           <figure className="image is-1by1">
             <img
               src={
-                profile.profileInfo.profilePictureUrl
-                  ? profile.profileInfo.profilePictureUrl
-                  : profilePicture
+                info.profilePictureUrl ? info.profilePictureUrl : profilePicture
               }
               className="is-rounded"
               alt=""
@@ -75,18 +73,18 @@ export const Profile = (props) => {
         </div>
         <div className="column">
           <strong className="is-size-3-mobile is-size-2-tablet is-size-1-desktop">
-            {profile.profileInfo.username}
+            {info.username}
           </strong>
           <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
-            {profile.profileInfo.firstName} {profile.profileInfo.lastName}
+            {info.firstName} {info.lastName}
           </p>
           <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
             <i className="fas fa-envelope" />
-            Email: {profile.profileInfo.email}
+            Email: {info.email}
           </p>
           <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
             <i className="fas fa-star" />
-            Rating: {profile.profileInfo.ratings}
+            Rating: {info.ratings}
           </p>
         </div>
         <div className="column is-1">
@@ -94,7 +92,6 @@ export const Profile = (props) => {
             className="none-btn"
             onClick={() =>
               props.toggleActiveStatus(
-                "activeStatus",
                 "updateProfile",
                 props.active.updateProfile
               )
@@ -110,11 +107,7 @@ export const Profile = (props) => {
         <button
           className="none-btn is-size-4"
           onClick={() =>
-            props.toggleActiveStatus(
-              "activeStatus",
-              "addProduct",
-              props.active.addProduct
-            )
+            props.toggleActiveStatus("addProduct", props.active.addProduct)
           }
         >
           <i className="fas fa-plus" />
@@ -123,13 +116,12 @@ export const Profile = (props) => {
       {props.active.addProduct ? (
         <AddProduct
           active={props.active.addProduct}
-          data={profile.addProduct}
-          image={profile.images.product}
+          data={formData.addProduct}
+          image={formData.images.product}
           handleInfo={handleInfo}
           handleFile={handleFile}
           toggleActiveStatus={() =>
             props.toggleActiveStatus(
-              "activeStatus",
               "addProduct",
               props.active.addProduct
             )
@@ -141,13 +133,12 @@ export const Profile = (props) => {
       {props.active.updateProfile ? (
         <UpdateProfile
           active={props.active.updateProfile}
-          data={profile.updateProfile}
-          image={profile.images.profile}
+          data={formData.updateProfile}
+          image={formData.images.profile}
           handleInfo={handleInfo}
           handleFile={handleFile}
           toggleActiveStatus={() =>
             props.toggleActiveStatus(
-              "activeStatus",
               "updateProfile",
               props.active.updateProfile
             )
