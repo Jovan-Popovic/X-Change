@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Home } from "./components/home/Home";
 import { Chat } from "./components/chat/Chat";
@@ -21,9 +21,10 @@ const App = () => {
     logIn: false,
     addProduct: false,
     updateProfile: false,
+    deleteProfile: false,
   });
   const [notification, updateNotification] = useState({
-    value: "Starter notification",
+    value: "",
     status: "is-primary",
   });
 
@@ -43,6 +44,17 @@ const App = () => {
 
   return (
     <div className="container">
+      {notification.value ? (
+        <Notification
+          value={notification.value}
+          status={notification.status}
+          showNotification={() =>
+            showNotification(false, "Closed notification")
+          }
+        />
+      ) : (
+        ""
+      )}
       <BrowserRouter>
         <Route
           path="*"
@@ -53,22 +65,12 @@ const App = () => {
               navActive={active.navbar}
               signUpActive={active.signUp}
               logInActive={active.logIn}
+              showNotification={showNotification}
               toggleAuthStatus={toggleAuthStatus}
               toggleActiveStatus={toggleActiveStatus}
             />
           )}
         />
-        {notification.value ? (
-          <Notification
-            value={notification.value}
-            status={notification.status}
-            showNotification={() =>
-              showNotification("value", notification.value)
-            }
-          />
-        ) : (
-          ""
-        )}
         <Switch>
           <Route
             exact
@@ -76,23 +78,34 @@ const App = () => {
             render={(props) => (
               <Home
                 {...props}
+                isAuth={isAuth}
                 active={active}
                 notification={notification}
-                toggleAuthStatus={toggleAuthStatus}
                 showNotification={showNotification}
+                toggleAuthStatus={toggleAuthStatus}
                 toggleActiveStatus={toggleActiveStatus}
               />
             )}
           />
-          <PrivateRoute path="/product/:id" component={Product} />
+          <PrivateRoute
+            path="/product/:id"
+            component={Product}
+            showNotification={showNotification}
+          />
           <PrivateRoute
             path="/profile"
             component={Profile}
             active={active}
+            showNotification={showNotification}
             toggleActiveStatus={toggleActiveStatus}
+            toggleAuthStatus={toggleAuthStatus}
           />
           <PrivateRoute path="/chat" component={Chat} />
-          <PrivateRoute path="/dashboard" component={Dashboard} />
+          <PrivateRoute
+            path="/dashboard"
+            component={Dashboard}
+            showNotification={showNotification}
+          />
           <Route
             path="*"
             render={(props) => (

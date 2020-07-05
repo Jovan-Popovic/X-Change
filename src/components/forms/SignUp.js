@@ -20,13 +20,14 @@ export const SignUp = (props) => {
       })
       .then((res) => {
         console.log(res);
-        props.showNotification(res.data.Message, "is-success");
+        props.showNotification(`You are now registered, Welcome ${localStorage.getItem("username")}`, "is-success");
         props.toggleActiveStatus();
         props.toggleAuthStatus(true);
+        props.history.push("/profile")
       })
       .catch((error) => {
         console.error(error);
-        props.showNotification("SOAB", "is-danger");
+        props.showNotification("Whoops, something went wrong", "is-danger");
       });
   };
 
@@ -134,7 +135,7 @@ export const SignUp = (props) => {
                 </div>
               </div>
               <div className="field">
-                <label className="label">Profile Picture (Optional)</label>
+                <label className="label">Profile Picture</label>
                 <div className="control">
                   <label className="file-label">
                     <input

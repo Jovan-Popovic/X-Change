@@ -5,19 +5,19 @@ export const UpdateProfile = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const updateData = JSON.stringify({ ...props.data });
-    const image = props.image;
-    const imageData = new FormData();
-    imageData.append("upfile", image, image.name);
-    console.log(imageData);
     xChange
       .post("/updateProfile", updateData)
-      .then(
-        (res) => console.log(res)
-        /*         return xChange.post("/uploadImage/user", image);
-         */
-      )
-      .catch((error) => console.error(error));
+      .then((res) => {
+        console.log(res);
+        props.toggleActiveStatus()
+        props.showNotification("Your informations are updated, refresh profile page", "is-info");
+      })
+      .catch((error) => {
+        console.error(error);
+        props.showNotification("Whoops, something went wrong", "is-danger");
+      });
   };
+
   return (
     <form id="updateProfile" onSubmit={handleSubmit}>
       <div className={`modal ${props.active ? "is-active" : ""}`}>
@@ -93,29 +93,14 @@ export const UpdateProfile = (props) => {
                 </select>
               </div>
             </div>
-            <label className="label">New Image</label>
-            <div className="file">
-              <label className="file-label">
-                <input
-                  className="file-input"
-                  type="file"
-                  name="upfile"
-                  accept="image/*"
-                  onChange={props.handleFile}
-                  required
-                />
-                <span className="file-cta">
-                  <span className="file-icon">
-                    <i className="fas fa-upload" />
-                  </span>
-                  <span className="file-label">Choose New Image</span>
-                </span>
-              </label>
-            </div>
           </section>
           <footer className="modal-card-foot">
             <div className="control">
-              <button type="submit" className="button is-primary">
+              <button
+                type="submit"
+                className="button is-primary"
+                onClick={handleSubmit}
+              >
                 <i className="fas fa-user-edit" />
                 &nbsp; Edit profile
               </button>

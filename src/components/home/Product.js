@@ -18,9 +18,21 @@ export const Product = (props) => {
   }, []);
 
   const buyProduct = () =>
-    xChange(`/products/${props.computedMatch.params.id}/buy`).then((res) =>
-      console.log(res)
-    );
+    xChange(`/products/${props.computedMatch.params.id}/buy`)
+      .then((res) => {
+        console.log(res);
+        props.showNotification(
+          `You have purchased ${product.name}, now you just have to wait for sellers response`,
+          "is-info"
+        );
+      })
+      .catch((error) => {
+        console.error(error);
+        props.showNotification(
+          "You've already purchased this product, stop spamming Buy button",
+          "is-warning"
+        );
+      });
 
   return (
     <div className="container">
@@ -50,14 +62,24 @@ export const Product = (props) => {
                       <i className="fas fa-tag" />
                       &nbsp;Category
                     </td>
-                    <td className="has-text-right">{product.category}</td>
+                    <td className="has-text-right">
+                      {product.category
+                        ? product.category[0].toUpperCase() +
+                          product.category.slice(1)
+                        : ""}
+                    </td>
                   </tr>
                   <tr>
                     <td>
                       <i className="fas fa-star-half-alt" />
                       &nbsp;Condition
                     </td>
-                    <td className="has-text-right">{product.condition}</td>
+                    <td className="has-text-right">
+                      {product.condition
+                        ? product.condition[0].toUpperCase() +
+                          product.condition.slice(1)
+                        : ""}
+                    </td>
                   </tr>
                   <tr>
                     <td>
@@ -72,7 +94,12 @@ export const Product = (props) => {
               </table>
               {localStorage.getItem("username") !==
               (product.user ? product.user.username : "") ? (
-                <button className="button is-primary" onClick={buyProduct}>
+                <button
+                  className="button is-primary"
+                  onClick={() => {
+                    buyProduct();
+                  }}
+                >
                   <i className="fas fa-shopping-cart" />
                   &nbsp; Buy Now!
                 </button>

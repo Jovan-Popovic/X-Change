@@ -5,6 +5,7 @@ import profilePicture from "../../img/profile.png";
 import { AddProduct } from "../forms/AddProduct.js";
 import { UpdateProfile } from "../forms/UpdateProfile";
 import { xChange } from "../../api/apiCalls";
+import { DeleteProfile } from "../forms/DeleteProfile";
 
 export const Profile = (props) => {
   const [info, getInfo] = React.useState({});
@@ -83,11 +84,13 @@ export const Profile = (props) => {
             Email: {info.email}
           </p>
           <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
+            <i className="fab fa-bitcoin" />
+            Bookcoin balance: {info.bookCoinBalance}
+          </p>
+          <p className="is-size-4-mobile is-size-4-tablet is-size-3-desktop">
             <i className="fas fa-star" />
             Rating: {info.ratings}
           </p>
-        </div>
-        <div className="column is-1">
           <button
             className="none-btn"
             onClick={() =>
@@ -99,6 +102,21 @@ export const Profile = (props) => {
           >
             <p className="is-size-4">
               <i className="fas fa-user-cog" />
+              &nbsp; Edit Profile
+            </p>
+          </button>
+          <button
+            className="none-btn"
+            onClick={() =>
+              props.toggleActiveStatus(
+                "deleteProfile",
+                props.active.deleteProfile
+              )
+            }
+          >
+            <p className="is-size-4">
+              <i className="fas fa-trash" />
+              &nbsp; Delete Profile
             </p>
           </button>
         </div>
@@ -117,14 +135,12 @@ export const Profile = (props) => {
         <AddProduct
           active={props.active.addProduct}
           data={formData.addProduct}
+          showNotification={props.showNotification}
           image={formData.images.product}
           handleInfo={handleInfo}
           handleFile={handleFile}
           toggleActiveStatus={() =>
-            props.toggleActiveStatus(
-              "addProduct",
-              props.active.addProduct
-            )
+            props.toggleActiveStatus("addProduct", props.active.addProduct)
           }
         />
       ) : (
@@ -134,6 +150,7 @@ export const Profile = (props) => {
         <UpdateProfile
           active={props.active.updateProfile}
           data={formData.updateProfile}
+          showNotification={props.showNotification}
           image={formData.images.profile}
           handleInfo={handleInfo}
           handleFile={handleFile}
@@ -141,6 +158,21 @@ export const Profile = (props) => {
             props.toggleActiveStatus(
               "updateProfile",
               props.active.updateProfile
+            )
+          }
+        />
+      ) : (
+        ""
+      )}
+      {props.active.deleteProfile ? (
+        <DeleteProfile
+          active={props.active.deleteProfile}
+          toggleAuthStatus={props.toggleAuthStatus}
+          history={props.history}
+          toggleActiveStatus={() =>
+            props.toggleActiveStatus(
+              "deleteProfile",
+              props.active.deleteProfile
             )
           }
         />

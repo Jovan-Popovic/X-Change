@@ -19,8 +19,14 @@ export const AddProduct = (props) => {
           imageData
         );
       })
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        console.log(res);
+        props.showNotification("You successfuly posted new product", "is-info");
+      })
+      .catch((error) => {
+        console.log(error);
+        props.showNotification("Whoops, something went wrong", "is-info");
+      });
   };
 
   return (
@@ -113,11 +119,7 @@ export const AddProduct = (props) => {
             </div>
             <label className="label">Category</label>
             <div className="select">
-              <select
-                name="category"
-                onChange={props.handleInfo}
-                required
-              >
+              <select name="category" onChange={props.handleInfo} required>
                 <option value="books">Books</option>
                 <option value="electronics">Electronics</option>
                 <option value="clothes">Clothes</option>

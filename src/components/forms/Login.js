@@ -12,13 +12,14 @@ export const Login = (props) => {
       .then((res) => {
         const responseData = res.data;
         auth.login(responseData.token, props.data.username);
-        props.showNotification(responseData.Message, "is-success");
+        props.showNotification(`You are logged in, Welcome ${localStorage.getItem("username")}`, "is-success");
         props.toggleActiveStatus();
         props.toggleAuthStatus(true);
+        props.history.push("/profile")
       })
       .catch((error) => {
         console.log(error);
-        props.showNotification("Mrs", "is-danger");
+        props.showNotification("Whoops, something went wrong", "is-danger");
       });
   };
 
