@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps*/
-import React from "react";
+import React, { useState } from "react";
 import { xChange } from "../../api/apiCalls";
 import Moment from "react-moment";
 import "moment-timezone";
 
 export const Product = (props) => {
-  const [product, updateProduct] = React.useState({});
+  const [product, updateProduct] = useState({});
 
   React.useEffect(() => {
     xChange(`/products/${props.computedMatch.params.id}`)
       .then((res) => {
         console.log(res);
         updateProduct({ ...res.data.product });
-        console.log(product);
       })
+      .then((res) => console.log(res))
       .catch((error) => console.log(error));
   }, []);
 

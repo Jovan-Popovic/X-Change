@@ -71,7 +71,7 @@ export const LastProducts = (props) => {
         ))}
       </div>
       <div className="is-horizontal-center">
-        <button className="button is-primary non-btn" onClick={getProducts}>
+        <button className="button is-primary mb-5 non-btn" onClick={getProducts}>
           <i className="fas fa-sync-alt" />
           &nbsp; Load More Products
         </button>
