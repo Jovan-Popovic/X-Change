@@ -1,14 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps*/
 import React from "react";
-import { xChange } from "../../api/apiCalls";
-import Moment from "react-moment";
 import "moment-timezone";
 
 export const MyProducts = (props) => {
   const [products, getProducts] = React.useState([]);
-
-  React.useEffect(() => {
-    xChange();
-  }, []);
 
   return (
     <React.Fragment>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps*/
 import React from "react";
 import { xChange } from "../../api/apiCalls";
 import Moment from "react-moment";
