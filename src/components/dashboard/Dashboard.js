@@ -2,7 +2,6 @@ import React from "react";
 import { Buy } from "./Buy";
 import { Sell } from "./Sell";
 import { xChange } from "../../api/apiCalls";
-import { MyProducts } from "./MyProducts";
 
 export const Dashboard = (props) => {
   const acceptRequest = (id) => {
@@ -22,7 +21,6 @@ export const Dashboard = (props) => {
       <h1 className="title has-text-centered mb-5">
         Welcome to your Dashboard, {localStorage.getItem("username")}
       </h1>
-      <MyProducts showNotification={props.showNotification} />
       <Buy
         acceptRequest={acceptRequest}
         rejectRequest={rejectRequest}
