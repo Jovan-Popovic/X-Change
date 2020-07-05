@@ -3,6 +3,8 @@ import { Link, NavLink } from "react-router-dom";
 import { auth } from "../auth/AuthService";
 
 export const Navbar = (props) => {
+  const openLogin = () => props.toggleActiveStatus("logIn", props.logInActive);
+
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
@@ -34,19 +36,39 @@ export const Navbar = (props) => {
             <i className="fas fa-home" />
             &nbsp; Home
           </NavLink>
-          <NavLink className="navbar-item" to="/dashboard">
-            <i className="fas fa-chart-line" />
-            &nbsp; Dashboard
-          </NavLink>
-          <NavLink className="navbar-item" to="/chat">
-            <i className="fas fa-comments" />
-            &nbsp; Chat
-          </NavLink>
-          <NavLink className="navbar-item" to="/profile">
-            <i className="fas fa-user-alt" />
-            &nbsp;
-            {props.isAuth ? `${localStorage.getItem("username")}` : "Guest"}
-          </NavLink>
+          {props.isAuth ? (
+            <NavLink className="navbar-item" to="/dashboard">
+              <i className="fas fa-chart-line" />
+              &nbsp; Dashboard
+            </NavLink>
+          ) : (
+            <Link className="navbar-item" to="/" onClick={openLogin}>
+              <i className="fas fa-chart-line" />
+              &nbsp; Dashboard
+            </Link>
+          )}
+          {props.isAuth ? (
+            <NavLink className="navbar-item" to="/chat">
+              <i className="fas fa-comments" />
+              &nbsp; Chat
+            </NavLink>
+          ) : (
+            <Link className="navbar-item" to="/" onClick={openLogin}>
+              <i className="fas fa-comments" />
+              &nbsp; Chat
+            </Link>
+          )}
+          {props.isAuth ? (
+            <NavLink className="navbar-item" to="/profile">
+              <i className="fas fa-user-alt" />
+              &nbsp; {localStorage.getItem("username")}
+            </NavLink>
+          ) : (
+            <Link className="navbar-item" to="/" onClick={openLogin}>
+              <i className="fas fa-user-alt" />
+              &nbsp; Guest
+            </Link>
+          )}
         </div>
         <div className="navbar-end">
           <div className="navbar-item field has-addons">
@@ -78,6 +100,7 @@ export const Navbar = (props) => {
                   onClick={() => {
                     auth.logout();
                     props.toggleAuthStatus(false);
+                    props.showNotification("You are logged out, see you soon :)", "")
                   }}
                 >
                   <i className="fas fa-sign-out-alt" />
@@ -94,12 +117,7 @@ export const Navbar = (props) => {
                     <i className="fas fa-sign-in-alt" />
                     &nbsp; Sign Up
                   </button>
-                  <button
-                    className="button is-light"
-                    onClick={() =>
-                      props.toggleActiveStatus("logIn", props.logInActive)
-                    }
-                  >
+                  <button className="button is-light" onClick={openLogin}>
                     <i className="fas fa-user-circle" />
                     &nbsp; Log In
                   </button>

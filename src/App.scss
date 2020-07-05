@@ -1,6 +1,5 @@
+@charset "utf-8";
 @import "~bulma/css/bulma.css";
-@import "styles/carousel.scss";
-@import "styles/navbar.scss";
 
 body {
   margin: 0;
@@ -9,6 +8,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
@@ -22,9 +22,9 @@ a.navbar-item.active {
 
 .notification {
   position: fixed !important;
-  bottom: 1vh !important;
-  right: 1vh !important;
-  z-index: 1;
+  bottom: 1.5vh !important;
+  right: 1.5vh !important;
+  z-index: 41;
 }
 
 .is-horizontal-center {
@@ -44,20 +44,34 @@ a.navbar-item.active {
   border-radius: 50% !important;
 }
 
-/* 
-.container > form {
-  padding-left: 300px;
-  padding-right: 300px;
-  padding-top: 40px;
-}
-
-.container > form > label > div {
-  margin-top: 25px;
-  margin-bottom: 18px;
-}
- */
 .none-btn {
   border: 0px solid blue;
   background: none;
-  outline: none;
+  outline: none !important;
+}
+
+.slick-prev {
+  left: 5% !important;
+  z-index: 1;
+}
+
+.slick-next {
+  right: 5% !important;
+  z-index: 1;
+}
+
+.slide-img {
+  margin-bottom: 2vh;
+}
+
+.navbar {
+  padding: 3vh 0;
+}
+
+.navbar-menu.is-active {
+  margin-top: 3vh;
+}
+
+.navbar-item.field {
+  margin-bottom: 0 !important;
 }

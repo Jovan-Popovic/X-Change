@@ -41,16 +41,14 @@ export const Home = (props) => {
         <SignUp
           active={props.active.signUp}
           data={data.signUp}
+          history={props.history}
           upfile={data.upfile}
           showNotification={props.showNotification}
           handleInfo={handleInfo}
           handleFile={handleFile}
           toggleAuthStatus={props.toggleAuthStatus}
           toggleActiveStatus={() =>
-            props.toggleActiveStatus(
-              "signUp",
-              props.active.signUp
-            )
+            props.toggleActiveStatus("signUp", props.active.signUp)
           }
         />
       ) : (
@@ -60,14 +58,12 @@ export const Home = (props) => {
         <Login
           active={props.active.logIn}
           data={data.logIn}
+          history={props.history}
           showNotification={props.showNotification}
           handleInfo={handleInfo}
           toggleAuthStatus={props.toggleAuthStatus}
           toggleActiveStatus={() =>
-            props.toggleActiveStatus(
-              "logIn",
-              props.active.logIn
-            )
+            props.toggleActiveStatus("logIn", props.active.logIn)
           }
         />
       ) : (
@@ -77,7 +73,12 @@ export const Home = (props) => {
         <Filters />
         <Carousel />
       </div>
-      <LastProducts />
+      <LastProducts
+        isAuth={props.isAuth}
+        toggleActiveStatus={() =>
+          props.toggleActiveStatus("logIn", props.active.logIn)
+        }
+      />
     </div>
   );
 };
