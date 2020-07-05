@@ -106,7 +106,7 @@ export const Product = (props) => {
               ) : (
                 <p>
                   <i className="fas fa-times" />
-                  &nbsp; You can't buy your own product moron
+                  &nbsp; You can't buy your own product
                 </p>
               )}
             </div>
