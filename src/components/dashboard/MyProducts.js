@@ -3,7 +3,7 @@ import React from "react";
 import "moment-timezone";
 
 export const MyProducts = (props) => {
-  const [products, getProducts] = React.useState([]);
+  const products = React.useState([]);
 
   return (
     <React.Fragment>
