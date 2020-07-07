@@ -1,5 +1,4 @@
-import React from "react";/* 
-import bulmaCarousel from "bulma-carousel"; */
+import React from "react";
 import Slider from "react-slick";
 import { CarouselWrapper } from "./CarouselWrapper";
 import "slick-carousel/slick/slick.css";
