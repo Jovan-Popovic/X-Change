@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps*/
 import React from "react";
+import { Link } from "react-router-dom";
 import { xChange } from "../../api/apiCalls";
 import Moment from "react-moment";
 import "moment-timezone";
@@ -11,6 +12,7 @@ export const Sell = (props) => {
     xChange("/transactions")
       .then((res) => {
         getSell(res.data.sell);
+        console.log(res.data);
       })
       .catch((error) => console.error(error));
   }, []);
@@ -54,7 +56,11 @@ export const Sell = (props) => {
                     </div>
                     <div className="media-content">
                       <p className="title is-4">{product.productId.name}</p>
-                      <p className="subtitle is-6">@{product.buyer.username}</p>
+                      <p className="subtitle is-6">
+                        <Link to={`users/${product.buyer.username}`}>
+                          @{product.buyer.username}
+                        </Link>
+                      </p>
                     </div>
                   </div>
                   <div className="content">
@@ -66,8 +72,9 @@ export const Sell = (props) => {
                     <p>
                       Location:{" "}
                       {product.buyer.location
-                        ? product.buyer.location[0].toUpperCase() +
-                          product.buyer.location.slice(1)
+                        ? product.buyer.location[0]
+                            .toUpperCase()
+                            .concat(product.buyer.location.slice(1))
                         : "Location unknown"}
                     </p>
                     <p>Phone Number: {product.buyer.phoneNumber}</p>

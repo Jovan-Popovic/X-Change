@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps*/
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { xChange } from "../../api/apiCalls";
 import Moment from "react-moment";
 import "moment-timezone";
@@ -64,8 +65,9 @@ export const Product = (props) => {
                     </td>
                     <td className="has-text-right">
                       {product.category
-                        ? product.category[0].toUpperCase() +
-                          product.category.slice(1)
+                        ? product.category[0]
+                            .toUpperCase()
+                            .concat(product.category.slice(1))
                         : ""}
                     </td>
                   </tr>
@@ -76,8 +78,9 @@ export const Product = (props) => {
                     </td>
                     <td className="has-text-right">
                       {product.condition
-                        ? product.condition[0].toUpperCase() +
-                          product.condition.slice(1)
+                        ? product.condition[0]
+                            .toUpperCase()
+                            .concat(product.condition.slice(1))
                         : ""}
                     </td>
                   </tr>
@@ -94,15 +97,24 @@ export const Product = (props) => {
               </table>
               {localStorage.getItem("username") !==
               (product.user ? product.user.username : "") ? (
-                <button
-                  className="button is-primary"
-                  onClick={() => {
-                    buyProduct();
-                  }}
-                >
-                  <i className="fas fa-shopping-cart" />
-                  &nbsp; Buy Now!
-                </button>
+                <React.Fragment>
+                  <button
+                    className="button is-primary"
+                    onClick={() => {
+                      buyProduct();
+                    }}
+                  >
+                    <i className="fas fa-shopping-cart" />
+                    &nbsp; Buy Now!
+                  </button>
+                  <Link
+                    className="button is-info ml-4"
+                    to={`/users/${props.computedMatch.params.id}`}
+                  >
+                    <i className="fas fa-user-circle" />
+                    &nbsp; Check Seller
+                  </Link>
+                </React.Fragment>
               ) : (
                 <p>
                   <i className="fas fa-times" />

@@ -12,7 +12,7 @@ export const Buy = (props) => {
     xChange("/transactions")
       .then((res) => {
         getBuy(res.data.buy);
-        console.log(buy);
+        console.log(res.data);
       })
       .catch((error) => console.error(error));
   }, []);
@@ -57,7 +57,9 @@ export const Buy = (props) => {
                     <div className="media-content">
                       <p className="title is-4">{product.productId.name}</p>
                       <p className="subtitle is-6">
-                        @{product.seller.username}
+                        <Link to={`users/${product.seller.username}`}>
+                          @{product.seller.username}
+                        </Link>
                       </p>
                     </div>
                   </div>
@@ -86,7 +88,7 @@ export const Buy = (props) => {
                       <React.Fragment>
                         <Link
                           className="button is-primary"
-                          to={`product/${product.productId._id}`}
+                          to={`/products/${product.productId._id}`}
                         >
                           <i className="fas fa-store-alt" /> &nbsp; Check store
                         </Link>

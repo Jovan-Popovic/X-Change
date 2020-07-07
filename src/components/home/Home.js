@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { SignUp } from "../forms/SignUp";
-import { Login } from "../forms/Login";
+import { SignUp } from "./SignUp";
+import { Login } from "./Login";
 import { Carousel } from "./Carousel";
 import { Filters } from "./Filters";
 import { LastProducts } from "./LastProducts";

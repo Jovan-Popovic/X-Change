@@ -5,6 +5,7 @@ import { Chat } from "./components/chat/Chat";
 import { Profile } from "./components/profile/Profile";
 import { NotFound } from "./components/NotFound";
 import { Dashboard } from "./components/dashboard/Dashboard";
+import { User } from "./components/user/User";
 import { Product } from "./components/home/Product";
 import { Navbar } from "./components/Navbar";
 import { auth } from "./auth/AuthService";
@@ -87,8 +88,9 @@ const App = () => {
               />
             )}
           />
+          <PrivateRoute path="/users/:username" component={User} />
           <PrivateRoute
-            path="/product/:id"
+            path="/products/:id"
             component={Product}
             showNotification={showNotification}
           />

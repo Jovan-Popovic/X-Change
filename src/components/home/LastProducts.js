@@ -9,9 +9,12 @@ export const LastProducts = (props) => {
   const [products, updateProducts] = React.useState([]);
 
   const getProducts = () =>
-    xChange("/getProducts/12").then((res) => {
-      updateProducts(res.data.products);
-    });
+    xChange("/getProducts/12")
+      .then((res) => {
+        updateProducts(res.data.products);
+        console.log(res);
+      })
+      .catch((error) => console.error(error));
 
   React.useEffect(() => {
     getProducts();
@@ -40,7 +43,24 @@ export const LastProducts = (props) => {
                 </div>
                 <div className="media-content">
                   <p className="title is-4">{product.name}</p>
-                  <p className="subtitle is-6">@{product.user.username}</p>
+                  <p className="subtitle is-6">
+                    {props.isAuth ? (
+                      <Link
+                        to={
+                          product.user.username !==
+                          localStorage.getItem("username")
+                            ? `/users/${product.user.username}`
+                            : "/profile"
+                        }
+                      >
+                        @{product.user.username}
+                      </Link>
+                    ) : (
+                      <Link to="/" onClick={props.toggleActiveStatus}>
+                        @{product.user.username}
+                      </Link>
+                    )}
+                  </p>
                 </div>
               </div>
               <div className="content">
@@ -51,10 +71,10 @@ export const LastProducts = (props) => {
                 {props.isAuth ? (
                   <Link
                     className="button is-info"
-                    to={`product/${product._id}`}
+                    to={`/products/${product._id}`}
                   >
                     <i className="fas fa-store-alt" />
-                    &nbsp;View Store
+                    &nbsp; View Store
                   </Link>
                 ) : (
                   <button
@@ -71,7 +91,10 @@ export const LastProducts = (props) => {
         ))}
       </div>
       <div className="is-horizontal-center">
-        <button className="button is-primary mb-5 non-btn" onClick={getProducts}>
+        <button
+          className="button is-primary mb-5 non-btn"
+          onClick={getProducts}
+        >
           <i className="fas fa-sync-alt" />
           &nbsp; Load More Products
         </button>
