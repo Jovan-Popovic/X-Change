@@ -3,8 +3,6 @@ import { Link, NavLink } from "react-router-dom";
 import { auth } from "../auth/AuthService";
 
 export const Navbar = (props) => {
-  const openLogin = () => props.toggleActiveStatus("logIn", props.logInActive);
-
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
@@ -42,7 +40,7 @@ export const Navbar = (props) => {
               &nbsp; Dashboard
             </NavLink>
           ) : (
-            <Link className="navbar-item" to="/" onClick={openLogin}>
+            <Link className="navbar-item" to="/" onClick={props.openLogin}>
               <i className="fas fa-chart-line" />
               &nbsp; Dashboard
             </Link>
@@ -53,18 +51,21 @@ export const Navbar = (props) => {
               &nbsp; Chat
             </NavLink>
           ) : (
-            <Link className="navbar-item" to="/" onClick={openLogin}>
+            <Link className="navbar-item" to="/" onClick={props.openLogin}>
               <i className="fas fa-comments" />
               &nbsp; Chat
             </Link>
           )}
           {props.isAuth ? (
-            <NavLink className="navbar-item" to="/profile">
+            <NavLink
+              className="navbar-item"
+              to={`/users/${localStorage.getItem("username")}`}
+            >
               <i className="fas fa-user-alt" />
               &nbsp; {localStorage.getItem("username")}
             </NavLink>
           ) : (
-            <Link className="navbar-item" to="/" onClick={openLogin}>
+            <Link className="navbar-item" to="/" onClick={props.openLogin}>
               <i className="fas fa-user-alt" />
               &nbsp; Guest
             </Link>
@@ -100,7 +101,10 @@ export const Navbar = (props) => {
                   onClick={() => {
                     auth.logout();
                     props.toggleAuthStatus(false);
-                    props.showNotification("You are logged out, see you soon :)", "")
+                    props.showNotification(
+                      "You are logged out, see you soon :)",
+                      ""
+                    );
                   }}
                 >
                   <i className="fas fa-sign-out-alt" />
@@ -117,7 +121,7 @@ export const Navbar = (props) => {
                     <i className="fas fa-sign-in-alt" />
                     &nbsp; Sign Up
                   </button>
-                  <button className="button is-light" onClick={openLogin}>
+                  <button className="button is-light" onClick={props.openLogin}>
                     <i className="fas fa-user-circle" />
                     &nbsp; Log In
                   </button>

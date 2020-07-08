@@ -7,9 +7,9 @@ import "moment-timezone";
 
 export const Product = (props) => {
   const [product, updateProduct] = useState({});
-
+  const id = props.computedMatch.params.id;
   React.useEffect(() => {
-    xChange(`/products/${props.computedMatch.params.id}`)
+    xChange(`/products/${id}`)
       .then((res) => {
         console.log(res);
         updateProduct({ ...res.data.product });
@@ -17,9 +17,9 @@ export const Product = (props) => {
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
   }, []);
-
+  console.log(props);
   const buyProduct = () =>
-    xChange(`/products/${props.computedMatch.params.id}/buy`)
+    xChange(`/products/${id}/buy`)
       .then((res) => {
         console.log(res);
         props.showNotification(
@@ -52,7 +52,7 @@ export const Product = (props) => {
                   <tr>
                     <td>
                       <i className="fas fa-user-circle" />
-                      &nbsp;Seller
+                      &nbsp; Seller
                     </td>
                     <td className="has-text-right">
                       {product.user ? product.user.username : ""}
@@ -61,7 +61,7 @@ export const Product = (props) => {
                   <tr>
                     <td>
                       <i className="fas fa-tag" />
-                      &nbsp;Category
+                      &nbsp; Category
                     </td>
                     <td className="has-text-right">
                       {product.category
@@ -74,7 +74,7 @@ export const Product = (props) => {
                   <tr>
                     <td>
                       <i className="fas fa-star-half-alt" />
-                      &nbsp;Condition
+                      &nbsp; Condition
                     </td>
                     <td className="has-text-right">
                       {product.condition
@@ -87,7 +87,7 @@ export const Product = (props) => {
                   <tr>
                     <td>
                       <i className="fas fa-calendar-week" />
-                      &nbsp;Created
+                      &nbsp; Created
                     </td>
                     <td className="has-text-right">
                       <Moment date={product.createdAt} format="LL" />
@@ -99,7 +99,7 @@ export const Product = (props) => {
               (product.user ? product.user.username : "") ? (
                 <React.Fragment>
                   <button
-                    className="button is-primary"
+                    className="button is-primary mb-3 mr-4"
                     onClick={() => {
                       buyProduct();
                     }}
@@ -108,8 +108,8 @@ export const Product = (props) => {
                     &nbsp; Buy Now!
                   </button>
                   <Link
-                    className="button is-info ml-4"
-                    to={`/users/${props.computedMatch.params.id}`}
+                    className="button is-info mb-3"
+                    to={`/users/${product.user ? product.user.username : ""}`}
                   >
                     <i className="fas fa-user-circle" />
                     &nbsp; Check Seller

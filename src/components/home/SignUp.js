@@ -20,10 +20,13 @@ export const SignUp = (props) => {
       })
       .then((res) => {
         console.log(res);
-        props.showNotification(`You are now registered, Welcome ${localStorage.getItem("username")}`, "is-success");
+        props.showNotification(
+          `You are now registered, Welcome ${localStorage.getItem("username")}`,
+          "is-success"
+        );
         props.toggleActiveStatus();
         props.toggleAuthStatus(true);
-        props.history.push("/profile")
+        props.history.push(`/users/${localStorage.getItem("username")}`);
       })
       .catch((error) => {
         console.error(error);

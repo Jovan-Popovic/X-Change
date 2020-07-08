@@ -3,6 +3,8 @@ import React from "react";
 import { profilePicture } from "../../img/profile.png";
 
 export const Info = (props) => {
+  const [info] = React.useState({ ...props.info });
+
   return (
     <div className="columns mb-6">
       <div className="container profile">
@@ -13,8 +15,8 @@ export const Info = (props) => {
                 <img
                   className="profile"
                   src={
-                    props.info.profilePictureUrl
-                      ? props.info.profilePictureUrl
+                    info.profilePictureUrl
+                      ? info.profilePictureUrl
                       : profilePicture
                   }
                   alt=""
@@ -23,30 +25,70 @@ export const Info = (props) => {
             </div>
             <div className="column is-4-tablet is-10-mobile">
               <p>
-                <span className="title is-bold">{props.info.username}</span>
+                <span className="title is-bold">{info.username}</span>
                 <br />
+                {props.sameUsername ? (
+                  <React.Fragment>
+                    <button
+                      className="button is-primary my-3 mr-3"
+                      onClick={() =>
+                        props.toggleActiveStatus(
+                          "updateProfile",
+                          props.active.updateProfile
+                        )
+                      }
+                    >
+                      <i className="fas fa-user-edit" />
+                      &nbsp; Edit Preferences
+                    </button>
+                    <button
+                      className="button is-danger my-3"
+                      onClick={() =>
+                        props.toggleActiveStatus(
+                          "deleteProfile",
+                          props.active.deleteProfile
+                        )
+                      }
+                    >
+                      <i className="fas fa-trash" />
+                      &nbsp; Delete Profile
+                    </button>
+                    <button
+                      className="button is-primary"
+                      onClick={() =>
+                        props.toggleActiveStatus(
+                          "addProduct",
+                          props.active.addProduct
+                        )
+                      }
+                    >
+                      <i className="fas fa-plus-circle my-3" />
+                      &nbsp; Add Product
+                    </button>
+                    <br />
+                  </React.Fragment>
+                ) : (
+                  ""
+                )}
               </p>
               <p className="tagline">
-                Name: {props.info.firstName} {props.info.lastName}
+                Name: {info.firstName} {info.lastName}
               </p>
-              <p className="tagline">Email: {props.info.email}</p>
+              <p className="tagline">Email: {info.email}</p>
               <p className="tagline">
                 Location:{" "}
-                {props.info.location
-                  ? props.info.location[0]
+                {info.location
+                  ? info.location[0]
                       .toUpperCase()
-                      .concat(props.info.location.slice(1))
-                  : "Location Unknown"}
+                      .concat(info.location.slice(1))
+                  : "Unknown"}
               </p>
               <p className="tagline">
-                Phone Number:{" "}
-                {props.info.phoneNumber
-                  ? props.info.phoneNumber
-                  : "Phone Number Unknown"}
+                Phone Number: {info.phoneNumber ? info.phoneNumber : "Unknown"}
               </p>
             </div>
             <div className="column is-2-tablet is-4-mobile has-text-centered">
-              <p className="stat-val">{props.info.bookCoinBalance}</p>
+              <p className="stat-val">{info.bookCoinBalance}</p>
               <p className="stat-key">Bookcoin</p>
             </div>
             <div className="column is-2-tablet is-4-mobile has-text-centered">
@@ -56,7 +98,7 @@ export const Info = (props) => {
               </p>
             </div>
             <div className="column is-2-tablet is-4-mobile has-text-centered">
-              <p className="stat-val">{props.info.ratings}</p>
+              <p className="stat-val">{info.ratings}</p>
               <p className="stat-key">Rating</p>
             </div>
           </div>

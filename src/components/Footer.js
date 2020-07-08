@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const Footer = () => {
+export const Footer = (props) => {
   return (
     <footer className="footer">
       <div className="container">
@@ -16,9 +16,15 @@ export const Footer = () => {
               <Link className="level-item" to="/">
                 Home
               </Link>
-              <Link className="level-item" to="/dashboard">
-                Dashboard
-              </Link>
+              {props.isAuth ? (
+                <Link className="level-item" to="/dashboard">
+                  Dashboard
+                </Link>
+              ) : (
+                <Link className="level-item" to="/" onClick={props.openLogin}>
+                  Dashboard
+                </Link>
+              )}
             </div>
           </div>
           <div className="column is-4 has-text-centered is-hidden-mobile">
@@ -28,12 +34,27 @@ export const Footer = () => {
           </div>
           <div className="column is-4 has-text-right">
             <div className="level">
-              <Link className="level-item" to="/chat">
-                Chat
-              </Link>
-              <Link className="level-item" to="/profile">
-                Profile
-              </Link>
+              {props.isAuth ? (
+                <Link className="level-item" to="/chat">
+                  Chat
+                </Link>
+              ) : (
+                <Link className="level-item" to="/" onClick={props.openLogin}>
+                  Chat
+                </Link>
+              )}
+              {props.isAuth ? (
+                <Link
+                  className="level-item"
+                  to={`/users/${localStorage.getItem("username")}`}
+                >
+                  {localStorage.getItem("username")}
+                </Link>
+              ) : (
+                <Link to="/" onClick={props.openLogin}>
+                  Guest
+                </Link>
+              )}
             </div>
           </div>
         </div>

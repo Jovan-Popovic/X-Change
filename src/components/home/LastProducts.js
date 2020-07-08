@@ -45,14 +45,7 @@ export const LastProducts = (props) => {
                   <p className="title is-4">{product.name}</p>
                   <p className="subtitle is-6">
                     {props.isAuth ? (
-                      <Link
-                        to={
-                          product.user.username !==
-                          localStorage.getItem("username")
-                            ? `/users/${product.user.username}`
-                            : "/profile"
-                        }
-                      >
+                      <Link to={`/users/${product.user.username}`}>
                         @{product.user.username}
                       </Link>
                     ) : (
@@ -64,7 +57,7 @@ export const LastProducts = (props) => {
                 </div>
               </div>
               <div className="content">
-                <p>{product.description}</p>
+                <p>Description: {product.description}</p>
                 <p>
                   Created: <Moment date={product.createdAt} format="LLL" />
                 </p>

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Home } from "./components/home/Home";
 import { Chat } from "./components/chat/Chat";
-import { Profile } from "./components/profile/Profile";
-import { NotFound } from "./components/NotFound";
+/* import { Profile } from "./components/profile/Profile";
+ */ import { NotFound } from "./components/NotFound";
 import { Dashboard } from "./components/dashboard/Dashboard";
 import { User } from "./components/user/User";
 import { Product } from "./components/home/Product";
@@ -43,6 +43,8 @@ const App = () => {
       status,
     });
 
+  const openLogin = () => toggleActiveStatus("logIn", active.logInActive);
+
   return (
     <div className="container">
       {notification.value ? (
@@ -66,6 +68,7 @@ const App = () => {
               navActive={active.navbar}
               signUpActive={active.signUp}
               logInActive={active.logIn}
+              openLogin={openLogin}
               showNotification={showNotification}
               toggleAuthStatus={toggleAuthStatus}
               toggleActiveStatus={toggleActiveStatus}
@@ -88,20 +91,27 @@ const App = () => {
               />
             )}
           />
-          <PrivateRoute path="/users/:username" component={User} />
+          <PrivateRoute
+            path="/users/:username"
+            component={User}
+            active={active}
+            showNotification={showNotification}
+            toggleActiveStatus={toggleActiveStatus}
+            toggleAuthStatus={toggleAuthStatus}
+          />
           <PrivateRoute
             path="/products/:id"
             component={Product}
             showNotification={showNotification}
           />
-          <PrivateRoute
+          {/* <PrivateRoute
             path="/profile"
             component={Profile}
             active={active}
             showNotification={showNotification}
             toggleActiveStatus={toggleActiveStatus}
             toggleAuthStatus={toggleAuthStatus}
-          />
+          /> */}
           <PrivateRoute path="/chat" component={Chat} />
           <PrivateRoute
             path="/dashboard"
@@ -118,7 +128,12 @@ const App = () => {
             )}
           ></Route>
         </Switch>
-        <Footer />
+        <Route
+          path="*"
+          render={(props) => (
+            <Footer {...props} isAuth={isAuth} openLogin={openLogin} />
+          )}
+        />
       </BrowserRouter>
     </div>
   );
