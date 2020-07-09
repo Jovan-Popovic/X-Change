@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps*/
-import React from "react";
+import React, { useState } from "react";
 import { Info } from "./Info";
 import { Products } from "./Products";
 import { Comments } from "./Comments";
@@ -9,8 +9,10 @@ import { DeleteProfile } from "./DeleteProfile";
 import { xChange } from "../../api/apiCalls";
 
 export const User = (props) => {
-  const [info, getInfo] = React.useState({});
-  const [formData, updateProfile] = React.useState({
+  const [info, getInfo] = useState({});
+  const [userImage, setImage] = useState("");
+  const [render, reRender] = useState(false);
+  const [formData, updateProfile] = useState({
     addProduct: {
       name: "",
       description: "Random description",
@@ -40,12 +42,16 @@ export const User = (props) => {
       .then((res) => {
         const profileInfo = res.data;
         getInfo({ ...profileInfo });
+        return xChange(`/findUser/${localStorage.getItem("username")}`)
+          .then((res) => setImage(res.data.user.profilePictureUrl))
+          .catch((error) => console.error(error));
       })
       .catch((error) => console.log(error));
 
   React.useEffect(() => {
     findUser();
-  }, []);
+    console.log("fdsfsddfs");
+  }, [render, username]);
 
   const handleInfo = (event) => {
     const form = event.target.closest(["#addProduct", "#updateProfile"]).id;
@@ -64,6 +70,8 @@ export const User = (props) => {
     });
   };
 
+  const renderComponent = () => reRender(!render);
+
   return (
     <React.Fragment>
       {info.user ? (
@@ -73,6 +81,7 @@ export const User = (props) => {
           active={props.active}
           toggleActiveStatus={props.toggleActiveStatus}
           sameUsername={sameUsername}
+          renderComponent={renderComponent}
         />
       ) : (
         ""
@@ -82,6 +91,7 @@ export const User = (props) => {
           products={info.products}
           username={username}
           sameUsername={sameUsername}
+          renderComponent={renderComponent}
         />
       ) : (
         ""
@@ -90,7 +100,10 @@ export const User = (props) => {
         <Comments
           comments={info.comments}
           username={username}
+          userImage={userImage}
+          render={render}
           sameUsername={sameUsername}
+          renderComponent={renderComponent}
         />
       ) : (
         ""

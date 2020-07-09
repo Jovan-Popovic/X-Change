@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react-hooks/exhaustive-deps*/
 import React from "react";
+import { Link } from "react-router-dom";
 import { xChange } from "../../api/apiCalls";
 import Moment from "react-moment";
 import "moment-timezone";
 
 export const Comments = (props) => {
-  const [allComments, getComments] = React.useState([...props.comments]);
   const [comment, updateComment] = React.useState({
     title: `${localStorage.getItem("username")}'s opinion on ${props.username}`,
     body: "",
@@ -14,8 +14,8 @@ export const Comments = (props) => {
   });
 
   React.useEffect(() => {
-    getComments([...props.comments]);
-  }, []);
+    updateComment({ ...comment });
+  }, [props.render]);
 
   const updateCommentBody = (event) => {
     const body = event.target.value;
@@ -32,16 +32,20 @@ export const Comments = (props) => {
         updateComment({ ...comment, body: "" });
       })
       .catch((error) => console.error(error));
+    props.renderComponent();
   };
 
   const deleteComment = (id) => {
     console.log(id);
+    const body = { data: JSON.stringify({ commentId: id }) };
     xChange
-      .delete("/deleteComment", { data: JSON.stringify({ commentId: id }) })
+      .delete("/deleteComment", body)
       .then((res) => console.log(res))
       .catch((error) => console.error(error));
+    props.renderComponent();
   };
 
+  const comments = props.comments;
   return (
     <React.Fragment>
       <h2 className="subtitle has-text-centered mb-5">
@@ -49,22 +53,27 @@ export const Comments = (props) => {
           ? "See what other users think about you"
           : `Check what others think about ${props.username}`}
       </h2>
-      {allComments.map((comment) => (
+      {comments.map((comment) => (
         <article key={comment._id} className="media">
           <figure className="media-left ml-2">
             <p className="image is-64x64">
-              <img
-                src={comment.postedBy ? comment.postedBy.profilePictureUrl : ""}
-                alt=""
-              />
+              <Link to={`/users/${comment.postedBy.username}`}>
+                <img
+                  className="is-rounded"
+                  src={
+                    comment.postedBy ? comment.postedBy.profilePictureUrl : ""
+                  }
+                  alt=""
+                />
+              </Link>
             </p>
           </figure>
           <div className="media-content">
             <div className="content">
               <p>
-                <strong>
-                  {comment.postedBy ? comment.postedBy.username : ""}
-                </strong>
+                <Link to={`/users/${comment.postedBy.username}`}>
+                  <strong>@{comment.postedBy.username}</strong>
+                </Link>
                 <br />
                 {comment.body}
                 <br />
@@ -91,10 +100,7 @@ export const Comments = (props) => {
         <article className="media">
           <figure className="media-left ml-2">
             <p className="image is-64x64">
-              <img
-                src="https://bulma.io/images/placeholders/128x128.png"
-                alt=""
-              />
+              <img src={props.userImage} alt="" />
             </p>
           </figure>
           <div className="media-content">

@@ -6,12 +6,14 @@ import Moment from "react-moment";
 import "moment-timezone";
 
 export const Products = (props) => {
-  const [products] = React.useState([...props.products]);
+  const products = props.products;
 
-  const deleteProduct = (id) =>
+  const deleteProduct = (id) => {
     xChange(`/deleteProduct/${id}`)
       .then((res) => console.log(res))
       .catch((error) => console.error(error));
+    props.renderComponent();
+  };
 
   return (
     <React.Fragment>
@@ -30,17 +32,7 @@ export const Products = (props) => {
                 </figure>
               </div>
               <div className="card-content">
-                <div className="media">
-                  {/* <div className="media-left">
-                    <figure className="image">
-                      <img
-                        src={product.profilePictureUrl}
-                        className="is-circle"
-                        alt=""
-                      />
-                    </figure>
-                  </div> */}
-                </div>
+                <div className="media"></div>
                 <div className="content">
                   <p className="title is-4">{product.name}</p>
                   <p>Description: {product.description}</p>

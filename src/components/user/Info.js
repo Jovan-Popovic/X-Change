@@ -3,7 +3,7 @@ import React from "react";
 import { profilePicture } from "../../img/profile.png";
 
 export const Info = (props) => {
-  const [info] = React.useState({ ...props.info });
+  const info = props.info;
 
   return (
     <div className="columns mb-6">
@@ -42,7 +42,7 @@ export const Info = (props) => {
                       &nbsp; Edit Preferences
                     </button>
                     <button
-                      className="button is-danger my-3"
+                      className="button is-danger my-3 mr-3"
                       onClick={() =>
                         props.toggleActiveStatus(
                           "deleteProfile",
@@ -54,7 +54,7 @@ export const Info = (props) => {
                       &nbsp; Delete Profile
                     </button>
                     <button
-                      className="button is-primary"
+                      className="button is-primary my-3 mr-3"
                       onClick={() =>
                         props.toggleActiveStatus(
                           "addProduct",
