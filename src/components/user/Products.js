@@ -17,13 +17,31 @@ export const Products = (props) => {
 
   return (
     <React.Fragment>
-      <h2 className="subtitle has-text-centered mb-5">
-        {props.sameUsername
-          ? "Check all your products"
-          : `Check all products from ${props.username}`}
+      <h2 className="subtitle has-text-centered">
+        {props.sameUsername ? (
+          <React.Fragment>
+            Check all your products
+            <p className="has-text-centered mb-5">
+              <button
+                className="button is-primary my-3 mr-3"
+                onClick={() =>
+                  props.toggleActiveStatus(
+                    "addProduct",
+                    props.active.addProduct
+                  )
+                }
+              >
+                <i className="fas fa-plus-circle my-3" />
+                &nbsp; Add Product
+              </button>
+            </p>
+          </React.Fragment>
+        ) : (
+          `Check all products from ${props.username}`
+        )}
       </h2>
       <div className="box columns is-multiline is-centered mb-5">
-        {products[0] ? (
+        {products.length ? (
           products.map((product) => (
             <div key={product._id} className="card column is-3 mx-5 my-5">
               <div className="card-image">
@@ -51,7 +69,7 @@ export const Products = (props) => {
                       className="button is-danger"
                       onClick={() => deleteProduct(product._id)}
                     >
-                      <i className="fas fa-trash" />
+                      <i className="fas fa-trash-alt" />
                       &nbsp; Delete Product
                     </button>
                   ) : (

@@ -1,27 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps*/
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { xChange } from "../../api/apiCalls";
 import Moment from "react-moment";
 import "moment-timezone";
 
 export const LastProducts = (props) => {
-  const [products, updateProducts] = React.useState([]);
+  const [counter, increment] = useState(12);
+  const [products, updateProducts] = useState([]);
 
   const getProducts = () =>
-    xChange("/getProducts/12")
-      .then((res) => {
-        updateProducts(res.data.products);
-        console.log(res);
-      })
+    xChange(`/getProducts/${counter}`)
+      .then((res) => updateProducts(res.data.products))
       .catch((error) => console.error(error));
 
   React.useEffect(() => {
-    getProducts();
-  }, []);
+    getProducts(counter);
+  }, [counter]);
 
   return (
     <React.Fragment>
+      <h2 className="subtitle has-text-centered">
+        Chect out the newest products
+      </h2>
       <div className="columns is-multiline is-centered">
         {products.map((product) => (
           <div key={product._id} className="card column is-3 mx-5 my-5">
@@ -34,11 +35,23 @@ export const LastProducts = (props) => {
               <div className="media">
                 <div className="media-left">
                   <figure className="image">
-                    <img
-                      className="is-circle"
-                      src={product.user.profilePictureUrl}
-                      alt=""
-                    />
+                    {props.isAuth ? (
+                      <Link to={`/users/${product.user.username}`}>
+                        <img
+                          className="is-circle"
+                          src={product.user.profilePictureUrl}
+                          alt=""
+                        />
+                      </Link>
+                    ) : (
+                      <Link to="/" onClick={props.toggleActiveStatus}>
+                        <img
+                          className="is-circle"
+                          src={product.user.profilePictureUrl}
+                          alt=""
+                        />
+                      </Link>
+                    )}
                   </figure>
                 </div>
                 <div className="media-content">
@@ -86,7 +99,7 @@ export const LastProducts = (props) => {
       <div className="is-horizontal-center">
         <button
           className="button is-primary mb-5 non-btn"
-          onClick={getProducts}
+          onClick={() => increment(counter + 12)}
         >
           <i className="fas fa-sync-alt" />
           &nbsp; Load More Products

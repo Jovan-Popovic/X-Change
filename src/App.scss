@@ -38,12 +38,27 @@ a.navbar-item.active {
 }
 
 .is-circle {
-  width: 8vh !important;
-  height: 8vh !important;
+  width: 10vh !important;
+  height: 10vh !important;
   margin-right: 1vh !important;
   border-radius: 50% !important;
 }
-
+/* 
+.is-user {
+  width: 25vh !important;
+  height: 25vh !important;
+  margin-right: 1vh !important;
+  border-radius: 50% !important;
+}
+ */
+@media only screen and (min-width: 768px){
+  .is-user {
+    width: 25vh !important;
+    height: 25vh !important;
+    margin-right: 1vh !important;
+    border-radius: 50% !important;
+  }
+}
 .none-btn {
   border: 0px solid blue;
   background: none;

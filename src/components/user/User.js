@@ -50,7 +50,6 @@ export const User = (props) => {
 
   React.useEffect(() => {
     findUser();
-    console.log("fdsfsddfs");
   }, [render, username]);
 
   const handleInfo = (event) => {
@@ -90,6 +89,8 @@ export const User = (props) => {
         <Products
           products={info.products}
           username={username}
+          active={props.active}
+          toggleActiveStatus={props.toggleActiveStatus}
           sameUsername={sameUsername}
           renderComponent={renderComponent}
         />
@@ -102,6 +103,8 @@ export const User = (props) => {
           username={username}
           userImage={userImage}
           render={render}
+          active={props.active}
+          toggleActiveStatus={props.toggleActiveStatus}
           sameUsername={sameUsername}
           renderComponent={renderComponent}
         />

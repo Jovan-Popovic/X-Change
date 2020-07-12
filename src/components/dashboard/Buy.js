@@ -32,7 +32,7 @@ export const Buy = (props) => {
         See all products that you have purchased
       </h2>
       <div className="box columns is-multiline is-centered mb-5">
-        {buy[0] ? (
+        {buy.length ? (
           buy.map((product) =>
             product.buyerConsent ? (
               ""
@@ -96,19 +96,14 @@ export const Buy = (props) => {
                           className="button is-danger"
                           onClick={() => {
                             props.rejectRequest(product._id);
-                            getBuy();
+                            removeTransaction(product._id);
+                            props.showNotification(
+                              `You gave up on ${product.productId.name}, if you want you can try buying it again on the store`,
+                              "is-info"
+                            );
                           }}
                         >
-                          <i
-                            className="fas fa-trash-alt"
-                            onClick={() => {
-                              removeTransaction(product._id);
-                              props.showNotification(
-                                `You gave up on ${product.productId.name}, if you want you can try buying it again on the store`,
-                                "is-info"
-                              );
-                            }}
-                          />
+                          <i className="fas fa-trash-alt" />
                           &nbsp; Give Up
                         </button>
                       </React.Fragment>

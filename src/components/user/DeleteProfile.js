@@ -46,7 +46,7 @@ export const DeleteProfile = (props) => {
               className="button is-danger"
               onClick={handleSubmit}
             >
-              <i className="fas fa-trash" />
+              <i className="fas fa-trash-alt" />
               &nbsp; Delete Profile
             </button>
             <button

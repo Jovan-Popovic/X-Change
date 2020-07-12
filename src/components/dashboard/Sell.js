@@ -32,7 +32,7 @@ export const Sell = (props) => {
         Check who wants to purchase your products
       </h2>
       <div className="box columns is-multiline is-centered mb-5">
-        {sell[0] ? (
+        {sell.length ? (
           sell.map((product) =>
             product.sellerConsent ? (
               ""

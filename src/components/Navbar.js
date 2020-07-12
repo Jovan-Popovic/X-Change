@@ -3,6 +3,16 @@ import { Link, NavLink } from "react-router-dom";
 import { auth } from "../auth/AuthService";
 
 export const Navbar = (props) => {
+  const getProducts = () => {
+    const name = props.name;
+    name
+      ? props.history.push(`/search/${name}`)
+      : props.showNotification(
+          "You have to enter something in input to searc for products",
+          "is-warning"
+        );
+  };
+
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
@@ -77,18 +87,14 @@ export const Navbar = (props) => {
               <input
                 className="input"
                 type="text"
+                name="name"
+                value={props.name}
+                onChange={props.handleFilters}
                 placeholder="Search product"
               />
             </div>
-            <div
-              className="control"
-              onClick={() =>
-                alert(
-                  "This action will later show all products matched by name"
-                )
-              }
-            >
-              <button className="button is-info">
+            <div className="control">
+              <button className="button is-info" onClick={getProducts}>
                 <i className="fas fa-search" />
               </button>
             </div>

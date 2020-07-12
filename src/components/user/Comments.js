@@ -3,6 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { xChange } from "../../api/apiCalls";
+import { profilePicture } from "../../img/profile.png";
 import Moment from "react-moment";
 import "moment-timezone";
 
@@ -46,6 +47,7 @@ export const Comments = (props) => {
   };
 
   const comments = props.comments;
+
   return (
     <React.Fragment>
       <h2 className="subtitle has-text-centered mb-5">
@@ -53,49 +55,66 @@ export const Comments = (props) => {
           ? "See what other users think about you"
           : `Check what others think about ${props.username}`}
       </h2>
-      {comments.map((comment) => (
-        <article key={comment._id} className="media">
-          <figure className="media-left ml-2">
-            <p className="image is-64x64">
-              <Link to={`/users/${comment.postedBy.username}`}>
-                <img
-                  className="is-rounded"
-                  src={
-                    comment.postedBy ? comment.postedBy.profilePictureUrl : ""
-                  }
-                  alt=""
-                />
-              </Link>
-            </p>
-          </figure>
-          <div className="media-content">
-            <div className="content">
-              <p>
+      {comments.length ? (
+        comments.map((comment) => (
+          <article key={comment._id} className="media">
+            <figure className="media-left ml-2">
+              <p className="image is-64x64">
                 <Link to={`/users/${comment.postedBy.username}`}>
-                  <strong>@{comment.postedBy.username}</strong>
+                  <img
+                    className="is-circle"
+                    src={comment.postedBy.profilePictureUrl || profilePicture}
+                    alt=""
+                  />
                 </Link>
-                <br />
-                {comment.body}
-                <br />
-                <small>
-                  <a>Like</a> · <a>Reply</a> ·{" "}
-                  <Moment date={comment.createdAt} format="LLL" /> &nbsp;
-                  {comment.postedBy.username ===
-                  localStorage.getItem("username") ? (
-                    <a onClick={() => deleteComment(comment._id)}>
-                      <i className="fas fa-trash" /> &nbsp; Delete Comment
-                    </a>
-                  ) : (
-                    ""
-                  )}
-                </small>
               </p>
+            </figure>
+            <div className="media-content">
+              <div className="content">
+                <p>
+                  <Link to={`/users/${comment.postedBy.username}`}>
+                    <strong>@{comment.postedBy.username}</strong>
+                  </Link>
+                  <br />
+                  {comment.body}
+                  <br />
+                  <small>
+                    <a>Like</a> · <a>Reply</a> ·{" "}
+                    <Moment date={comment.createdAt} format="LLL" /> &nbsp;
+                    {comment.postedBy.username ===
+                    localStorage.getItem("username") ? (
+                      <a onClick={() => deleteComment(comment._id)}>
+                        <i className="fas fa-trash" /> &nbsp; Delete Comment
+                      </a>
+                    ) : (
+                      ""
+                    )}
+                  </small>
+                </p>
+              </div>
             </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        ))
+      ) : (
+        <div className="modal-card-body has-text-centered">
+          <p>There is no comments</p>
+        </div>
+      )}
       {props.sameUsername ? (
-        ""
+        <p className="has-text-centered my-5">
+          <button
+            className="button is-danger"
+            onClick={() =>
+              props.toggleActiveStatus(
+                "deleteProfile",
+                props.active.deleteProfile
+              )
+            }
+          >
+            <i className="fas fa-trash-alt" />
+            &nbsp; Delete Profile
+          </button>
+        </p>
       ) : (
         <article className="media">
           <figure className="media-left ml-2">
