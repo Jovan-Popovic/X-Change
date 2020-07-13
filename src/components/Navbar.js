@@ -3,12 +3,14 @@ import { Link, NavLink } from "react-router-dom";
 import { auth } from "../auth/AuthService";
 
 export const Navbar = (props) => {
+  const [name, setName] = React.useState("");
+
   const getProducts = () => {
-    const name = props.name;
-    name
-      ? props.history.push(`/search/${name}`)
+    sessionStorage.setItem("name", name)
+    sessionStorage.getItem("name")
+      ? props.history.push("/search")
       : props.showNotification(
-          "You have to enter something in input to searc for products",
+          "You have to enter something in input to search for products",
           "is-warning"
         );
   };
@@ -88,8 +90,8 @@ export const Navbar = (props) => {
                 className="input"
                 type="text"
                 name="name"
-                value={props.name}
-                onChange={props.handleFilters}
+                value={name}
+                onChange={(event) => setName(event.target.value)}
                 placeholder="Search product"
               />
             </div>

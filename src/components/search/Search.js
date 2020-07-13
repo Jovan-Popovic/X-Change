@@ -1,32 +1,56 @@
 /* eslint-disable react-hooks/exhaustive-deps*/
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Filters } from "./Filters";
 import { xChange } from "../../api/apiCalls";
 import Moment from "react-moment";
 import "moment-timezone";
 
 export const Search = (props) => {
-  const [products, getMatchedProducts] = React.useState([]);
-  const { name } = props.match.params;
+  const { name } = sessionStorage;
+  const [products, getMatchedProducts] = useState([]);
+  const [render, reRender] = useState(false);
+  const [filters, updateFilters] = useState({
+    name: name,
+    category: "",
+    minPrice: 0,
+    maxPrice: 5,
+    sortBy: "date",
+    sortOrder: -1,
+  });
+  const [initialFilters] = useState({ ...filters });
 
   React.useEffect(() => {
-    const filters = JSON.stringify({ ...props.filters, name });
-    console.log(props.match.params.name);
+    const data = JSON.stringify({ ...filters });
+    console.log(props);
     xChange
-      .post("/findProduct", filters)
+      .post("/findProduct", data)
       .then((res) => {
         console.log(res);
         getMatchedProducts([...res.data.matchingProducts]);
       })
       .catch((error) => console.error(error));
-  }, [name]);
+  }, [name, render]);
+
+  const handleFilters = (event) => {
+    const key = event.target.name;
+    const value = event.target.value;
+    updateFilters({ ...filters, [key]: parseInt(value) || value });
+  };
+
+  const resetFilters = () => updateFilters({ ...initialFilters });
 
   return (
     <React.Fragment>
       <h1 className="title has-text-centered">
-        Check products matched with {name}
+        Check products matched with "{sessionStorage.getItem("name")}"
       </h1>
       <div className="columns is-multiline is-centered">
+        <Filters
+          reRender={() => reRender(!render)}
+          handleFilters={handleFilters}
+          resetFilters={resetFilters}
+        />
         {products.length ? (
           products.map((product) => (
             <div key={product._id} className="card column is-3 mx-5 my-5">
@@ -54,7 +78,16 @@ export const Search = (props) => {
                           @{product.user.username}
                         </Link>
                       ) : (
-                        <Link to="/" onClick={props.toggleActiveStatus}>
+                        <Link
+                          to="/"
+                          onClick={() => {
+                            props.toggleActiveStatus();
+                            props.showNotification(
+                              "You have to be logged in before checking user profile or products",
+                              "is-info"
+                            );
+                          }}
+                        >
                           @{product.user.username}
                         </Link>
                       )}
@@ -75,13 +108,20 @@ export const Search = (props) => {
                       &nbsp; View Store
                     </Link>
                   ) : (
-                    <button
+                    <Link
+                      to="/"
                       className="button is-info"
-                      onClick={props.toggleActiveStatus}
+                      onClick={() => {
+                        props.toggleActiveStatus();
+                        props.showNotification(
+                          "You have to be logged in before checking user profile or products",
+                          "is-info"
+                        );
+                      }}
                     >
                       <i className="fas fa-store-alt" />
                       &nbsp; View Store
-                    </button>
+                    </Link>
                   )}
                 </div>
               </div>

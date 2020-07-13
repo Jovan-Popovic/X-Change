@@ -28,12 +28,6 @@ const App = () => {
     value: "",
     status: "is-primary",
   });
-  const [filters, updateFilters] = useState({
-    name: "",
-    minPrice: 0,
-    sortBy: "",
-    sortOrder: "",
-  });
 
   const toggleAuthStatus = (status) => {
     if (!status) auth.logout();
@@ -50,12 +44,12 @@ const App = () => {
     });
 
   const openLogin = () => toggleActiveStatus("logIn", active.logInActive);
-
+  /* 
   const handleFilters = (event) => {
     const key = event.target.name;
     const value = event.target.value;
-    updateFilters({ ...filters, [key]: value });
-  };
+    value ? sessionStorage.setItem(key, value) : sessionStorage.removeItem(key);
+  }; */
 
   return (
     <div className="container">
@@ -80,9 +74,7 @@ const App = () => {
               navActive={active.navbar}
               signUpActive={active.signUp}
               logInActive={active.logIn}
-              name={filters.name}
               openLogin={openLogin}
-              handleFilters={handleFilters}
               showNotification={showNotification}
               toggleAuthStatus={toggleAuthStatus}
               toggleActiveStatus={toggleActiveStatus}
@@ -106,13 +98,12 @@ const App = () => {
             )}
           />
           <Route
-            path="/search/:name"
+            path="/search"
             render={(props) => (
               <Search
                 {...props}
                 isAuth={isAuth}
-                filters={filters}
-                handleFilters={handleFilters}
+                showNotification={showNotification}
                 toggleActiveStatus={() =>
                   toggleActiveStatus("logIn", active.logIn)
                 }

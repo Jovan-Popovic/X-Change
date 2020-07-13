@@ -86,8 +86,15 @@ export const Product = (props) => {
                   </tr>
                   <tr>
                     <td>
+                      <i className="fas fa-heartbeat" />
+                      &nbsp; Age
+                    </td>
+                    <td className="has-text-right">{product.age}</td>
+                  </tr>
+                  <tr>
+                    <td>
                       <i className="fas fa-calendar-week" />
-                      &nbsp; Created
+                      &nbsp; Posted
                     </td>
                     <td className="has-text-right">
                       <Moment date={product.createdAt} format="LL" />

@@ -15,9 +15,6 @@ class AuthService {
     localStorage.setItem("username", username);
     this.setJWT(token);
   };
-  logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-  };
+  logout = () => localStorage.clear();
 }
 export const auth = new AuthService();

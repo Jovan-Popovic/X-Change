@@ -1,8 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps*/
 import React, { useState } from "react";
 import { SignUp } from "./SignUp";
 import { Login } from "./Login";
 import { Carousel } from "./Carousel";
-import { Filters } from "./Filters";
 import { LastProducts } from "./LastProducts";
 
 export const Home = (props) => {
@@ -22,6 +22,10 @@ export const Home = (props) => {
     },
     upfile: null,
   });
+
+  React.useEffect(() => {
+    sessionStorage.clear();
+  }, []);
 
   const handleInfo = (event) => {
     const form = event.target.closest(["#signUp", "#logIn"]).id;
@@ -69,10 +73,7 @@ export const Home = (props) => {
       ) : (
         ""
       )}
-      <div className="columns">
-        <Filters />
-        <Carousel />
-      </div>
+      <Carousel />
       <LastProducts
         isAuth={props.isAuth}
         toggleActiveStatus={() =>

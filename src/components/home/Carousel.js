@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import { CarouselWrapper } from "./CarouselWrapper";
 import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 export const Carousel = () => {
   const [carouselProps] = React.useState({
@@ -24,7 +24,8 @@ export const Carousel = () => {
     ),
   });
 
-  return (<CarouselWrapper className="column is-9">
+  return (
+    <CarouselWrapper>
       <Slider {...carouselProps}>
         <div>
           <img
@@ -48,7 +49,7 @@ export const Carousel = () => {
           />
         </div>
       </Slider>
-    </CarouselWrapper> 
+    </CarouselWrapper>
   );
 };
 
