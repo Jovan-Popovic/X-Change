@@ -115,7 +115,7 @@ export const Comments = (props) => {
         <article className="media">
           <figure className="media-left ml-2">
             <p className="image is-64x64">
-              <img src={props.userImage} alt="" />
+              <img src={props.userImage} className="is-circle" alt="" />
             </p>
           </figure>
           <div className="media-content">
