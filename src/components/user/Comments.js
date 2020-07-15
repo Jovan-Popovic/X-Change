@@ -14,10 +14,6 @@ export const Comments = (props) => {
     username: props.username,
   });
 
-  React.useEffect(() => {
-    updateComment({ ...comment });
-  }, [props.render]);
-
   const updateCommentBody = (event) => {
     const body = event.target.value;
     updateComment({ ...comment, body });
@@ -136,7 +132,7 @@ export const Comments = (props) => {
             </div>
             <div className="field mb-3">
               <p className="control">
-                <button className="button is-info" onClick={postComment}>
+                <button className="button is-primary" onClick={postComment}>
                   <i className="fas fa-paper-plane" />
                   &nbsp; Post Comment
                 </button>

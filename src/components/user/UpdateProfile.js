@@ -9,8 +9,12 @@ export const UpdateProfile = (props) => {
       .post("/updateProfile", updateData)
       .then((res) => {
         console.log(res);
-        props.toggleActiveStatus()
-        props.showNotification("Your informations are updated, refresh profile page", "is-info");
+        props.renderComponent();
+        props.toggleActiveStatus();
+        props.showNotification(
+          "Your informations are updated, refresh profile page",
+          "is-info"
+        );
       })
       .catch((error) => {
         console.error(error);
@@ -87,9 +91,13 @@ export const UpdateProfile = (props) => {
               <div className="select">
                 <select name="location" onChange={props.handleInfo}>
                   <option value="podgorica">Podgorica</option>
-                  <option value="danilovgrad">Danilovgrad</option>
                   <option value="cetinje">Cetinje</option>
+                  <option value="danilovgrad">Danilovgrad</option>
                   <option value="niksic">Niksic</option>
+                  <option value="zabljak">Zabljak</option>
+                  <option value="bar">Bar</option>
+                  <option value="tivat">Tivat</option>
+                  <option value="kotor">Kotor</option>
                 </select>
               </div>
             </div>

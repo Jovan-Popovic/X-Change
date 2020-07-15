@@ -34,8 +34,12 @@ export const User = (props) => {
       profile: null,
     },
   });
-  const username = props.computedMatch.params.username;
+  const { username } = props.computedMatch.params;
   const sameUsername = username === localStorage.getItem("username");
+
+  React.useEffect(() => {
+    findUser();
+  }, [render, username]);
 
   const findUser = () =>
     xChange(`/findUser/${username}`)
@@ -47,10 +51,6 @@ export const User = (props) => {
           .catch((error) => console.error(error));
       })
       .catch((error) => console.log(error));
-
-  React.useEffect(() => {
-    findUser();
-  }, [render, username]);
 
   const handleInfo = (event) => {
     const form = event.target.closest(["#addProduct", "#updateProfile"]).id;
@@ -102,7 +102,6 @@ export const User = (props) => {
           comments={info.comments}
           username={username}
           userImage={userImage}
-          render={render}
           active={props.active}
           toggleActiveStatus={props.toggleActiveStatus}
           sameUsername={sameUsername}
@@ -120,6 +119,7 @@ export const User = (props) => {
           image={formData.images.product}
           handleInfo={handleInfo}
           handleFile={handleFile}
+          renderComponent={renderComponent}
           toggleActiveStatus={() =>
             props.toggleActiveStatus("addProduct", props.active.addProduct)
           }
@@ -135,6 +135,7 @@ export const User = (props) => {
           image={formData.images.profile}
           handleInfo={handleInfo}
           handleFile={handleFile}
+          renderComponent={renderComponent}
           toggleActiveStatus={() =>
             props.toggleActiveStatus(
               "updateProfile",

@@ -21,11 +21,16 @@ export const AddProduct = (props) => {
       })
       .then((res) => {
         console.log(res);
-        props.showNotification("You successfuly posted new product", "is-info");
+        props.renderComponent();
+        props.toggleActiveStatus();
+        props.showNotification(
+          "You successfuly posted new product",
+          "is-success"
+        );
       })
       .catch((error) => {
         console.log(error);
-        props.showNotification("Whoops, something went wrong", "is-info");
+        props.showNotification("Whoops, something went wrong", "is-danger");
       });
   };
 
@@ -120,9 +125,11 @@ export const AddProduct = (props) => {
             <label className="label">Category</label>
             <div className="select">
               <select name="category" onChange={props.handleInfo} required>
-                <option value="books">Books</option>
                 <option value="electronics">Electronics</option>
+                <option value="sport">Sport</option>
+                <option value="books">Books</option>
                 <option value="clothes">Clothes</option>
+                <option value="instruments">Instruments</option>
                 <option value="other">Other...</option>
               </select>
             </div>

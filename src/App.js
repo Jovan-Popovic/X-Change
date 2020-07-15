@@ -6,7 +6,7 @@ import { NotFound } from "./components/NotFound";
 import { Notification } from "./components/Notification";
 import { Home } from "./components/home/Home";
 import { Search } from "./components/search/Search";
-import { Product } from "./components/home/Product";
+import { Product } from "./components/product/Product";
 import { User } from "./components/user/User";
 import { Dashboard } from "./components/dashboard/Dashboard";
 import { Chat } from "./components/chat/Chat";

@@ -69,13 +69,8 @@ export const Sell = (props) => {
                       {product.productId.name}. Please press Accept button to
                       confirm transaction.
                     </p>
-                    <p>
-                      Location:{" "}
-                      {product.buyer.location
-                        ? product.buyer.location[0]
-                            .toUpperCase()
-                            .concat(product.buyer.location.slice(1))
-                        : "Location unknown"}
+                    <p className="is-capitalized">
+                      Location: {product.buyer.location || "Location unknown"}
                     </p>
                     <p>Phone Number: {product.buyer.phoneNumber}</p>
                     <p>
@@ -108,7 +103,6 @@ export const Sell = (props) => {
                       }}
                     >
                       <i className="fas fa-trash-alt" />
-                      &nbsp; Reject
                     </button>
                   </div>
                 </div>

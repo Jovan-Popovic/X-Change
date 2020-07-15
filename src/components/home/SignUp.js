@@ -164,9 +164,13 @@ export const SignUp = (props) => {
                   <div className="select">
                     <select name="location" onChange={props.handleInfo}>
                       <option value="podgorica">Podgorica</option>
-                      <option value="danilovgrad">Danilovgrad</option>
                       <option value="cetinje">Cetinje</option>
+                      <option value="danilovgrad">Danilovgrad</option>
                       <option value="niksic">Niksic</option>
+                      <option value="zabljak">Zabljak</option>
+                      <option value="bar">Bar</option>
+                      <option value="tivat">Tivat</option>
+                      <option value="kotor">Kotor</option>
                     </select>
                   </div>
                 </div>
@@ -188,7 +192,7 @@ export const SignUp = (props) => {
                   </label>
                 </div>
               </div>
-              <div className="field">
+              {/* <div className="field">
                 <div className="control">
                   <input
                     id="male"
@@ -212,7 +216,7 @@ export const SignUp = (props) => {
                     Female
                   </label>
                 </div>
-              </div>
+              </div> */}
             </div>
           </section>
           <footer className="modal-card-foot">

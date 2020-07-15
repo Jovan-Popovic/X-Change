@@ -11,13 +11,13 @@ export const Carousel = () => {
     autoplay: true,
     infinite: true,
     autoplaySpeed: 5000,
-    speed: 500,
+    speed: 300,
     swipeToSlide: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     className: "carousel",
     appendDots: (dots) => <ul>{dots}</ul>,
-    customPaging: (i) => (
+    customPaging: () => (
       <div className="ft-slick__dots--custom">
         <div className="loading" />
       </div>

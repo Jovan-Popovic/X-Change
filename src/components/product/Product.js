@@ -31,7 +31,7 @@ export const Product = (props) => {
         console.error(error);
         props.showNotification(
           "You've already purchased this product, stop spamming Buy button",
-          "is-warning"
+          "is-danger"
         );
       });
 
@@ -63,12 +63,8 @@ export const Product = (props) => {
                       <i className="fas fa-tag" />
                       &nbsp; Category
                     </td>
-                    <td className="has-text-right">
-                      {product.category
-                        ? product.category[0]
-                            .toUpperCase()
-                            .concat(product.category.slice(1))
-                        : ""}
+                    <td className="has-text-right is-capitalized">
+                      {product.category || ""}
                     </td>
                   </tr>
                   <tr>
@@ -76,12 +72,8 @@ export const Product = (props) => {
                       <i className="fas fa-star-half-alt" />
                       &nbsp; Condition
                     </td>
-                    <td className="has-text-right">
-                      {product.condition
-                        ? product.condition[0]
-                            .toUpperCase()
-                            .concat(product.condition.slice(1))
-                        : ""}
+                    <td className="has-text-right is-capitalized">
+                      {product.condition || ""}
                     </td>
                   </tr>
                   <tr>

@@ -3,7 +3,7 @@ import React from "react";
 export const Filters = (props) => {
   return (
     <aside className="box menu column is-3">
-      <p className="label">Categories</p>
+      <p className="menu-label">Categories</p>
       <div className="field ml-3">
         <div className="control">
           <label className="radio">
@@ -12,6 +12,7 @@ export const Filters = (props) => {
               name="category"
               onClick={props.handleFilters}
               value=""
+              defaultChecked
             />
             &nbsp; No Category
           </label>
@@ -44,9 +45,9 @@ export const Filters = (props) => {
               type="radio"
               name="category"
               onClick={props.handleFilters}
-              value="education"
+              value="books"
             />
-            &nbsp; Education
+            &nbsp; Books
           </label>
         </div>
         <div className="control">
@@ -83,7 +84,24 @@ export const Filters = (props) => {
           </label>
         </div>
       </div>
-      <p className="label">Location</p>
+      <p className="menu-label">Product Condition</p>
+      <div className="field has-addons">
+        <div className="control is-expanded">
+          <div className="select is-fullwidth">
+            <select
+              name="condition"
+              defaultValue=""
+              onChange={props.handleFilters}
+            >
+              <option value="">All Conditions</option>
+              <option value="new">New</option>
+              <option value="used">Used</option>
+              <option value="bad">Bad</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <p className="menu-label">Location</p>
       <div className="field has-addons">
         <div className="control is-expanded">
           <div className="select is-fullwidth">
@@ -105,11 +123,11 @@ export const Filters = (props) => {
           </div>
         </div>
       </div>
-      <p className="label">Minimum price & Maximum price</p>
+      <p className="menu-label">Minimum price & Maximum price</p>
       <div className="field">
-        <p className="control columns is-mobile is-centered mt-3">
+        <p className="control columns is-mobile is-centered my-3">
           <input
-            className="input column is-5"
+            className="input column is-5 mr-5"
             name="minPrice"
             type="number"
             min={1}
@@ -127,13 +145,13 @@ export const Filters = (props) => {
             placeholder="Max is 5"
           />
         </p>
-        <p className="label">Sort Products By</p>
+        <p className="menu-label">Sort Products By</p>
         <div className="field has-addons">
           <div className="control is-expanded">
             <div className="select is-fullwidth">
               <select
                 name="sortBy"
-                defaultValue=""
+                defaultValue="date"
                 onChange={props.handleFilters}
               >
                 <option value="date">Date Created</option>
@@ -143,7 +161,7 @@ export const Filters = (props) => {
             </div>
           </div>
         </div>
-        <p className="label">Sort Order</p>
+        <p className="menu-label">Sort Order</p>
         <div className="field has-addons">
           <div className="control is-expanded">
             <div className="select is-fullwidth">
@@ -159,24 +177,18 @@ export const Filters = (props) => {
           </div>
         </div>
       </div>
-      <div className="field has-addons has-addons-centered">
-        <button className="button is-primary my-3" onClick={props.reRender}>
+      <p className="has-text-centered my-4">
+        <button className="button is-info" onClick={props.reRender}>
           <i className="fas fa-filter" />
           &nbsp; Apply Filters
         </button>
-      </div>
-      <div className="field has-addons has-addons-centered">
-        <button
-          className="button my-3"
-          onClick={() => {
-            props.resetFilters();
-            props.reRender();
-          }}
-        >
+      </p>
+      <p className="has-text-centered my-4">
+        <button className="button is-light" onClick={props.resetFilters}>
           <i className="fas fa-times-circle" />
           &nbsp; Remove Filters
         </button>
-      </div>
+      </p>
     </aside>
   );
 };

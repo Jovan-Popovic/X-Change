@@ -13,6 +13,7 @@ export const Search = (props) => {
   const [filters, updateFilters] = useState({
     name: name,
     category: "",
+    condition: "",
     minPrice: 0,
     maxPrice: 5,
     sortBy: "date",
@@ -38,7 +39,10 @@ export const Search = (props) => {
     updateFilters({ ...filters, [key]: parseInt(value) || value });
   };
 
-  const resetFilters = () => updateFilters({ ...initialFilters });
+  const resetFilters = () => {
+    updateFilters({ ...initialFilters });
+    reRender(!render);
+  };
 
   return (
     <React.Fragment>
@@ -63,11 +67,32 @@ export const Search = (props) => {
                 <div className="media">
                   <div className="media-left">
                     <figure className="image">
-                      <img
-                        className="is-circle"
-                        src={product.user.profilePictureUrl}
-                        alt=""
-                      />
+                      {props.isAuth ? (
+                        <Link to={`/users/${product.user.username}`}>
+                          <img
+                            className="is-circle"
+                            src={product.user.profilePictureUrl}
+                            alt=""
+                          />
+                        </Link>
+                      ) : (
+                        <Link
+                          to="/"
+                          onClick={() => {
+                            props.toggleActiveStatus();
+                            props.showNotification(
+                              "You have to be logged in before checking user profile or products",
+                              "is-info"
+                            );
+                          }}
+                        >
+                          <img
+                            className="is-circle"
+                            src={product.user.profilePictureUrl}
+                            alt=""
+                          />
+                        </Link>
+                      )}
                     </figure>
                   </div>
                   <div className="media-content">
@@ -101,7 +126,7 @@ export const Search = (props) => {
                   </p>
                   {props.isAuth ? (
                     <Link
-                      className="button is-info"
+                      className="button is-primary"
                       to={`/products/${product._id}`}
                     >
                       <i className="fas fa-store-alt" />
@@ -110,12 +135,12 @@ export const Search = (props) => {
                   ) : (
                     <Link
                       to="/"
-                      className="button is-info"
+                      className="button is-primary"
                       onClick={() => {
                         props.toggleActiveStatus();
                         props.showNotification(
                           "You have to be logged in before checking user profile or products",
-                          "is-info"
+                          "is-primary"
                         );
                       }}
                     >

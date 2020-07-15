@@ -76,7 +76,7 @@ export const LastProducts = (props) => {
                 </p>
                 {props.isAuth ? (
                   <Link
-                    className="button is-info"
+                    className="button is-primary"
                     to={`/products/${product._id}`}
                   >
                     <i className="fas fa-store-alt" />
@@ -84,7 +84,7 @@ export const LastProducts = (props) => {
                   </Link>
                 ) : (
                   <button
-                    className="button is-info"
+                    className="button is-primary"
                     onClick={props.toggleActiveStatus}
                   >
                     <i className="fas fa-store-alt" />
@@ -98,7 +98,7 @@ export const LastProducts = (props) => {
       </div>
       <div className="is-horizontal-center">
         <button
-          className="button is-primary mb-5 non-btn"
+          className="button is-info mb-5 non-btn"
           onClick={() => increment(counter + 12)}
         >
           <i className="fas fa-sync-alt" />

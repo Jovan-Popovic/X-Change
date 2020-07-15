@@ -45,13 +45,8 @@ export const Info = (props) => {
                 Name: {info.firstName} {info.lastName}
               </p>
               <p className="tagline">Email: {info.email}</p>
-              <p className="tagline">
-                Location:{" "}
-                {info.location
-                  ? info.location[0]
-                      .toUpperCase()
-                      .concat(info.location.slice(1))
-                  : "Unknown"}
+              <p className="tagline is-capitalized">
+                Location: {info.location || "Unknown"}
               </p>
               <p className="tagline">
                 Phone Number: {info.phoneNumber || "Unknown"}
@@ -63,9 +58,7 @@ export const Info = (props) => {
             </div>
             <div className="column is-2-tablet is-4-mobile has-text-centered">
               <p className="stat-val">{props.productsLength}</p>
-              <p className="stat-key">
-                {props.productsLength === 1 ? "Product" : "Products"}
-              </p>
+              <p className="stat-key">Products</p>
             </div>
             <div className="column is-2-tablet is-4-mobile has-text-centered">
               <p className="stat-val">{info.ratings}</p>

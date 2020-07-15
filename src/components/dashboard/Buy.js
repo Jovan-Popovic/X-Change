@@ -87,7 +87,7 @@ export const Buy = (props) => {
                     ) : (
                       <React.Fragment>
                         <Link
-                          className="button is-primary"
+                          className="button is-primary mr-3"
                           to={`/products/${product.productId._id}`}
                         >
                           <i className="fas fa-store-alt" /> &nbsp; Check store
@@ -104,7 +104,6 @@ export const Buy = (props) => {
                           }}
                         >
                           <i className="fas fa-trash-alt" />
-                          &nbsp; Give Up
                         </button>
                       </React.Fragment>
                     )}

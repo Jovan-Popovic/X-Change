@@ -6,12 +6,12 @@ export const Navbar = (props) => {
   const [name, setName] = React.useState("");
 
   const getProducts = () => {
-    sessionStorage.setItem("name", name)
+    sessionStorage.setItem("name", name);
     sessionStorage.getItem("name")
       ? props.history.push("/search")
       : props.showNotification(
           "You have to enter something in input to search for products",
-          "is-warning"
+          "is-primary"
         );
   };
 
@@ -19,7 +19,11 @@ export const Navbar = (props) => {
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <Link className="navbar-item" to="/">
-          <img alt="" src="https://bulma.io/images/bulma-logo.png" />
+          <img
+            src={require("../img/navbar-logo.png")}
+            className="logo"
+            alt=""
+          />
         </Link>
         <Link
           onClick={() => props.toggleActiveStatus("navbar", props.navActive)}
@@ -96,7 +100,7 @@ export const Navbar = (props) => {
               />
             </div>
             <div className="control">
-              <button className="button is-info" onClick={getProducts}>
+              <button className="button is-primary" onClick={getProducts}>
                 <i className="fas fa-search" />
               </button>
             </div>
@@ -111,7 +115,7 @@ export const Navbar = (props) => {
                     props.toggleAuthStatus(false);
                     props.showNotification(
                       "You are logged out, see you soon :)",
-                      ""
+                      "is-light"
                     );
                   }}
                 >
@@ -121,15 +125,22 @@ export const Navbar = (props) => {
               ) : (
                 <React.Fragment>
                   <button
-                    className="button is-primary"
-                    onClick={() =>
-                      props.toggleActiveStatus("signUp", props.signUpActive)
-                    }
+                    className="button is-info"
+                    onClick={() => {
+                      props.history.push("/");
+                      props.toggleActiveStatus("signUp", props.signUpActive);
+                    }}
                   >
                     <i className="fas fa-sign-in-alt" />
                     &nbsp; Sign Up
                   </button>
-                  <button className="button is-light" onClick={props.openLogin}>
+                  <button
+                    className="button is-light"
+                    onClick={() => {
+                      props.history.push("/");
+                      props.openLogin();
+                    }}
+                  >
                     <i className="fas fa-user-circle" />
                     &nbsp; Log In
                   </button>

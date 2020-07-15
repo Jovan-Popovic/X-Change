@@ -23,7 +23,7 @@ export const Products = (props) => {
             Check all your products
             <p className="has-text-centered mb-5">
               <button
-                className="button is-primary my-3 mr-3"
+                className="button is-info my-3 mr-3"
                 onClick={() =>
                   props.toggleActiveStatus(
                     "addProduct",
@@ -59,7 +59,7 @@ export const Products = (props) => {
                     <Moment date={product.createdAt} format="LLLL" />
                   </p>
                   <Link
-                    className="button is-primary"
+                    className="button is-primary mr-3"
                     to={`/products/${product._id}`}
                   >
                     <i className="fas fa-store-alt" /> &nbsp; Check store
@@ -70,7 +70,6 @@ export const Products = (props) => {
                       onClick={() => deleteProduct(product._id)}
                     >
                       <i className="fas fa-trash-alt" />
-                      &nbsp; Delete Product
                     </button>
                   ) : (
                     ""
@@ -83,7 +82,7 @@ export const Products = (props) => {
           <div className="modal-card-body has-text-centered">
             <p>
               {props.sameUsername
-                ? `You don't have any products on your account. To create products press Add Product button and fill up modal form to create product.`
+                ? "You don't have any products on your account. To create products press Add Product button and fill up modal form to create product."
                 : "This user don't have any products posted right now."}
             </p>
           </div>
