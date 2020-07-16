@@ -20,7 +20,7 @@ code {
   background-color: #ffc020 !important;
 }
 
-.is-info{
+.is-info {
   background-color: #ff8820 !important;
 }
 
@@ -68,22 +68,6 @@ a.navbar-item.active {
   height: 10vh !important;
   margin-right: 1vh !important;
   border-radius: 50% !important;
-}
-/* 
-.is-user {
-  width: 25vh !important;
-  height: 25vh !important;
-  margin-right: 1vh !important;
-  border-radius: 50% !important;
-}
- */
-@media only screen and (min-width: 768px) {
-  .is-user {
-    width: 25vh !important;
-    height: 25vh !important;
-    margin-right: 1vh !important;
-    border-radius: 50% !important;
-  }
 }
 
 .none-btn {
@@ -159,6 +143,18 @@ a.navbar-item.active {
   margin-bottom: 20px;
   padding: 20px;
   background-color: #f1f1f1;
+}
+
+input.rating {
+  display: none;
+}
+@media only screen and (min-width: 768px) {
+  .is-user {
+    width: 25vh !important;
+    height: 25vh !important;
+    margin-right: 1vh !important;
+    border-radius: 50% !important;
+  }
 }
 
 @media only screen and (min-width: 1024px) {

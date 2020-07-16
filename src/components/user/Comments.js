@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react-hooks/exhaustive-deps*/
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { xChange } from "../../api/apiCalls";
 import { profilePicture } from "../../img/profile.png";
@@ -8,11 +8,19 @@ import Moment from "react-moment";
 import "moment-timezone";
 
 export const Comments = (props) => {
-  const [comment, updateComment] = React.useState({
-    title: `${localStorage.getItem("username")}'s opinion on ${props.username}`,
+  const { username, comments } = props;
+  const [comment, updateComment] = useState({
+    title: `${localStorage.getItem("username")}'s opinion on ${username}`,
     body: "",
-    username: props.username,
+    username: username,
   });
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
+  const myComment =
+    comments.filter(
+      (comment) =>
+        comment.postedBy.username === localStorage.getItem("username")
+    )[0] || false;
 
   const updateCommentBody = (event) => {
     const body = event.target.value;
@@ -27,13 +35,29 @@ export const Comments = (props) => {
       .then((res) => {
         console.log(res);
         updateComment({ ...comment, body: "" });
+        addRating();
+      })
+      .catch((error) => console.error(error));
+    props.renderComponent();
+  };
+
+  const editComment = () => {
+    const body = JSON.stringify({
+      title: `${localStorage.getItem("username")} new opinion on ${username}`,
+      body: comment.body,
+    });
+    xChange
+      .post(`/editComment/${myComment._id}`, body)
+      .then((res) => {
+        console.log(res);
+        updateComment({ ...comment, body: "" });
+        addRating();
       })
       .catch((error) => console.error(error));
     props.renderComponent();
   };
 
   const deleteComment = (id) => {
-    console.log(id);
     const body = { data: JSON.stringify({ commentId: id }) };
     xChange
       .delete("/deleteComment", body)
@@ -42,14 +66,21 @@ export const Comments = (props) => {
     props.renderComponent();
   };
 
-  const comments = props.comments;
+  const addRating = () =>
+    xChange(`/addRating/${username}/${rating}`)
+      .then((res) => {
+        console.log(res);
+        setRating(null);
+        props.renderComponent();
+      })
+      .catch((error) => console.error(error));
 
   return (
     <React.Fragment>
       <h2 className="subtitle has-text-centered mb-5">
         {props.sameUsername
           ? "See what other users think about you"
-          : `Check what others think about ${props.username}`}
+          : `Check what others think about ${username}`}
       </h2>
       {comments.length ? (
         comments.map((comment) => (
@@ -75,12 +106,19 @@ export const Comments = (props) => {
                   {comment.body}
                   <br />
                   <small>
-                    <a>Like</a> · <a>Reply</a> ·{" "}
-                    <Moment date={comment.createdAt} format="LLL" /> &nbsp;
+                    <a>
+                      <i className="fas fa-heart" /> Like
+                    </a>{" "}
+                    ·{" "}
+                    <Moment
+                      date={comment.updatedAt}
+                      format="LLL"
+                      className="mr-3"
+                    />
                     {comment.postedBy.username ===
                     localStorage.getItem("username") ? (
                       <a onClick={() => deleteComment(comment._id)}>
-                        <i className="fas fa-trash" /> &nbsp; Delete Comment
+                        <i className="fas fa-trash-alt" /> &nbsp; Delete Comment
                       </a>
                     ) : (
                       ""
@@ -126,17 +164,44 @@ export const Comments = (props) => {
                   name="body"
                   value={comment.body}
                   onChange={updateCommentBody}
-                  placeholder="Post a comment..."
+                  placeholder={
+                    myComment ? "Edit comment..." : "Post a comment..."
+                  }
                 ></textarea>
               </p>
             </div>
             <div className="field mb-3">
-              <p className="control">
-                <button className="button is-primary" onClick={postComment}>
+              <div className="control">
+                <button
+                  className="button is-primary"
+                  onClick={myComment ? editComment : postComment}
+                >
                   <i className="fas fa-paper-plane" />
-                  &nbsp; Post Comment
+                  &nbsp; {myComment ? "Edit" : "Post"} Comment
                 </button>
-              </p>
+                <p className="my-3">
+                  Rate {username}: &nbsp; {rating || 0} &nbsp;
+                  {[...Array(5)].map((star, index) => {
+                    const ratingValue = index + 1;
+                    return (
+                      <i
+                        key={index}
+                        className="fas fa-star"
+                        value={ratingValue}
+                        style={{
+                          color:
+                            ratingValue <= (hover || rating)
+                              ? "#ffc020"
+                              : "#e4e5e9",
+                        }}
+                        onClick={() => setRating(ratingValue)}
+                        onMouseEnter={() => setHover(ratingValue)}
+                        onMouseLeave={() => setHover(null)}
+                      />
+                    );
+                  })}
+                </p>
+              </div>
             </div>
           </div>
         </article>

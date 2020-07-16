@@ -44,6 +44,7 @@ export const User = (props) => {
   const findUser = () =>
     xChange(`/findUser/${username}`)
       .then((res) => {
+        console.log(res);
         const profileInfo = res.data;
         getInfo({ ...profileInfo });
         return xChange(`/findUser/${localStorage.getItem("username")}`)

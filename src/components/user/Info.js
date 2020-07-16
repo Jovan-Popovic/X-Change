@@ -2,7 +2,7 @@
 import React from "react";
 
 export const Info = (props) => {
-  const info = props.info;
+  const { info } = props;
 
   return (
     <div className="columns mb-6">
@@ -61,7 +61,7 @@ export const Info = (props) => {
               <p className="stat-key">Products</p>
             </div>
             <div className="column is-2-tablet is-4-mobile has-text-centered">
-              <p className="stat-val">{info.ratings}</p>
+              <p className="stat-val">{info.reputation.toFixed(1)}</p>
               <p className="stat-key">Rating</p>
             </div>
           </div>
