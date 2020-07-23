@@ -117,7 +117,7 @@ export const Comments = (props) => {
                       className="mr-3"
                     />
                     {comment.postedBy.username ===
-                      localStorage.getItem("username") || admin ? (
+                    localStorage.getItem("username") ? (
                       <Link
                         to={window.location}
                         onClick={() => deleteComment(comment._id)}
