@@ -3,7 +3,7 @@ import React from "react";
 
 export const Info = (props) => {
   const { info } = props;
-
+  console.log(info);
   return (
     <div className="columns mb-6">
       <div className="container profile">
@@ -22,7 +22,10 @@ export const Info = (props) => {
             </div>
             <div className="column is-4-tablet is-10-mobile">
               <p>
-                <span className="title is-bold">{info.username}</span>
+                <span className="title is-bold">
+                  {info.admin ? <i className="fas fa-star" /> : ""}
+                  {info.username}
+                </span>
                 <br />
                 {props.sameUsername ? (
                   <button

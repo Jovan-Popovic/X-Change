@@ -86,7 +86,7 @@ export const User = (props) => {
       ) : (
         ""
       )}
-      {info.products ? (
+      {info.products && !info.user.admin ? (
         <Products
           products={info.products}
           username={username}
@@ -103,6 +103,7 @@ export const User = (props) => {
           comments={info.comments}
           username={username}
           userImage={userImage}
+          admin={info.user.admin}
           active={props.active}
           toggleActiveStatus={props.toggleActiveStatus}
           sameUsername={sameUsername}

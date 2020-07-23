@@ -8,7 +8,8 @@ import Moment from "react-moment";
 import "moment-timezone";
 
 export const Comments = (props) => {
-  const { username, comments } = props;
+  const { username, comments, admin } = props;
+  console.log(props);
   const [comment, updateComment] = useState({
     title: `${localStorage.getItem("username")}'s opinion on ${username}`,
     body: "",
@@ -35,7 +36,7 @@ export const Comments = (props) => {
       .then((res) => {
         console.log(res);
         updateComment({ ...comment, body: "" });
-        addRating();
+        if (rating) addRating();
       })
       .catch((error) => console.error(error));
     props.renderComponent();
@@ -51,7 +52,7 @@ export const Comments = (props) => {
       .then((res) => {
         console.log(res);
         updateComment({ ...comment, body: "" });
-        addRating();
+        if (rating) addRating();
       })
       .catch((error) => console.error(error));
     props.renderComponent();
@@ -116,10 +117,13 @@ export const Comments = (props) => {
                       className="mr-3"
                     />
                     {comment.postedBy.username ===
-                    localStorage.getItem("username") ? (
-                      <a onClick={() => deleteComment(comment._id)}>
+                      localStorage.getItem("username") || admin ? (
+                      <Link
+                        to={window.location}
+                        onClick={() => deleteComment(comment._id)}
+                      >
                         <i className="fas fa-trash-alt" /> &nbsp; Delete Comment
-                      </a>
+                      </Link>
                     ) : (
                       ""
                     )}

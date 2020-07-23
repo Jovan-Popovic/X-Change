@@ -6,7 +6,7 @@ import Moment from "react-moment";
 import "moment-timezone";
 
 export const Products = (props) => {
-  const products = props.products;
+  const { products } = props;
 
   const deleteProduct = (id) => {
     xChange(`/deleteProduct/${id}`)
