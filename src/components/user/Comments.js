@@ -8,7 +8,7 @@ import Moment from "react-moment";
 import "moment-timezone";
 
 export const Comments = (props) => {
-  const { username, comments, admin } = props;
+  const { username, comments } = props;
   console.log(props);
   const [comment, updateComment] = useState({
     title: `${localStorage.getItem("username")}'s opinion on ${username}`,
@@ -117,7 +117,8 @@ export const Comments = (props) => {
                       className="mr-3"
                     />
                     {comment.postedBy.username ===
-                    localStorage.getItem("username") ? (
+                      localStorage.getItem("username") ||
+                    localStorage.getItem("admin") ? (
                       <Link
                         to={window.location}
                         onClick={() => deleteComment(comment._id)}

@@ -17,14 +17,7 @@ export const Sell = (props) => {
       .catch((error) => console.error(error));
   }, []);
 
-  const removeTransaction = (id) =>
-    getSell([
-      ...sell.map((transaction) =>
-        transaction._id === id
-          ? { ...transaction, sellerConsent: true }
-          : { ...transaction }
-      ),
-    ]);
+  const removeTransaction = (id) => props.removeTransaction(getSell, sell, id);
 
   return (
     <React.Fragment>

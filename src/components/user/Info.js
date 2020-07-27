@@ -3,7 +3,7 @@ import React from "react";
 
 export const Info = (props) => {
   const { info } = props;
-  console.log(info);
+
   return (
     <div className="columns mb-6">
       <div className="container profile">

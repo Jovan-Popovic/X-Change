@@ -15,7 +15,11 @@ export const SignUp = (props) => {
       .post("/register", userData)
       .then((res) => {
         console.log(res);
-        auth.login(res.data.token, res.data["Created user"].username);
+        auth.login(
+          res.data.token,
+          res.data["Created user"].username,
+          res.data["Created user"].admin
+        );
         return xChange.post("/uploadImage/user", userImage);
       })
       .then((res) => {

@@ -3,15 +3,15 @@ import { auth } from "../../auth/AuthService";
 import { xChange } from "../../api/apiCalls";
 
 export const Login = (props) => {
-  //Function for handling form submit
   const handleSubmit = (event) => {
     event.preventDefault();
     const userData = JSON.stringify({ ...props.data });
     xChange
       .post("/login", userData)
       .then((res) => {
+        console.log(res);
         const responseData = res.data;
-        auth.login(responseData.token, props.data.username);
+        auth.login(responseData.token, props.data.username, res.data.Admin);
         props.showNotification(
           `You are logged in, Welcome ${localStorage.getItem("username")}`,
           "is-success"
@@ -29,10 +29,7 @@ export const Login = (props) => {
   return (
     <form id="logIn" onSubmit={handleSubmit}>
       <div className={`modal ${props.active ? "is-active" : ""}`}>
-        <div
-          className="modal-background"
-          onClick={props.toggleActiveStatus}
-        ></div>
+        <div className="modal-background" onClick={props.toggleActiveStatus} />
         <div className="modal-card">
           <header className="modal-card-head">
             <p className="modal-card-title">Login to your profile</p>

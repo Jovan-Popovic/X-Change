@@ -64,7 +64,7 @@ export const Products = (props) => {
                   >
                     <i className="fas fa-store-alt" /> &nbsp; Check store
                   </Link>
-                  {props.sameUsername ? (
+                  {props.sameUsername || localStorage.getItem("admin") ? (
                     <button
                       className="button is-danger"
                       onClick={() => deleteProduct(product._id)}

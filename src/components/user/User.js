@@ -86,7 +86,7 @@ export const User = (props) => {
       ) : (
         ""
       )}
-      {info.products && !info.user.admin ? (
+      {info.products ? (
         <Products
           products={info.products}
           username={username}
