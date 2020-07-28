@@ -23,8 +23,8 @@ export const Info = (props) => {
             <div className="column is-4-tablet is-10-mobile">
               <p>
                 <span className="title is-bold">
-                  {info.admin ? <i className="fas fa-star" /> : ""}
-                  {info.username}
+                  {info.username}&nbsp;
+                  {info.admin ? <i className="fas fa-star text-primary" /> : ""}
                 </span>
                 <br />
                 {props.sameUsername ? (

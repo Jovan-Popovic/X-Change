@@ -14,10 +14,8 @@ export const Product = (props) => {
         console.log(res);
         updateProduct({ ...res.data.product });
       })
-      .then((res) => console.log(res))
       .catch((error) => console.log(error));
   }, []);
-  console.log(props);
   const buyProduct = () =>
     xChange(`/products/${id}/buy`)
       .then((res) => {

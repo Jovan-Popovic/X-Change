@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
+import { Tabs } from "./Tabs";
 import { Buy } from "./Buy";
 import { Sell } from "./Sell";
+import { Users } from "./Users";
+import { Products } from "./Products";
 import { xChange } from "../../api/apiCalls";
 
 export const Dashboard = (props) => {
-  /* React.useEffect(() => {
-    xChange("/stats").then((res) => console.log(res));
-  }, []); */
-  
+  const [active, setActive] = useState({
+    users: false,
+    products: false,
+    buy: true,
+    sell: false,
+  });
+  const [users, setUsers] = useState([]);
+  const [products, setProducts] = useState([]);
+
+  React.useEffect(() => {
+    if (localStorage.getItem("admin"))
+      xChange("/stats").then((res) => {
+        console.log(res.data.Users[16]);
+        setUsers(res.data.Users);
+        setProducts(res.data.Products);
+      });
+  }, []);
+
+  const activeTab = (activeTab) =>
+    setActive({
+      users: false,
+      products: false,
+      buy: false,
+      sell: false,
+      [activeTab]: true,
+    });
+
   const acceptRequest = (id) => {
     xChange(`transactions/${id}/accept`)
       .then((res) => console.log(res))
@@ -30,18 +56,29 @@ export const Dashboard = (props) => {
       <h1 className="title has-text-centered mb-5">
         Welcome to your Dashboard, {localStorage.getItem("username")}
       </h1>
-      <Buy
-        acceptRequest={acceptRequest}
-        rejectRequest={rejectRequest}
-        removeTransaction={removeTransaction}
-        showNotification={props.showNotification}
-      />
-      <Sell
-        acceptRequest={acceptRequest}
-        rejectRequest={rejectRequest}
-        removeTransaction={removeTransaction}
-        showNotification={props.showNotification}
-      />
+      <Tabs active={active} activeTab={activeTab} />
+      {active.buy ? (
+        <Buy
+          acceptRequest={acceptRequest}
+          rejectRequest={rejectRequest}
+          removeTransaction={removeTransaction}
+          showNotification={props.showNotification}
+        />
+      ) : (
+        ""
+      )}
+      {active.sell ? (
+        <Sell
+          acceptRequest={acceptRequest}
+          rejectRequest={rejectRequest}
+          removeTransaction={removeTransaction}
+          showNotification={props.showNotification}
+        />
+      ) : (
+        ""
+      )}
+      {active.users ? <Users users={users} /> : ""}
+      {active.products ? <Products products={products} /> : ""}
     </div>
   );
 };
