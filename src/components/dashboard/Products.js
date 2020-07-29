@@ -49,8 +49,15 @@ export const Products = (props) => {
               </div>
               <div className="content">
                 <p>Description: {product.description}</p>
+                <p>Product Category: {product.category}</p>
+                <p>Quantity: {product.quantity}</p>
+                <p>Product Age: {product.age}</p>
+                <p>Product Price: {product.price}</p>
                 <p>
                   Created: <Moment date={product.createdAt} format="LLL" />
+                </p>
+                <p>
+                  Updated: <Moment date={product.updatedAt} format="LLL" />
                 </p>
                 <Link
                   className="button is-primary mr-3"

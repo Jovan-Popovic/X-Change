@@ -19,7 +19,7 @@ export const Dashboard = (props) => {
   React.useEffect(() => {
     if (localStorage.getItem("admin"))
       xChange("/stats").then((res) => {
-        console.log(res.data.Users[16]);
+        console.log(res.data);
         setUsers(res.data.Users);
         setProducts(res.data.Products);
       });
