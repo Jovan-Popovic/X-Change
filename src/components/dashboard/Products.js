@@ -9,13 +9,13 @@ export const Products = (props) => {
     xChange(`/deleteProduct/${id}`)
       .then((res) => console.log(res))
       .catch((error) => console.error(error));
-    props.renderComponent();
+    props.reRender();
   };
 
   return (
     <React.Fragment>
       <h2 className="subtitle has-text-centered">
-        Here you can see avery product on this application{" "}
+        Here you can see every product on our database
       </h2>
       <div className="columns is-multiline is-centered">
         {props.products.map((product) => (

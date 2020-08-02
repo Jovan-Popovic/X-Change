@@ -19,16 +19,10 @@ export const User = (props) => {
       price: 3,
       condition: "new",
       age: 0,
-      category: "books",
+      category: "electronics",
       quantity: 1,
     },
-    updateProfile: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: 0,
-      location: "podgorica",
-    },
+    updateProfile: {},
     images: {
       product: null,
       profile: null,
@@ -38,7 +32,7 @@ export const User = (props) => {
   const sameUsername = username === localStorage.getItem("username");
 
   React.useEffect(() => {
-    findUser();
+    setTimeout(findUser, 100);
   }, [render, username]);
 
   const findUser = () =>

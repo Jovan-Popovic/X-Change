@@ -14,6 +14,13 @@ export const LastProducts = (props) => {
       .then((res) => updateProducts(res.data.products))
       .catch((error) => console.error(error));
 
+  /* const deleteProduct = (id) => {
+    xChange(`/deleteProduct/${id}`)
+      .then((res) => console.log(res))
+      .catch((error) => console.error(error));
+    props.renderComponent();
+  };
+ */
   React.useEffect(() => {
     getProducts(counter);
   }, [counter]);
@@ -76,7 +83,7 @@ export const LastProducts = (props) => {
                 </p>
                 {props.isAuth ? (
                   <Link
-                    className="button is-primary"
+                    className="button is-primary mr-3"
                     to={`/products/${product._id}`}
                   >
                     <i className="fas fa-store-alt" />
@@ -90,6 +97,13 @@ export const LastProducts = (props) => {
                     <i className="fas fa-store-alt" />
                     &nbsp; View Store
                   </button>
+                )}
+                {localStorage.getItem("admin") ? (
+                  <button className="button is-danger">
+                    <i className="fas fa-trash-alt" />
+                  </button>
+                ) : (
+                  ""
                 )}
               </div>
             </div>

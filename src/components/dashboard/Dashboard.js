@@ -8,22 +8,26 @@ import { xChange } from "../../api/apiCalls";
 
 export const Dashboard = (props) => {
   const [active, setActive] = useState({
-    users: false,
-    products: false,
     buy: true,
     sell: false,
+    users: false,
+    products: false,
   });
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
-
-  React.useEffect(() => {
+  const [render, setRender] = useState(false);
+  const getStats = () => {
     if (localStorage.getItem("admin"))
       xChange("/stats").then((res) => {
         console.log(res.data);
         setUsers(res.data.Users);
         setProducts(res.data.Products);
       });
-  }, []);
+  };
+
+  React.useEffect(() => {
+    setTimeout(getStats, 1500);
+  }, [render]);
 
   const activeTab = (activeTab) =>
     setActive({
@@ -51,6 +55,8 @@ export const Dashboard = (props) => {
       ...stateArray.filter((transaction) => transaction._id !== id),
     ]);
 
+  const reRender = () => setRender(!render);
+
   return (
     <div>
       <h1 className="title has-text-centered mb-5">
@@ -77,8 +83,20 @@ export const Dashboard = (props) => {
       ) : (
         ""
       )}
-      {active.users ? <Users users={users} /> : ""}
-      {active.products ? <Products products={products} /> : ""}
+      {active.users ? (
+        <Users
+          users={users}
+          showNotification={props.showNotification}
+          reRender={reRender}
+        />
+      ) : (
+        ""
+      )}
+      {active.products ? (
+        <Products products={products} reRender={reRender} />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

@@ -51,7 +51,7 @@ export const Footer = (props) => {
                   {localStorage.getItem("username")}
                 </Link>
               ) : (
-                <Link to="/" onClick={props.openLogin}>
+                <Link className="level-item" to="/" onClick={props.openLogin}>
                   Guest
                 </Link>
               )}

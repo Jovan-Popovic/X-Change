@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { xChange } from "../../api/apiCalls";
+import { DeleteUser } from "./DeleteUser";
+
 const TableHeader = () => {
   return (
     <React.Fragment>
@@ -19,15 +20,17 @@ const TableHeader = () => {
     </React.Fragment>
   );
 };
+
 export const Users = (props) => {
-  const deleteUser = (username) =>
-    xChange
-      .delete(`/deleteUser/${username}`)
-      .then((res) => console.log(res))
-      .catch((error) => console.error(error));
+  const [active, setActive] = React.useState(false);
+  const [username, setUsername] = React.useState("");
+  const toggleActiveStatus = () => setActive(!active);
 
   return (
     <div className="table-container">
+      <h2 className="subtitle has-text-centered">
+        Here you can see every user on our database
+      </h2>
       <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
           <TableHeader />
@@ -60,18 +63,21 @@ export const Users = (props) => {
               </td>
               <td
                 className={`has-text-centered ${
-                  user.admin ? "is-success" : "is-danger"
+                  user.admin ? "is-success" : "is-danger delete-user"
                 }`}
+                onClick={() => {
+                  if (!user.admin) {
+                    setUsername(user.username);
+                    toggleActiveStatus();
+                  }
+                }}
               >
                 {user.username === localStorage.getItem("username") ? (
                   "You"
                 ) : user.admin ? (
                   ""
                 ) : (
-                  <i
-                    className="fas fa-times delete-user-icon"
-                    onClick={() => deleteUser(user.username)}
-                  />
+                  <i className="fas fa-trash-alt" />
                 )}
               </td>
             </tr>
@@ -81,6 +87,13 @@ export const Users = (props) => {
           <TableHeader />
         </tfoot>
       </table>
+      <DeleteUser
+        active={active}
+        username={username}
+        toggleActiveStatus={toggleActiveStatus}
+        showNotification={props.showNotification}
+        reRender={props.reRender}
+      />
     </div>
   );
 };
