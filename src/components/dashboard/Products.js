@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { xChange } from "../../api/apiCalls";
 import Moment from "react-moment";
 import "moment-timezone";
 import { DeleteModal } from "../DeleteModal";
@@ -9,13 +8,6 @@ export const Products = (props) => {
   const [active, setActive] = React.useState(false);
   const [id, setId] = React.useState("");
   const toggleActiveStatus = () => setActive(!active);
-
-  const deleteProduct = (id) => {
-    xChange(`/deleteProduct/${id}`)
-      .then((res) => console.log(res))
-      .catch((error) => console.error(error));
-    props.reRender();
-  };
 
   return (
     <React.Fragment>
