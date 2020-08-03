@@ -1,13 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps*/
 import React from "react";
 import { Link } from "react-router-dom";
+import { DeleteModal } from "../DeleteModal";
 import { xChange } from "../../api/apiCalls";
 import Moment from "react-moment";
 import "moment-timezone";
 
 export const Products = (props) => {
+  const [active, setActive] = React.useState(false);
+  const [id, setId] = React.useState("");
   const { products } = props;
 
+  const toggleActiveStatus = () => setActive(!active);
   const deleteProduct = (id) => {
     xChange(`/deleteProduct/${id}`)
       .then((res) => console.log(res))
@@ -67,7 +71,10 @@ export const Products = (props) => {
                   {props.sameUsername || localStorage.getItem("admin") ? (
                     <button
                       className="button is-danger"
-                      onClick={() => deleteProduct(product._id)}
+                      onClick={() => {
+                        setId(product._id);
+                        toggleActiveStatus();
+                      }}
                     >
                       <i className="fas fa-trash-alt" />
                     </button>
@@ -88,6 +95,13 @@ export const Products = (props) => {
           </div>
         )}
       </div>
+      <DeleteModal
+        active={active}
+        _id={id}
+        toggleActiveStatus={toggleActiveStatus}
+        showNotification={props.showNotification}
+        reRender={() => props.renderComponent()}
+      />
     </React.Fragment>
   );
 };

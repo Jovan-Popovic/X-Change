@@ -3,8 +3,13 @@ import { Link } from "react-router-dom";
 import { xChange } from "../../api/apiCalls";
 import Moment from "react-moment";
 import "moment-timezone";
+import { DeleteModal } from "../DeleteModal";
 
 export const Products = (props) => {
+  const [active, setActive] = React.useState(false);
+  const [id, setId] = React.useState("");
+  const toggleActiveStatus = () => setActive(!active);
+
   const deleteProduct = (id) => {
     xChange(`/deleteProduct/${id}`)
       .then((res) => console.log(res))
@@ -56,9 +61,6 @@ export const Products = (props) => {
                 <p>
                   Created: <Moment date={product.createdAt} format="LLL" />
                 </p>
-                <p>
-                  Updated: <Moment date={product.updatedAt} format="LLL" />
-                </p>
                 <Link
                   className="button is-primary mr-3"
                   to={`/products/${product._id}`}
@@ -68,7 +70,10 @@ export const Products = (props) => {
                 </Link>
                 <button
                   className="button is-danger"
-                  onClick={() => deleteProduct(product._id)}
+                  onClick={() => {
+                    toggleActiveStatus();
+                    setId(product._id);
+                  }}
                 >
                   <i className="fas fa-trash-alt" />
                 </button>
@@ -77,6 +82,13 @@ export const Products = (props) => {
           </div>
         ))}
       </div>
+      <DeleteModal
+        active={active}
+        _id={id}
+        toggleActiveStatus={toggleActiveStatus}
+        showNotification={props.showNotification}
+        reRender={props.reRender}
+      />
     </React.Fragment>
   );
 };

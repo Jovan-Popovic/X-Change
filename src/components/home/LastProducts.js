@@ -98,13 +98,6 @@ export const LastProducts = (props) => {
                     &nbsp; View Store
                   </button>
                 )}
-                {localStorage.getItem("admin") ? (
-                  <button className="button is-danger">
-                    <i className="fas fa-trash-alt" />
-                  </button>
-                ) : (
-                  ""
-                )}
               </div>
             </div>
           </div>

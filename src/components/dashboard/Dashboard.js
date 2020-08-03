@@ -93,7 +93,11 @@ export const Dashboard = (props) => {
         ""
       )}
       {active.products ? (
-        <Products products={products} reRender={reRender} />
+        <Products
+          products={products}
+          showNotification={props.showNotification}
+          reRender={reRender}
+        />
       ) : (
         ""
       )}

@@ -10,11 +10,7 @@ import "moment-timezone";
 export const Comments = (props) => {
   const { username, comments } = props;
   console.log(props);
-  const [comment, updateComment] = useState({
-    title: `${localStorage.getItem("username")}'s opinion on ${username}`,
-    body: "",
-    username: username,
-  });
+  const [comment, updateComment] = useState("");
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
   const myComment =
@@ -25,17 +21,21 @@ export const Comments = (props) => {
 
   const updateCommentBody = (event) => {
     const body = event.target.value;
-    updateComment({ ...comment, body });
+    updateComment(body);
   };
 
   const postComment = () => {
-    const commentData = JSON.stringify({ ...comment });
-    console.log(commentData);
+    const body = JSON.stringify({
+      title: `${localStorage.getItem("username")}'s opinion on ${username}`,
+      body: comment,
+      username: username,
+    });
+    console.log(body);
     xChange
-      .post("/postComment", commentData)
+      .post("/postComment", body)
       .then((res) => {
         console.log(res);
-        updateComment({ ...comment, body: "" });
+        updateComment("");
         if (rating) addRating();
       })
       .catch((error) => console.error(error));
@@ -45,13 +45,13 @@ export const Comments = (props) => {
   const editComment = () => {
     const body = JSON.stringify({
       title: `${localStorage.getItem("username")} new opinion on ${username}`,
-      body: comment.body,
+      body: comment,
     });
     xChange
       .post(`/editComment/${myComment._id}`, body)
       .then((res) => {
         console.log(res);
-        updateComment({ ...comment, body: "" });
+        updateComment("");
         if (rating) addRating();
       })
       .catch((error) => console.error(error));
@@ -111,23 +111,28 @@ export const Comments = (props) => {
                       <i className="fas fa-heart" /> Like
                     </a>{" "}
                     ·{" "}
+                    {comment.postedBy.username ===
+                      localStorage.getItem("username") ||
+                    localStorage.getItem("admin") ? (
+                      <React.Fragment>
+                        {" "}
+                        <Link
+                          to={window.location}
+                          onClick={() => deleteComment(comment._id)}
+                        >
+                          <i className="fas fa-trash-alt" />
+                          &nbsp; Delete
+                        </Link>{" "}
+                        ·{" "}
+                      </React.Fragment>
+                    ) : (
+                      ""
+                    )}
                     <Moment
                       date={comment.updatedAt}
                       format="LLL"
                       className="mr-3"
                     />
-                    {comment.postedBy.username ===
-                      localStorage.getItem("username") ||
-                    localStorage.getItem("admin") ? (
-                      <Link
-                        to={window.location}
-                        onClick={() => deleteComment(comment._id)}
-                      >
-                        <i className="fas fa-trash-alt" /> &nbsp; Delete Comment
-                      </Link>
-                    ) : (
-                      ""
-                    )}
                   </small>
                 </p>
               </div>
@@ -166,8 +171,8 @@ export const Comments = (props) => {
               <p className="control">
                 <textarea
                   className="textarea"
-                  name="body"
-                  value={comment.body}
+                  name="comment"
+                  value={comment}
                   onChange={updateCommentBody}
                   placeholder={
                     myComment ? "Edit comment..." : "Post a comment..."

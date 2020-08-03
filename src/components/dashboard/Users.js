@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { DeleteUser } from "./DeleteUser";
+import { DeleteModal } from "../DeleteModal";
 
 const TableHeader = () => {
   return (
@@ -87,7 +87,7 @@ export const Users = (props) => {
           <TableHeader />
         </tfoot>
       </table>
-      <DeleteUser
+      <DeleteModal
         active={active}
         username={username}
         toggleActiveStatus={toggleActiveStatus}

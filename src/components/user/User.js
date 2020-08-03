@@ -5,7 +5,8 @@ import { Products } from "./Products";
 import { Comments } from "./Comments";
 import { AddProduct } from "./AddProduct.js";
 import { UpdateProfile } from "./UpdateProfile";
-import { DeleteProfile } from "./DeleteProfile";
+/* import { DeleteProfile } from "./DeleteProfile";
+ */ import { DeleteModal } from "../DeleteModal";
 import { xChange } from "../../api/apiCalls";
 
 export const User = (props) => {
@@ -87,6 +88,7 @@ export const User = (props) => {
           active={props.active}
           toggleActiveStatus={props.toggleActiveStatus}
           sameUsername={sameUsername}
+          showNotification={props.showNotification}
           renderComponent={renderComponent}
         />
       ) : (
@@ -143,9 +145,11 @@ export const User = (props) => {
         ""
       )}
       {props.active.deleteProfile ? (
-        <DeleteProfile
+        <DeleteModal
           active={props.active.deleteProfile}
           toggleAuthStatus={props.toggleAuthStatus}
+          showNotification={props.showNotification}
+          username={username}
           history={props.history}
           toggleActiveStatus={() =>
             props.toggleActiveStatus(
