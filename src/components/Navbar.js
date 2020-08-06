@@ -51,40 +51,38 @@ export const Navbar = (props) => {
             &nbsp; Home
           </NavLink>
           {props.isAuth ? (
-            <NavLink className="navbar-item" to="/dashboard">
-              <i className="fas fa-chart-line" />
-              &nbsp; Dashboard
-            </NavLink>
+            <React.Fragment>
+              <NavLink className="navbar-item" to="/dashboard">
+                <i className="fas fa-chart-line" />
+                &nbsp; Dashboard
+              </NavLink>
+              <NavLink className="navbar-item" to="/chat">
+                <i className="fas fa-comments" />
+                &nbsp; Chat
+              </NavLink>{" "}
+              <NavLink
+                className="navbar-item"
+                to={`/users/${localStorage.getItem("username")}`}
+              >
+                <i className="fas fa-user-alt" />
+                &nbsp; {localStorage.getItem("username")}
+              </NavLink>
+            </React.Fragment>
           ) : (
-            <Link className="navbar-item" to="/" onClick={props.openLogin}>
-              <i className="fas fa-chart-line" />
-              &nbsp; Dashboard
-            </Link>
-          )}
-          {props.isAuth ? (
-            <NavLink className="navbar-item" to="/chat">
-              <i className="fas fa-comments" />
-              &nbsp; Chat
-            </NavLink>
-          ) : (
-            <Link className="navbar-item" to="/" onClick={props.openLogin}>
-              <i className="fas fa-comments" />
-              &nbsp; Chat
-            </Link>
-          )}
-          {props.isAuth ? (
-            <NavLink
-              className="navbar-item"
-              to={`/users/${localStorage.getItem("username")}`}
-            >
-              <i className="fas fa-user-alt" />
-              &nbsp; {localStorage.getItem("username")}
-            </NavLink>
-          ) : (
-            <Link className="navbar-item" to="/" onClick={props.openLogin}>
-              <i className="fas fa-user-alt" />
-              &nbsp; Guest
-            </Link>
+            <React.Fragment>
+              <Link className="navbar-item" to="/" onClick={props.openLogin}>
+                <i className="fas fa-chart-line" />
+                &nbsp; Dashboard
+              </Link>
+              <Link className="navbar-item" to="/" onClick={props.openLogin}>
+                <i className="fas fa-comments" />
+                &nbsp; Chat
+              </Link>
+              <Link className="navbar-item" to="/" onClick={props.openLogin}>
+                <i className="fas fa-user-alt" />
+                &nbsp; Guest
+              </Link>
+            </React.Fragment>
           )}
         </div>
         <div className="navbar-end">
@@ -96,6 +94,10 @@ export const Navbar = (props) => {
                 name="name"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
+                onKeyPress={(event) => {
+                  if (event.key === "Enter" || event.keyCode === 13)
+                    getProducts();
+                }}
                 placeholder="Search product"
               />
             </div>
@@ -124,7 +126,8 @@ export const Navbar = (props) => {
                 </button>
               ) : (
                 <React.Fragment>
-                  <button
+                  <Link
+                    to="/"
                     className="button is-info"
                     onClick={() => {
                       props.history.push("/");
@@ -133,8 +136,9 @@ export const Navbar = (props) => {
                   >
                     <i className="fas fa-sign-in-alt" />
                     &nbsp; Sign Up
-                  </button>
-                  <button
+                  </Link>
+                  <Link
+                    to="/"
                     className="button is-light"
                     onClick={() => {
                       props.history.push("/");
@@ -143,7 +147,7 @@ export const Navbar = (props) => {
                   >
                     <i className="fas fa-user-circle" />
                     &nbsp; Log In
-                  </button>
+                  </Link>
                 </React.Fragment>
               )}
             </div>
