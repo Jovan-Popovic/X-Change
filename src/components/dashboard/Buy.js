@@ -41,7 +41,10 @@ export const Buy = (props) => {
                     <div className="media-left">
                       <figure className="image">
                         <img
-                          src={product.seller.profilePictureUrl}
+                          src={
+                            product.seller.profilePictureUrl ||
+                            require("../../img/profile.png")
+                          }
                           className="is-circle"
                           alt=""
                         />

@@ -46,7 +46,10 @@ export const LastProducts = (props) => {
                       <Link to={`/users/${product.user.username}`}>
                         <img
                           className="is-circle"
-                          src={product.user.profilePictureUrl}
+                          src={
+                            product.user.profilePictureUrl ||
+                            require("../../img/profile.png")
+                          }
                           alt=""
                         />
                       </Link>
@@ -54,7 +57,10 @@ export const LastProducts = (props) => {
                       <Link to="/" onClick={props.toggleActiveStatus}>
                         <img
                           className="is-circle"
-                          src={product.user.profilePictureUrl}
+                          src={
+                            product.user.profilePictureUrl ||
+                            require("../../img/profile.png")
+                          }
                           alt=""
                         />
                       </Link>

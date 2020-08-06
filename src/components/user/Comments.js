@@ -1,9 +1,7 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react-hooks/exhaustive-deps*/
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { xChange } from "../../api/apiCalls";
-import { profilePicture } from "../../img/profile.png";
 import Moment from "react-moment";
 import "moment-timezone";
 
@@ -87,11 +85,14 @@ export const Comments = (props) => {
         comments.map((comment) => (
           <article key={comment._id} className="media">
             <figure className="media-left ml-2">
-              <p className="image is-64x64">
+              <p className="image">
                 <Link to={`/users/${comment.postedBy.username}`}>
                   <img
                     className="is-circle"
-                    src={comment.postedBy.profilePictureUrl || profilePicture}
+                    src={
+                      comment.postedBy.profilePictureUrl ||
+                      require("../../img/profile.png")
+                    }
                     alt=""
                   />
                 </Link>
@@ -107,9 +108,9 @@ export const Comments = (props) => {
                   {comment.body}
                   <br />
                   <small>
-                    <a>
+                    <Link to={window.location}>
                       <i className="fas fa-heart" /> Like
-                    </a>{" "}
+                    </Link>{" "}
                     ·{" "}
                     {comment.postedBy.username ===
                       localStorage.getItem("username") ||

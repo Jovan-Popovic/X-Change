@@ -22,13 +22,14 @@ export const Search = (props) => {
   const [initialFilters] = useState({ ...filters });
 
   React.useEffect(() => {
-    const data = JSON.stringify({ ...filters });
+    const data = JSON.stringify({ ...filters, name });
     console.log(props);
     xChange
       .post("/findProduct", data)
       .then((res) => {
         console.log(res);
-        getMatchedProducts([...res.data.matchingProducts]);
+        if (sessionStorage.getItem("name"))
+          getMatchedProducts([...res.data.matchingProducts]);
       })
       .catch((error) => console.error(error));
   }, [name, render]);
@@ -71,7 +72,10 @@ export const Search = (props) => {
                         <Link to={`/users/${product.user.username}`}>
                           <img
                             className="is-circle"
-                            src={product.user.profilePictureUrl}
+                            src={
+                              product.user.profilePictureUrl ||
+                              require("../../img/profile.png")
+                            }
                             alt=""
                           />
                         </Link>
@@ -88,7 +92,10 @@ export const Search = (props) => {
                         >
                           <img
                             className="is-circle"
-                            src={product.user.profilePictureUrl}
+                            src={
+                              product.user.profilePictureUrl ||
+                              require("../../img/profile.png")
+                            }
                             alt=""
                           />
                         </Link>
@@ -153,11 +160,9 @@ export const Search = (props) => {
             </div>
           ))
         ) : (
-          <div className="modal-card-body">
-            <p className="has-text-centered">
-              There is no products matched with {name}
-            </p>
-          </div>
+          <p className="column is-7 has-text-centered my-6 ml-1">
+            There is no products matched with "{name}"
+          </p>
         )}
       </div>
     </React.Fragment>

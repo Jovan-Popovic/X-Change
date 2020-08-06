@@ -29,7 +29,10 @@ export const Products = (props) => {
                     <Link to={`/users/${product.user.username}`}>
                       <img
                         className="is-circle"
-                        src={product.user.profilePictureUrl}
+                        src={
+                          product.user.profilePictureUrl ||
+                          require("../../img/profile.png")
+                        }
                         alt=""
                       />
                     </Link>

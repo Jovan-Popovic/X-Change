@@ -12,7 +12,7 @@ export const Filters = (props) => {
   ];
 
   return (
-    <aside className="box menu column is-3">
+    <aside className="box menu column is-3 mx-5 my-5">
       <div className="field ml-3">
         <p className="menu-label">Categories</p>
         {categories.map((category, index) => (
