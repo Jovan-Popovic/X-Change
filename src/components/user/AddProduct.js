@@ -21,7 +21,7 @@ export const AddProduct = (props) => {
       })
       .then((res) => {
         console.log(res);
-        props.renderComponent();
+        props.reRender();
         props.toggleActiveStatus();
         props.showNotification(
           "You successfuly posted new product",

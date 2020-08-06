@@ -16,9 +16,10 @@ export const DeleteModal = (props) => {
             : "Your account is deleted, sorry to see you go ;(",
           "is-info"
         );
-        localStorage.getItem("username") === username
-          ? props.toggleAuthStatus(false)
-          : props.reRender();
+        if (localStorage.getItem("username") === username) {
+          auth.logout();
+          props.toggleAuthStatus(false);
+        } else props.reRender();
       })
       .catch((error) => console.error(error));
 
@@ -73,11 +74,7 @@ export const DeleteModal = (props) => {
               <button
                 type="submit"
                 className="button is-danger"
-                onClick={() => {
-                  deleteUser(username);
-                  if (localStorage.getItem("username") === username)
-                    auth.logout();
-                }}
+                onClick={() => deleteUser(username)}
               >
                 <i className="fas fa-trash-alt" />
                 &nbsp; Delete Account

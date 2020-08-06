@@ -1,88 +1,34 @@
 import React from "react";
 
 export const Filters = (props) => {
+  const categories = [
+    "",
+    "electronics",
+    "sport",
+    "books",
+    "clothes",
+    "instrument",
+    "other",
+  ];
+
   return (
     <aside className="box menu column is-3">
-      <p className="menu-label">Categories</p>
       <div className="field ml-3">
-        <div className="control">
-          <label className="radio">
-            <input
-              type="radio"
-              name="category"
-              onClick={props.handleFilters}
-              value=""
-              defaultChecked
-            />
-            &nbsp; No Category
-          </label>
-        </div>
-        <div className="control">
-          <label className="radio">
-            <input
-              type="radio"
-              name="category"
-              onClick={props.handleFilters}
-              value="electronics"
-            />
-            &nbsp; Electronics
-          </label>
-        </div>
-        <div className="control">
-          <label className="radio">
-            <input
-              type="radio"
-              name="category"
-              onClick={props.handleFilters}
-              value="sport"
-            />
-            &nbsp; Sport
-          </label>
-        </div>
-        <div className="control">
-          <label className="radio">
-            <input
-              type="radio"
-              name="category"
-              onClick={props.handleFilters}
-              value="books"
-            />
-            &nbsp; Books
-          </label>
-        </div>
-        <div className="control">
-          <label className="radio">
-            <input
-              type="radio"
-              name="category"
-              onClick={props.handleFilters}
-              value="clothes"
-            />
-            &nbsp; Clothes
-          </label>
-        </div>
-        <div className="control">
-          <label className="radio">
-            <input
-              type="radio"
-              name="category"
-              onClick={props.handleFilters}
-              value="instrument"
-            />
-            &nbsp; Instrument
-          </label>
-        </div>
-        <div className="control">
-          <label className="radio">
-            <input
-              type="radio"
-              name="category"
-              onClick={props.handleFilters}
-              value="other"
-            />
-            &nbsp; Other
-          </label>
-        </div>
+        <p className="menu-label">Categories</p>
+        {categories.map((category, index) => (
+          <div className="control" key={index}>
+            <label className="radio is-capitalized">
+              <input
+                type="radio"
+                name="category"
+                onClick={props.handleFilters}
+                value={category}
+                defaultChecked={category === ""}
+              />
+              &nbsp; {category || "No Category"}
+            </label>
+          </div>
+        ))}
       </div>
       <p className="menu-label">Product Condition</p>
       <div className="field has-addons">

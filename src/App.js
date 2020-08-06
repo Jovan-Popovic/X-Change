@@ -20,9 +20,6 @@ const App = () => {
     navbar: false,
     signUp: false,
     logIn: false,
-    addProduct: false,
-    updateProfile: false,
-    deleteProfile: false,
   });
   const [notification, updateNotification] = useState({
     value: "",
@@ -44,12 +41,6 @@ const App = () => {
     });
 
   const openLogin = () => toggleActiveStatus("logIn", active.logInActive);
-  /* 
-  const handleFilters = (event) => {
-    const key = event.target.name;
-    const value = event.target.value;
-    value ? sessionStorage.setItem(key, value) : sessionStorage.removeItem(key);
-  }; */
 
   return (
     <div className="container">
@@ -113,7 +104,6 @@ const App = () => {
           <PrivateRoute
             path="/users/:username"
             component={User}
-            active={active}
             showNotification={showNotification}
             toggleActiveStatus={toggleActiveStatus}
             toggleAuthStatus={toggleAuthStatus}
@@ -137,7 +127,7 @@ const App = () => {
                 <NotFound {...props} />
               </React.Fragment>
             )}
-          ></Route>
+          />
         </Switch>
         <Route
           path="*"

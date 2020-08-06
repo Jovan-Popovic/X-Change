@@ -93,7 +93,7 @@ export const Products = (props) => {
         _id={id}
         toggleActiveStatus={toggleActiveStatus}
         showNotification={props.showNotification}
-        reRender={() => props.renderComponent()}
+        reRender={props.reRender}
       />
     </React.Fragment>
   );

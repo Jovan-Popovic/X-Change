@@ -11,7 +11,7 @@ export const NotFound = (props) => {
             <p>
               Sorry, the page you are looking for doesn't exist, or you don't
               have permission to access it. Press the buton below to go back to
-              home page
+              home page.
             </p>
           </div>
         </div>
@@ -19,7 +19,7 @@ export const NotFound = (props) => {
           className="button is-primary"
           onClick={() => props.history.push("/")}
         >
-          Back to homepage
+          Back to Home
         </button>
       </div>
     </section>

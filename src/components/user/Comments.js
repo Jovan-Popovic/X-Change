@@ -39,7 +39,7 @@ export const Comments = (props) => {
         if (rating) addRating();
       })
       .catch((error) => console.error(error));
-    props.renderComponent();
+    props.reRender();
   };
 
   const editComment = () => {
@@ -55,7 +55,7 @@ export const Comments = (props) => {
         if (rating) addRating();
       })
       .catch((error) => console.error(error));
-    props.renderComponent();
+    props.reRender();
   };
 
   const deleteComment = (id) => {
@@ -64,7 +64,7 @@ export const Comments = (props) => {
       .delete("/deleteComment", body)
       .then((res) => console.log(res))
       .catch((error) => console.error(error));
-    props.renderComponent();
+    props.reRender();
   };
 
   const addRating = () =>
@@ -72,7 +72,7 @@ export const Comments = (props) => {
       .then((res) => {
         console.log(res);
         setRating(null);
-        props.renderComponent();
+        props.reRender();
       })
       .catch((error) => console.error(error));
 

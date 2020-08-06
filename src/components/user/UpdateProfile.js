@@ -9,7 +9,7 @@ export const UpdateProfile = (props) => {
       .post("/updateProfile", updateData)
       .then((res) => {
         console.log(res);
-        props.renderComponent();
+        props.reRender();
         props.toggleActiveStatus();
         props.showNotification(
           "Your informations are updated, refresh profile page",

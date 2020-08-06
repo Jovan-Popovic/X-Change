@@ -153,8 +153,10 @@ export const Search = (props) => {
             </div>
           ))
         ) : (
-          <div className="modal-card-body has-text-centered">
-            <p>There is no products matched with {name}</p>
+          <div className="modal-card-body">
+            <p className="has-text-centered">
+              There is no products matched with {name}
+            </p>
           </div>
         )}
       </div>

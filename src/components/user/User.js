@@ -5,14 +5,18 @@ import { Products } from "./Products";
 import { Comments } from "./Comments";
 import { AddProduct } from "./AddProduct.js";
 import { UpdateProfile } from "./UpdateProfile";
-/* import { DeleteProfile } from "./DeleteProfile";
- */ import { DeleteModal } from "../DeleteModal";
+import { DeleteModal } from "../DeleteModal";
 import { xChange } from "../../api/apiCalls";
 
 export const User = (props) => {
   const [info, getInfo] = useState({});
+  const [active, setActive] = useState({
+    addProduct: false,
+    updateProfile: false,
+    deleteProfile: false,
+  });
   const [userImage, setImage] = useState("");
-  const [render, reRender] = useState(false);
+  const [render, setRender] = useState(false);
   const [formData, updateProfile] = useState({
     addProduct: {
       name: "",
@@ -65,7 +69,10 @@ export const User = (props) => {
     });
   };
 
-  const renderComponent = () => reRender(!render);
+  const toggleActiveStatus = (value, status) =>
+    setActive({ ...active, [value]: !status });
+
+  const reRender = () => setRender(!render);
 
   return (
     <React.Fragment>
@@ -73,10 +80,10 @@ export const User = (props) => {
         <Info
           info={info.user}
           productsLength={info.products.length}
-          active={props.active}
-          toggleActiveStatus={props.toggleActiveStatus}
+          active={active}
+          toggleActiveStatus={toggleActiveStatus}
           sameUsername={sameUsername}
-          renderComponent={renderComponent}
+          reRender={reRender}
         />
       ) : (
         ""
@@ -85,11 +92,11 @@ export const User = (props) => {
         <Products
           products={info.products}
           username={username}
-          active={props.active}
-          toggleActiveStatus={props.toggleActiveStatus}
+          active={active}
+          toggleActiveStatus={toggleActiveStatus}
           sameUsername={sameUsername}
           showNotification={props.showNotification}
-          renderComponent={renderComponent}
+          reRender={reRender}
         />
       ) : (
         ""
@@ -100,62 +107,56 @@ export const User = (props) => {
           username={username}
           userImage={userImage}
           admin={info.user.admin}
-          active={props.active}
-          toggleActiveStatus={props.toggleActiveStatus}
+          active={active}
+          toggleActiveStatus={toggleActiveStatus}
           sameUsername={sameUsername}
-          renderComponent={renderComponent}
+          reRender={reRender}
         />
       ) : (
         ""
       )}
-      {/*Components below are for users with same username as username from local storage*/}
-      {props.active.addProduct ? (
+      {active.addProduct ? (
         <AddProduct
-          active={props.active.addProduct}
+          active={active.addProduct}
           data={formData.addProduct}
           showNotification={props.showNotification}
           image={formData.images.product}
           handleInfo={handleInfo}
           handleFile={handleFile}
-          renderComponent={renderComponent}
+          reRender={reRender}
           toggleActiveStatus={() =>
-            props.toggleActiveStatus("addProduct", props.active.addProduct)
+            toggleActiveStatus("addProduct", active.addProduct)
           }
         />
       ) : (
         ""
       )}
-      {props.active.updateProfile ? (
+      {active.updateProfile ? (
         <UpdateProfile
-          active={props.active.updateProfile}
+          active={active.updateProfile}
           data={formData.updateProfile}
           showNotification={props.showNotification}
           image={formData.images.profile}
           handleInfo={handleInfo}
           handleFile={handleFile}
-          renderComponent={renderComponent}
+          reRender={reRender}
           toggleActiveStatus={() =>
-            props.toggleActiveStatus(
-              "updateProfile",
-              props.active.updateProfile
-            )
+            toggleActiveStatus("updateProfile", active.updateProfile)
           }
         />
       ) : (
         ""
       )}
-      {props.active.deleteProfile ? (
+      {active.deleteProfile ? (
         <DeleteModal
-          active={props.active.deleteProfile}
+          active={active.deleteProfile}
           toggleAuthStatus={props.toggleAuthStatus}
+          reRender={reRender}
           showNotification={props.showNotification}
           username={username}
           history={props.history}
           toggleActiveStatus={() =>
-            props.toggleActiveStatus(
-              "deleteProfile",
-              props.active.deleteProfile
-            )
+            toggleActiveStatus("deleteProfile", active.deleteProfile)
           }
         />
       ) : (
